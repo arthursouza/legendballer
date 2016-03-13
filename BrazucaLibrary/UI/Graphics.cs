@@ -48,7 +48,13 @@ namespace BrazucaLibrary.UI
 
             NewspaperChampion = content.Load<Texture2D>("Backgrounds/Jornal Championship");
             BlankBackground = content.Load<Texture2D>("Backgrounds/Light Blue Bg");
+
+            FieldBounds = content.Load<Texture2D>("Backgrounds/FieldBounds");
             FieldBackground = content.Load<Texture2D>("Backgrounds/Field");
+            Goal = content.Load<Texture2D>("Backgrounds/Goal");
+            GoalTopNet = content.Load<Texture2D>("Backgrounds/GoalTopNet");
+            GoalShadow = content.Load<Texture2D>("Backgrounds/GoalShadow");
+
             SimulationBG = content.Load<Texture2D>("Backgrounds/Simulation BG");
             LobbyBackground = content.Load<Texture2D>("Backgrounds/Game Lobby");
             MainMenu = content.Load<Texture2D>("Backgrounds/Main Menu");
@@ -56,10 +62,17 @@ namespace BrazucaLibrary.UI
             Selected = content.Load<Texture2D>("UI/Selected");
         }
 
+        public static Texture2D Goal { get; set; }
+
+        public static Texture2D GoalShadow { get; set; }
+
+        public static Texture2D FieldBounds { get; set; }
+
         public static Texture2D NewspaperSignContract { get; set; }
 
         public static Texture2D GameJoltLogin { get; set; }
 
         public static Texture2D GameJoltLoginHover { get; set; }
+        public static Texture2D GoalTopNet { get; set; }
     }
 }

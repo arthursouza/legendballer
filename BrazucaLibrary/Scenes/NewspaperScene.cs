@@ -58,6 +58,7 @@ namespace BrazucaLibrary.Scenes
             {
                 if (continueButton.MouseOver())
                 {
+                    Game.Save();
                     Game.Transition(State.Lobby);
                     return;
                 }

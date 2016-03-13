@@ -35,7 +35,7 @@ namespace BrazucaLibrary
         public int WinSequence;
         public TimeSpan PlayedSpan;
 
-        public static bool HARDCORE_INGAME_TESTING = true;
+        public static bool HARDCORE_INGAME_TESTING = false;
 
         Random rand = new Random(DateTime.Now.Millisecond);
         GraphicsDeviceManager graphics;
@@ -81,7 +81,6 @@ namespace BrazucaLibrary
         // Kick Information
         public float KickPower;
         public Vector2 KickDirection;
-
 
         private Transition transition;
         Dictionary<State, Scene> Scenes;
@@ -162,29 +161,10 @@ namespace BrazucaLibrary
 
             LoadGraphics();
 
-            GameField = new Rectangle(
-                (int)((WindowSize.X - Graphics.FieldBackground.Width) / 2),
-                (int)((WindowSize.Y - Graphics.FieldBackground.Height) / 2),
-                Graphics.FieldBackground.Width,
-                Graphics.FieldBackground.Height);
-
             MessageBox.DefaultWindowPosition = new Vector2(
                 WindowSize.X / 2 - MessageBox.DefaultWindowSize.X / 2,
                 WindowSize.Y / 2 - MessageBox.DefaultWindowSize.Y / 2);
-
-            GoalBounds = new Rectangle(
-                396 + GameField.X,
-                28 + GameField.Y,
-                161, 58);
-
-            GoalInnerBounds = new Rectangle(
-                397 + GameField.X,
-                53 + GameField.Y,
-                158, 25);
-
-            //traveEsquerda = new Rectangle(GoalBounds.X - 3, GoalBounds.Y + GoalBounds.Height - 70, 5, 70);
-            //traveDireita = new Rectangle(GoalBounds.X + GoalBounds.Width - 2, GoalBounds.Y + GoalBounds.Height - 70, 5, 70);
-
+            
             IngameBall = new Ball();
             IngameBall.Animated = true;
             IngameBall.CollisionRadius = 10;
@@ -192,11 +172,15 @@ namespace BrazucaLibrary
             IngameBall.Texture = Content.Load<Texture2D>("Ball/Ball spritesheet");
             IngameBall.ShadowTexture = Content.Load<Texture2D>("Ball/Ball Shadow");
 
+
+
             InputInfo.LastMouseState = Mouse.GetState();
             InputInfo.LastKeyboardState = Keyboard.GetState();
 
             transition = new Transition(this);
             transition.Finish += transition_Finish;
+
+            SetupFieldSize();
 
             LoadScenes();
             LoadCountries();
@@ -213,6 +197,63 @@ namespace BrazucaLibrary
                 Simulation.Start();
             }
         }
+
+        private void SetupFieldSize()
+        {
+            var fieldScale = 800f/1200f;
+            var innerGoalHeight = 34f;
+            var goalBarWidth = 2f;
+
+
+            GoalInsideGrassArea = 45f*fieldScale; 
+            GoalHeight = 20f;
+
+            GameField = new Rectangle((int) ((WindowSize.X - ((float) Graphics.FieldBounds.Width*fieldScale))/2),
+                (int) (WindowSize.Y - ((float) Graphics.FieldBounds.Height*fieldScale)),
+                (int) (Graphics.FieldBounds.Width*fieldScale),
+                (int) (Graphics.FieldBounds.Height*fieldScale));
+
+            GoalBounds = new Rectangle(
+                (int) (WindowSize.X/2 - (Graphics.Goal.Width*fieldScale)/2),
+                (int) (GameField.Y - (Graphics.Goal.Height*fieldScale)) + 2,
+                (int) (Graphics.Goal.Width*fieldScale),
+                (int) (Graphics.Goal.Height*fieldScale));
+
+            GoalShadowBounds = new Rectangle(
+                (int) (WindowSize.X/2 - (Graphics.Goal.Width*fieldScale)/2),
+                (int) (GameField.Y - (Graphics.Goal.Height*fieldScale)),
+                (int) (Graphics.GoalShadow.Width*fieldScale),
+                (int) (Graphics.GoalShadow.Height*fieldScale));
+
+            GoalInnerBounds = new Rectangle(
+                (int) (GoalBounds.X + goalBarWidth),
+                GameField.Y - (int) (innerGoalHeight*fieldScale) + 2,
+                (int) (GoalBounds.Width - (goalBarWidth*2)),
+                (int) (innerGoalHeight*fieldScale));
+
+            SmallAreaBounds = new Rectangle((int) (WindowSize.X/2), (int) GameField.Y, (int) (240*fieldScale),
+                (int) (70*fieldScale));
+
+            var playableAreaSize = new Vector2(800, 700) * fieldScale;
+
+            var playableArea = new Rectangle(
+                (int) (GameField.Width - playableAreaSize.X)/2 + GameField.X,
+                (int) (GameField.Height - playableAreaSize.Y)/2 + GameField.Y,
+                (int) playableAreaSize.X,
+                (int) playableAreaSize.Y);
+
+            FieldRegions.Attack = new Rectangle(playableArea.X, playableArea.Y, playableArea.Width, playableArea.Height / 3);
+            FieldRegions.MidAttack = new Rectangle(playableArea.X, playableArea.Height / 3 + playableArea.Y, playableArea.Width, playableArea.Height / 3);
+            FieldRegions.MidField = new Rectangle(playableArea.X, playableArea.Height / 3 * 2 + playableArea.Y, playableArea.Width, playableArea.Height / 3);
+        }
+
+        public float GoalInsideGrassArea { get; set; }
+
+        public float GoalHeight { get; set; }
+
+        public Rectangle SmallAreaBounds{ get; set; }
+
+        public Rectangle GoalShadowBounds { get; set; }
 
         private void LoadCountries()
         {
@@ -297,33 +338,29 @@ namespace BrazucaLibrary
 
         public void PreparePlayers(SimulationStep simulationStep)
         {
-            FieldRegions.Attack = new Rectangle(281 + GameField.X, 150 + GameField.Y, 395, 90);
-            FieldRegions.MidAttack = new Rectangle(277 + GameField.X, 397 + GameField.Y, 395, 90);
-            FieldRegions.MidField = new Rectangle(277 + GameField.X, 510 + GameField.Y, 395, 90);
+            //Texture2D friend = Content.Load<Texture2D>("Player/Player2");
+            //Texture2D enemy = Content.Load<Texture2D>("Player/Player1");
+            //Texture2D keeper = Content.Load<Texture2D>("Player/Keeper");
 
-            Texture2D friend = Content.Load<Texture2D>("Player/Player2");
-            Texture2D enemy = Content.Load<Texture2D>("Player/Player1");
-            Texture2D keeper = Content.Load<Texture2D>("Player/Keeper");
+            //Players = new List<Character>();
 
-            Players = new List<Character>();
+            //CreatePlayers(PlayerType.Friend, FieldRegions.Attack, 2, friend);
+            //CreatePlayers(PlayerType.Friend, FieldRegions.MidAttack, 2, friend);
+            //CreatePlayers(PlayerType.Friend, FieldRegions.MidField, 2, friend);
 
-            CreatePlayers(PlayerType.Friend, FieldRegions.Attack, 2, friend);
-            CreatePlayers(PlayerType.Friend, FieldRegions.MidAttack, 2, friend);
-            CreatePlayers(PlayerType.Friend, FieldRegions.MidField, 2, friend);
+            //CreatePlayers(PlayerType.Adversary, FieldRegions.Attack, 2, enemy);
+            //CreatePlayers(PlayerType.Adversary, FieldRegions.MidAttack, 2, enemy);
+            //CreatePlayers(PlayerType.Adversary, FieldRegions.MidField, 2, enemy);
 
-            CreatePlayers(PlayerType.Adversary, FieldRegions.Attack, 2, enemy);
-            CreatePlayers(PlayerType.Adversary, FieldRegions.MidAttack, 2, enemy);
-            CreatePlayers(PlayerType.Adversary, FieldRegions.MidField, 2, enemy);
+            //Character gk = new Character();
+            //gk.Texture = keeper;
+            //gk.Speed = 3f;
+            //gk.Position = new Vector2(
+            //    WindowSize.X/2 - SmallAreaBounds.Width / 2 + rand.Next(0, SmallAreaBounds.Width),
+            //    GameField.Y + rand.Next(0, SmallAreaBounds.Height));
+            //gk.Type = PlayerType.Keeper;
 
-            Character gk = new Character();
-            gk.Texture = keeper;
-            gk.Speed = 3f;
-            gk.Position = new Vector2(
-                GameField.X + 476 + rand.Next(-20, 20),
-                GameField.Y + 88);
-            gk.Type = PlayerType.Keeper;
-
-            Players.Add(gk);
+            //Players.Add(gk);
         }
 
         private void CreatePlayers(PlayerType type, Rectangle region, int amount, Texture2D texture)

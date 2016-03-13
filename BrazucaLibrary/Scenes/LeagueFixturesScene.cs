@@ -21,31 +21,40 @@ namespace BrazucaLibrary.Scenes
         bool standings = true;
         SpriteFont font;
 
-        Vector2 teamName = new Vector2(30, 30);
-        Vector2 points = new Vector2(270, 30);
-        Vector2 wins = new Vector2(340, 30);
-        Vector2 draws = new Vector2(410, 30);
-        Vector2 losses = new Vector2(480, 30);
+        Vector2 teamName;
+        Vector2 points;
+        Vector2 wins;
+        Vector2 draws;
+        Vector2 losses;
 
-        Vector2 proGoals = new Vector2(550, 30);
-        Vector2 conGoals = new Vector2(620, 30);
-        Vector2 goalRes = new Vector2(690, 30);
+        Vector2 proGoals;
+        Vector2 conGoals;
+        Vector2 goalRes;
 
         public LeagueFixturesScene(BrazucaGame game)
             : base(game)
         {
+            teamName = new Vector2(30, windowPadding);
+            points = new Vector2(270, windowPadding);
+            wins = new Vector2(340, windowPadding);
+            draws = new Vector2(410, windowPadding);
+            losses = new Vector2(480, windowPadding);
+
+            proGoals = new Vector2(550, windowPadding);
+            conGoals = new Vector2(620, windowPadding);
+            goalRes = new Vector2(690, windowPadding);
 
             btnFixtureStandings = new Button("Fixtures", 
                 new Vector2(
-                    BrazucaGame.WindowBounds.Width - windowPadding, 
-                    BrazucaGame.WindowBounds.Height - windowPadding), 
+                    BrazucaGame.WindowBounds.Width - (windowPadding + UserInterface.ButtonGreen.Width), 
+                    BrazucaGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)), 
                 Color.White, 
                 UserInterface.ButtonGreen);
             
             btnBack = new Button("Lobby", 
                 new Vector2(
-                    windowPadding, 
-                    BrazucaGame.WindowBounds.Height - windowPadding), 
+                    windowPadding,
+                    BrazucaGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)),
                 Color.White, 
                 UserInterface.ButtonGreen);
             
@@ -85,14 +94,17 @@ namespace BrazucaLibrary.Scenes
                 for (int i = 0; i < Game.League.Standings.Count; i++)
                 {
                     LeagueStanding s = Game.League.Standings[i];
-                    batch.DrawString(font, s.Club.Name, teamName + new Vector2(0, font.LineSpacing * (i + 1) + 15), Color.White);
-                    batch.DrawString(font, s.Points.ToString(), points + new Vector2(0, font.LineSpacing * (i + 1) + 15), Color.White);
-                    batch.DrawString(font, s.Wins.ToString(), wins + new Vector2(0, font.LineSpacing * (i + 1) + 15), Color.White);
-                    batch.DrawString(font, s.Draws.ToString(), draws + new Vector2(0, font.LineSpacing * (i + 1) + 15), Color.White);
-                    batch.DrawString(font, s.Losses.ToString(), losses + new Vector2(0, font.LineSpacing * (i + 1) + 15), Color.White);
-                    batch.DrawString(font, s.ProGoals.ToString(), proGoals + new Vector2(0, font.LineSpacing * (i + 1) + 15), Color.White);
-                    batch.DrawString(font, s.ConGoals.ToString(), conGoals + new Vector2(0, font.LineSpacing * (i + 1) + 15), Color.White);
-                    batch.DrawString(font, s.GoalScore.ToString(), goalRes + new Vector2(0, font.LineSpacing * (i + 1) + 15), Color.White);
+
+                    var color = s.Club.Name == Game.PlayerClub.Name ? Color.OrangeRed : Color.White;
+
+                    batch.DrawString(font, s.Club.Name, teamName + new Vector2(0, font.LineSpacing * (i + 1) + 15), color);
+                    batch.DrawString(font, s.Points.ToString(), points + new Vector2(0, font.LineSpacing * (i + 1) + 15), color);
+                    batch.DrawString(font, s.Wins.ToString(), wins + new Vector2(0, font.LineSpacing * (i + 1) + 15), color);
+                    batch.DrawString(font, s.Draws.ToString(), draws + new Vector2(0, font.LineSpacing * (i + 1) + 15), color);
+                    batch.DrawString(font, s.Losses.ToString(), losses + new Vector2(0, font.LineSpacing * (i + 1) + 15), color);
+                    batch.DrawString(font, s.ProGoals.ToString(), proGoals + new Vector2(0, font.LineSpacing * (i + 1) + 15), color);
+                    batch.DrawString(font, s.ConGoals.ToString(), conGoals + new Vector2(0, font.LineSpacing * (i + 1) + 15), color);
+                    batch.DrawString(font, s.GoalScore.ToString(), goalRes + new Vector2(0, font.LineSpacing * (i + 1) + 15), color);
                 }
             }
 

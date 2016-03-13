@@ -23,5 +23,7 @@
         public int HomeAtkWon { get; set; }
         public int HomeMidWon { get; set; }
         public int HomeDefWon { get; set; }
+        public int AwayRolls { get; set; }
+        public int HomeRolls { get; set; }
     }
 }

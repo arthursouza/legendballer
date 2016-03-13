@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BrazucaLibrary.Input;
+using BrazucaLibrary.Simulation;
 using BrazucaLibrary.UI;
 using BrazucaLibrary.Util;
 using Microsoft.Xna.Framework;
@@ -35,7 +36,10 @@ namespace BrazucaLibrary.Scenes
             {
                 ballClicked = Game.IngameBall.CollisionBounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
             }
+
+            //Game.IngameBall.Position = InputInfo.MousePosition;
         }
+
         public override void MouseClick(MouseButton button)
         {
             if (button == MouseButton.Left)
@@ -55,9 +59,16 @@ namespace BrazucaLibrary.Scenes
             base.MouseClick(button);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch batch)
         {
-            spriteBatch.Draw(Graphics.FieldBackground, Game.GameField, Color.White);
+            batch.Draw(Graphics.FieldBackground, new Rectangle(0, 0, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height), Color.White);
+            batch.Draw(Graphics.FieldBounds, Game.GameField, Color.White);
+            batch.Draw(Graphics.GoalShadow, Game.GoalShadowBounds, Color.White);
+            batch.Draw(Graphics.Goal, Game.GoalBounds, Color.White);
+
+            //batch.Draw(Graphics.Selected, FieldRegions.Attack, Color.Red);
+            //batch.Draw(Graphics.Selected, FieldRegions.MidAttack, Color.Orange);
+            //batch.Draw(Graphics.Selected, FieldRegions.MidField, Color.Yellow);
 
             if (ballClicked)
             {
@@ -65,8 +76,12 @@ namespace BrazucaLibrary.Scenes
                 float rotation = (float)Math.Atan2(Game.KickDirection.Y, Game.KickDirection.X);
                 Vector2 origin = new Vector2(0, seta.Height / 2);
                 Rectangle arrow = new Rectangle((int)Game.IngameBall.Position.X, (int)Game.IngameBall.Position.Y, (int)(seta.Width * size), seta.Height);
-                spriteBatch.Draw(seta, arrow, new Rectangle(0, 0, seta.Width, seta.Height), Color.White, rotation, origin, SpriteEffects.None, 0);
+                batch.Draw(seta, arrow, new Rectangle(0, 0, seta.Width, seta.Height), Color.White, rotation, origin, SpriteEffects.None, 0);
             }
+
+            //batch.Draw(Graphics.Selected, Game.GoalInnerBounds, Color.Yellow);
+
+            batch.DrawString(Fonts.Arial12, InputInfo.MousePosition.ToString(), InputInfo.MousePosition, Color.White);
 
             //// Draw player collision radius
             //foreach (Player item in Game.Players)
@@ -84,10 +99,12 @@ namespace BrazucaLibrary.Scenes
             renderList.Add(Game.IngameBall);
             renderList.AddRange(Game.Players);
             renderList.Sort();
-            renderList.ForEach(o => o.Draw(spriteBatch));
+            renderList.ForEach(o => o.Draw(batch));
+
+            batch.Draw(Graphics.GoalTopNet, Game.GoalBounds, Color.White);
 
             string text = Game.Simulation.CurrentTime.ToString("00");
-            spriteBatch.DrawString(Fonts.Pixelade90, text, new Vector2(20, 0), Color.White);
+            batch.DrawString(Fonts.Pixelade90, text, new Vector2(20, 0), Color.White);
             // << KICKING START
         }
 

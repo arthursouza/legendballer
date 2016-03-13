@@ -26,7 +26,7 @@ namespace BrazucaLibrary.Scenes
 
             btnKickOff = new Button(
                 "Kick Off", 
-                new Vector2(windowPadding, BrazucaGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)), 
+                new Vector2(BrazucaGame.WindowBounds.Width - (UserInterface.ButtonGreen.Width + windowPadding), BrazucaGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)),
                 Color.White, 
                 UserInterface.ButtonGreen);
         }
