@@ -37,6 +37,11 @@ namespace BrazucaLibrary.Scenes
                 ballClicked = Game.IngameBall.CollisionBounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
             }
 
+            if (button == MouseButton.Right)
+            {
+                Game.IngameBall.Position = InputInfo.MousePosition;
+            }
+
             //Game.IngameBall.Position = InputInfo.MousePosition;
         }
 
@@ -65,6 +70,9 @@ namespace BrazucaLibrary.Scenes
             batch.Draw(Graphics.FieldBounds, Game.GameField, Color.White);
             batch.Draw(Graphics.GoalShadow, Game.GoalShadowBounds, Color.White);
             batch.Draw(Graphics.Goal, Game.GoalBounds, Color.White);
+
+            //batch.Draw(Graphics.Selected, LeftBar, Color.Yellow);
+            //batch.Draw(Graphics.Selected, RightBar, Color.Yellow);
 
             //batch.Draw(Graphics.Selected, FieldRegions.Attack, Color.Red);
             //batch.Draw(Graphics.Selected, FieldRegions.MidAttack, Color.Orange);
@@ -110,7 +118,14 @@ namespace BrazucaLibrary.Scenes
 
         public override void Update(GameTime gameTime)
         {
+            LeftBar = new Rectangle(Game.GoalBounds.X, Game.GameField.Y - 50, 4, 50);
+            RightBar = new Rectangle(Game.GoalBounds.X + Game.GoalBounds.Width - 4, Game.GameField.Y - 50, 4, 50);
+
             Game.Players.ForEach(p => p.Update(gameTime));
         }
+
+        public Rectangle LeftBar { get; set; }
+
+        public Rectangle RightBar { get; set; }
     }
 }

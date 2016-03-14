@@ -25,13 +25,9 @@ namespace BrazucaLibrary.Scenes
         private float kickResultEndDelay = 1000;
 
         private float kickResultDelayTimer = 0f;
-        
+        private Ball ball { get { return Game.IngameBall; } }
         private State nextState;
-        Ball Ball
-        {
-            get { return Game.IngameBall; }
-        }
-
+        
         KickResult result;
 
         public KickResultScene(BrazucaGame game)
@@ -55,11 +51,17 @@ namespace BrazucaLibrary.Scenes
             batch.Draw(Graphics.GoalShadow, Game.GoalShadowBounds, Color.White);
             batch.Draw(Graphics.Goal, Game.GoalBounds, Color.White);
 
+            //batch.Draw(Graphics.Selected, LeftBar, Color.Yellow);
+            //batch.Draw(Graphics.Selected, RightBar, Color.Yellow);
+
+
             List<GameObject> renderList = new List<GameObject>();
             renderList.AddRange(Game.Players);
             renderList.Add(Game.IngameBall);
             renderList.Sort();
             renderList.ForEach(o => o.Draw(batch));
+
+
 
             if (BallInsideGoal())
             {
@@ -111,6 +113,9 @@ namespace BrazucaLibrary.Scenes
         public override void Update(GameTime gameTime)
         {
             Game.IngameBall.Update(gameTime);
+            LeftBar = new Rectangle(Game.GoalBounds.X, Game.GameField.Y - Game.GoalBounds.Height, 4, Game.GoalBounds.Height);
+            RightBar = new Rectangle(Game.GoalBounds.X + Game.GoalBounds.Width - 4, Game.GameField.Y - Game.GoalBounds.Height, 4, Game.GoalBounds.Height);
+
             bool anythingHappened = false;
 
             if (!AnimatingResult)
@@ -164,14 +169,14 @@ namespace BrazucaLibrary.Scenes
                 }
 
                 // passou da linha de fundo
-                if (Game.IngameBall.Position.Y < Game.GameField.Y)
+                if (Game.IngameBall.Position.Y + Game.IngameBall.CollisionRadius < Game.GameField.Y)
                 {
                     // passou da linha de fundo. mas entrou no gol?
                     if (BallInsideGoal())
                     {
                         Game.Simulation.FriendlyGoal();
 
-                        if (Ball.PlayerKick)
+                        if (ball.PlayerKick)
                         {
                             result = KickResult.Goal;
                             Game.Simulation.GameStatistics.PlayerGoals++;
@@ -181,7 +186,6 @@ namespace BrazucaLibrary.Scenes
                             result = KickResult.Assist;
                             Game.Simulation.GameStatistics.PlayerAssists++;
                         }
-
                         PlayResult(result);
                     }
                     else
@@ -190,29 +194,64 @@ namespace BrazucaLibrary.Scenes
                         PlayResult(result);
                     }
                 }
+                else
+                {
+                    if (ball.Position.Y - ball.CollisionRadius < Game.GameField.Y)
+                    {
+                        // if right part of the ball is hitting the bar
+                        if (ball.Position.X + ball.CollisionRadius >= LeftBar.X && ball.Position.X + ball.CollisionRadius <= LeftBar.X + LeftBar.Width)
+                        {
+                            ball.Direction *= new Vector2(-1, -1);
+                        }
+                        else if (ball.Position.X - ball.CollisionRadius >= LeftBar.X && ball.Position.X - ball.CollisionRadius <= LeftBar.X + LeftBar.Width)
+                        {
+                            ball.Direction *= new Vector2(-1, -1);
+                        }
+                    }
+                }
             }
             else
             {
                 // Enquanto animo resultado, se for um gol, deixo a bola ser animada até bater no fundo da rede
                 if (result == KickResult.Goal || result == KickResult.Assist)
                 {
-                    if (Game.IngameBall.Position.Y - Game.IngameBall.CollisionRadius < Game.GoalBounds.Y + Game.GoalBounds.Height - Game.GoalInsideGrassArea)
+                    if (Game.IngameBall.Position.Y - Game.IngameBall.CollisionRadius <
+                        Game.GoalBounds.Y + Game.GoalBounds.Height - Game.GoalInsideGrassArea)
                     {
-                        Game.IngameBall.Position.Y = Game.IngameBall.CollisionRadius + Game.GoalBounds.Y + Game.GoalBounds.Height - Game.GoalInsideGrassArea;
+                        Game.IngameBall.Position.Y = Game.IngameBall.CollisionRadius + Game.GoalBounds.Y +
+                                                     Game.GoalBounds.Height - Game.GoalInsideGrassArea;
                         Game.IngameBall.Speed = 0f;
                     }
-                    //else if (Game.IngameBall.Position.X + Game.IngameBall.CollisionRadius < Game.GoalInnerBounds.X)
-                    //{
-                    //    Game.IngameBall.Position.X = Game.GoalInnerBounds.X + Game.IngameBall.CollisionRadius;
-                    //}
-                    //else if (Game.IngameBall.Position.X + Game.IngameBall.CollisionRadius > Game.GoalInnerBounds.X + Game.GoalInnerBounds.Width)
-                    //{
-                    //    Game.IngameBall.Position.X = Game.GoalInnerBounds.X + Game.GoalInnerBounds.Width - Game.IngameBall.CollisionRadius;
-                    //}
+                    else if (Game.IngameBall.Position.X + Game.IngameBall.CollisionRadius < Game.GoalInnerBounds.X)
+                    {
+                        Game.IngameBall.Position.X = Game.GoalInnerBounds.X + Game.IngameBall.CollisionRadius;
+                    }
+                    else if (Game.IngameBall.Position.X + Game.IngameBall.CollisionRadius >
+                             Game.GoalInnerBounds.X + Game.GoalInnerBounds.Width)
+                    {
+                        Game.IngameBall.Position.X = Game.GoalInnerBounds.X + Game.GoalInnerBounds.Width -
+                                                     Game.IngameBall.CollisionRadius;
+                    }
 
                     if (Game.IngameBall.PhysicalHeight > Game.GoalHeight)
                     {
                         Game.IngameBall.VerticalForce *= -0.7f;
+                    }
+                }
+                else
+                {
+                    if (Game.IngameBall.Position.X < Game.GoalBounds.X &&
+                        Game.IngameBall.Position.X + Game.IngameBall.CollisionRadius > Game.GoalBounds.X)
+                    {
+                        Game.IngameBall.Position.X = Game.GoalBounds.X - Game.IngameBall.CollisionRadius;
+                        Game.IngameBall.Direction *= new Vector2(-1, 1);
+                    }
+                    else if (
+                        Game.IngameBall.Position.X > Game.GoalBounds.X + Game.GoalBounds.Width &&
+                        Game.IngameBall.Position.X - Game.IngameBall.CollisionRadius < Game.GoalBounds.X + Game.GoalBounds.Width)
+                    {
+                        Game.IngameBall.Position.X = Game.GoalBounds.X + Game.GoalBounds.Width + Game.IngameBall.CollisionRadius;
+                        Game.IngameBall.Direction *= new Vector2(-1, 1);
                     }
                 }
 
@@ -234,12 +273,18 @@ namespace BrazucaLibrary.Scenes
             }
         }
 
+        public Rectangle RightBar { get; set; }
+
+        public Rectangle LeftBar { get; set; }
+
         private bool BallInsideGoal()
         {
-            return Ball.PhysicalHeight < Game.GoalHeight && // height
-                Game.IngameBall.Position.Y < Game.GameField.Y &&  // past end line
-                Game.IngameBall.Position.Y - Game.IngameBall.CollisionRadius >= Game.GoalInnerBounds.Y && // inside Y net 
-                (Ball.Position.X - Ball.CollisionRadius > Game.GoalBounds.X || Ball.Position.X + Ball.CollisionRadius < Game.GoalBounds.X + Game.GoalBounds.Width);
+            var belowTopBar = ball.PhysicalHeight < Game.GoalHeight;
+            var pastEndLine = ball.Position.Y + ball.CollisionRadius < Game.GameField.Y;
+            //var insideGoalArea = ball.Position.Y - ball.CollisionRadius >= Game.GoalInnerBounds.Y;
+            var betweenTwoBars = (ball.Position.X - ball.CollisionRadius > Game.GoalBounds.X && ball.Position.X + ball.CollisionRadius < Game.GoalBounds.X + Game.GoalBounds.Width);
+
+            return belowTopBar && pastEndLine && betweenTwoBars;
         }
 
         private void ProcessPlayerPass(Character p)
@@ -264,7 +309,7 @@ namespace BrazucaLibrary.Scenes
                 if (kickDirection != Vector2.Zero)
                     kickDirection.Normalize();
 
-                Ball.Kick(40, kickDirection, new Vector2(0, -1), false);
+                ball.Kick(40, kickDirection, new Vector2(0, -1), false);
             }
             else
                 PlayResult(result);

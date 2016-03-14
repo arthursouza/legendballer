@@ -206,7 +206,7 @@ namespace BrazucaLibrary
 
 
             GoalInsideGrassArea = 45f*fieldScale; 
-            GoalHeight = 20f;
+            GoalHeight = 30f;
 
             GameField = new Rectangle((int) ((WindowSize.X - ((float) Graphics.FieldBounds.Width*fieldScale))/2),
                 (int) (WindowSize.Y - ((float) Graphics.FieldBounds.Height*fieldScale)),
@@ -340,9 +340,9 @@ namespace BrazucaLibrary
         {
             //Texture2D friend = Content.Load<Texture2D>("Player/Player2");
             //Texture2D enemy = Content.Load<Texture2D>("Player/Player1");
-            //Texture2D keeper = Content.Load<Texture2D>("Player/Keeper");
+            Texture2D keeper = Content.Load<Texture2D>("Player/Keeper");
 
-            //Players = new List<Character>();
+            Players = new List<Character>();
 
             //CreatePlayers(PlayerType.Friend, FieldRegions.Attack, 2, friend);
             //CreatePlayers(PlayerType.Friend, FieldRegions.MidAttack, 2, friend);
@@ -352,15 +352,15 @@ namespace BrazucaLibrary
             //CreatePlayers(PlayerType.Adversary, FieldRegions.MidAttack, 2, enemy);
             //CreatePlayers(PlayerType.Adversary, FieldRegions.MidField, 2, enemy);
 
-            //Character gk = new Character();
-            //gk.Texture = keeper;
-            //gk.Speed = 3f;
-            //gk.Position = new Vector2(
-            //    WindowSize.X/2 - SmallAreaBounds.Width / 2 + rand.Next(0, SmallAreaBounds.Width),
-            //    GameField.Y + rand.Next(0, SmallAreaBounds.Height));
-            //gk.Type = PlayerType.Keeper;
+            Character gk = new Character();
+            gk.Texture = keeper;
+            gk.Speed = 3f;
+            gk.Position = new Vector2(
+                WindowSize.X/2 - SmallAreaBounds.Width / 2 + rand.Next(0, SmallAreaBounds.Width),
+                GameField.Y + rand.Next(0, SmallAreaBounds.Height));
+            gk.Type = PlayerType.Keeper;
 
-            //Players.Add(gk);
+            Players.Add(gk);
         }
 
         private void CreatePlayers(PlayerType type, Rectangle region, int amount, Texture2D texture)
