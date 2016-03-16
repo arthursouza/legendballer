@@ -21,7 +21,7 @@ namespace BrazucaLibrary.Simulation
 
         public Narration()
         {
-            // {0} is always defense {1} is always defense
+            // {0} is always offense {1} is always defense
             GoalAttempts = new List<string>
             {
                 "A great attempt by {0}!",

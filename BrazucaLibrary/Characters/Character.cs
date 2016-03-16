@@ -25,7 +25,14 @@ namespace BrazucaLibrary.Characters
         public float VisionRange;
         public Texture2D Texture;
         public PlayerType Type;
-        public Rectangle Bounds
+        
+        /// <summary>
+        /// 1 2 or 3
+        /// </summary>
+        public float Speed;
+        public int Height { get; set; }
+
+        public Rectangle CollisionBounds
         {
             get
             {
@@ -36,60 +43,36 @@ namespace BrazucaLibrary.Characters
                     (int)(CollisionRadius * 2));
             }
         }
+        public Rectangle HeightBounds
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)(Position.X - CollisionRadius),
+                    (int)(Position.Y - CollisionRadius),
+                    (int)(CollisionRadius * 2),
+                    Height);
+            }
+        }
         public Color UniformColor;
         public Uniform Uniform;
-
-        /// <summary>
-        /// 1 2 or 3
-        /// </summary>
-        public float Speed;
         
         public Character()
         {
             Speed = 2.1f;
-            VisionRange = 45;
-            CollisionRadius = 12;
+            VisionRange = 70;
+            CollisionRadius = 5;
+            Height = 2;
         }
+        
         public void Update(GameTime gameTime)
         {
             Origin = new Vector2(Texture.Width / 2, Texture.Height);
             Size = new Vector2(Texture.Width, Texture.Height);
         }
+
         public override void Draw(SpriteBatch batch)
         {
-            switch (Type)
-            {
-                case PlayerType.Keeper:
-                    batch.Draw(Graphics.PlayerMarker,
-                        new Rectangle(
-                            (int)(Position.X - Graphics.PlayerMarker.Width / 2),
-                            (int)(Position.Y - Graphics.PlayerMarker.Height / 2),
-                            Graphics.PlayerMarker.Width,
-                            Graphics.PlayerMarker.Height),
-                            Color.Red * .5f);
-                    break;
-                case PlayerType.Friend:
-                    batch.Draw(Graphics.PlayerMarker,
-                        new Rectangle(
-                            (int)(Position.X - Graphics.PlayerMarker.Width / 2),
-                            (int)(Position.Y - Graphics.PlayerMarker.Height / 2),
-                            Graphics.PlayerMarker.Width,
-                            Graphics.PlayerMarker.Height),
-                            Color.Blue * .5f);
-                    break;
-                case PlayerType.Adversary:
-                    batch.Draw(Graphics.PlayerMarker,
-                        new Rectangle(
-                            (int)(Position.X - Graphics.PlayerMarker.Width / 2),
-                            (int)(Position.Y - Graphics.PlayerMarker.Height / 2),
-                            Graphics.PlayerMarker.Width,
-                            Graphics.PlayerMarker.Height),
-                            Color.Red * .5f);
-                    break;
-                default:
-                    break;
-            }
-
             batch.Draw(Texture, 
                 new Rectangle(
                     (int)(Position.X - Size.X/2),

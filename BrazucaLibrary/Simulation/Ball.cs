@@ -1,5 +1,6 @@
 using System;
 using BrazucaLibrary.Characters;
+using BrazucaLibrary.UI;
 using BrazucaLibrary.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,10 +25,12 @@ namespace BrazucaLibrary.Simulation
         public bool Animated;
         public Texture2D Texture;
         public float Height;
-        public float PhysicalHeight
+        public float MaxHeight;
+        public float DrawingHeight
         {
             get { return Height * 10; }
         }
+        
         public float CollisionRadius;
         public Rectangle CollisionBounds
         {
@@ -64,12 +67,17 @@ namespace BrazucaLibrary.Simulation
 
             Rectangle dest = new Rectangle(
                     (int)(Position.X - BallRadius),
-                    (int)(Position.Y - BallRadius - PhysicalHeight),
+                    (int)(Position.Y - BallRadius - DrawingHeight),
                     (int)(BallRadius * 2),
                     (int)(BallRadius * 2));
 
             if (ShadowTexture != null)
                 batch.Draw(ShadowTexture, shadow, Color.Gray);
+
+            if (BrazucaGame.DebugMode)
+            {
+                batch.DrawString(Fonts.Arial12, "h: "+Height.ToString("0,0"), new Vector2(Position.X + CollisionRadius + 5, Position.Y), Color.White);
+            }
 
             if (Animated)
             {
@@ -125,6 +133,8 @@ namespace BrazucaLibrary.Simulation
 
             Height += VerticalForce;
 
+            Height = Height > MaxHeight ? MaxHeight : Height;
+
             if (Height < 0)
             {
                 // bola bateu no chão, se a upforce negativa for mto alta, ela vai kickar
@@ -168,5 +178,20 @@ namespace BrazucaLibrary.Simulation
             this.PlayerKick = playerKick;
         }
 
+        public bool Intersects(Rectangle rect)
+        {
+            var circleDistanceX = Math.Abs(Position.X - rect.X);
+            var circleDistanceY = Math.Abs(Position.Y - rect.Y);
+
+            if (circleDistanceX > (rect.Width / 2 + CollisionRadius)) { return false; }
+            if (circleDistanceY > (rect.Height / 2 + CollisionRadius)) { return false; }
+
+            if (circleDistanceX <= (rect.Width / 2)) { return true; }
+            if (circleDistanceY <= (rect.Height / 2)) { return true; }
+
+            var cornerDistance_sq = (int)(circleDistanceX - rect.Width / 2) ^ 2 + (int)(circleDistanceY - rect.Height / 2) ^ 2;
+
+            return (cornerDistance_sq <= ((int)CollisionRadius ^ 2));
+        }
     }
 }

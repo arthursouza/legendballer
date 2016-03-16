@@ -19,12 +19,13 @@ namespace BrazucaLibrary.Scenes
             : base(game)
         {
             font = Fonts.Arial20;
+            
             btnLobby = new Button(
-                "Lobby", 
+                "Lobby",
                 new Vector2(
-                    windowPadding, 
-                    BrazucaGame.WindowBounds.Height - windowPadding), 
-                Color.White, 
+                    BrazucaGame.WindowBounds.Width - (windowPadding + UserInterface.ButtonGreen.Width),
+                    BrazucaGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height / 2)),
+                Color.White,
                 UserInterface.ButtonGreen);
 
             Controls.Add(btnLobby);

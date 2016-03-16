@@ -13,8 +13,12 @@ namespace BrazucaLibrary.Scenes
 {
     public class PlayerPossessionScene : Scene
     {
-        Texture2D seta;        
+        Texture2D seta;
+
         private bool ballClicked;
+
+        private Ball ball
+        { get { return Game.IngameBall; } }
 
         public PlayerPossessionScene(BrazucaGame game)
             : base(game)
@@ -51,14 +55,17 @@ namespace BrazucaLibrary.Scenes
             {
                 if (ballClicked)
                 {
+                    Game.LastBallPosition = Game.IngameBall.Position;
                     Game.CurrentState = State.IngameKickZoom;
                     ballClicked = false;
                 }
             }
             else
             {
-                if(BrazucaGame.HARDCORE_INGAME_TESTING)
+                if (BrazucaGame.DebugMode)
+                {
                     Game.IngameBall.Position = InputInfo.MousePosition;
+                }
             }
 
             base.MouseClick(button);
@@ -66,18 +73,8 @@ namespace BrazucaLibrary.Scenes
 
         public override void Draw(SpriteBatch batch)
         {
-            batch.Draw(Graphics.FieldBackground, new Rectangle(0, 0, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height), Color.White);
-            batch.Draw(Graphics.FieldBounds, Game.GameField, Color.White);
-            batch.Draw(Graphics.GoalShadow, Game.GoalShadowBounds, Color.White);
-            batch.Draw(Graphics.Goal, Game.GoalBounds, Color.White);
-
-            //batch.Draw(Graphics.Selected, LeftBar, Color.Yellow);
-            //batch.Draw(Graphics.Selected, RightBar, Color.Yellow);
-
-            //batch.Draw(Graphics.Selected, FieldRegions.Attack, Color.Red);
-            //batch.Draw(Graphics.Selected, FieldRegions.MidAttack, Color.Orange);
-            //batch.Draw(Graphics.Selected, FieldRegions.MidField, Color.Yellow);
-
+            Game.DrawField();
+            
             if (ballClicked)
             {
                 float size = 1 * (Game.KickPower / Game.Player.Stats.Power);
@@ -86,41 +83,10 @@ namespace BrazucaLibrary.Scenes
                 Rectangle arrow = new Rectangle((int)Game.IngameBall.Position.X, (int)Game.IngameBall.Position.Y, (int)(seta.Width * size), seta.Height);
                 batch.Draw(seta, arrow, new Rectangle(0, 0, seta.Width, seta.Height), Color.White, rotation, origin, SpriteEffects.None, 0);
             }
-
-            //batch.Draw(Graphics.Selected, Game.GoalInnerBounds, Color.Yellow);
-
-            batch.DrawString(Fonts.Arial12, InputInfo.MousePosition.ToString(), InputInfo.MousePosition, Color.White);
-
-            //// Draw player collision radius
-            //foreach (Player item in Game.Players)
-            //{
-            //    spriteBatch.Draw(Graphics.Circle, new Rectangle((int)(item.Position.X - item.CollisionRadius), (int)(item.Position.Y - item.CollisionRadius), (int)item.CollisionRadius * 2, (int)item.CollisionRadius * 2), Color.Green * .5f);
-            //}
-
-            //// Draw player collision radius
-            //foreach (Player item in Game.Players)
-            //{
-            //    spriteBatch.Draw(Graphics.Circle, new Rectangle((int)(item.Position.X - item.VisionRange), (int)(item.Position.Y - item.VisionRange), (int)item.VisionRange * 2, (int)item.VisionRange * 2), Color.White * .5f);
-            //}
-            
-            List<GameObject> renderList = new List<GameObject>();
-            renderList.Add(Game.IngameBall);
-            renderList.AddRange(Game.Players);
-            renderList.Sort();
-            renderList.ForEach(o => o.Draw(batch));
-
-            batch.Draw(Graphics.GoalTopNet, Game.GoalBounds, Color.White);
-
-            string text = Game.Simulation.CurrentTime.ToString("00");
-            batch.DrawString(Fonts.Pixelade90, text, new Vector2(20, 0), Color.White);
-            // << KICKING START
         }
 
         public override void Update(GameTime gameTime)
         {
-            LeftBar = new Rectangle(Game.GoalBounds.X, Game.GameField.Y - 50, 4, 50);
-            RightBar = new Rectangle(Game.GoalBounds.X + Game.GoalBounds.Width - 4, Game.GameField.Y - 50, 4, 50);
-
             Game.Players.ForEach(p => p.Update(gameTime));
         }
 

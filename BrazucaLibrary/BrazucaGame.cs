@@ -35,7 +35,7 @@ namespace BrazucaLibrary
         public int WinSequence;
         public TimeSpan PlayedSpan;
 
-        public static bool HARDCORE_INGAME_TESTING = false;
+        public static bool DebugMode = false;
 
         Random rand = new Random(DateTime.Now.Millisecond);
         GraphicsDeviceManager graphics;
@@ -58,7 +58,6 @@ namespace BrazucaLibrary
                     return null; 
             }
         }
-        
         public List<Club> Clubs;
         public List<string> Country;
 
@@ -82,9 +81,18 @@ namespace BrazucaLibrary
         public float KickPower;
         public Vector2 KickDirection;
 
+        // Field Bounds
+        public float GoalInsideGrassArea { get; set; }
+        public float GoalHeight { get; set; }
+        public Rectangle LeftBar { get; set; }
+        public Rectangle RightBar { get; set; }
+        public Rectangle SmallAreaBounds { get; set; }
+        public Rectangle GoalShadowBounds { get; set; }
+        public Vector2 LastBallPosition { get; set; }
+
         private Transition transition;
-        Dictionary<State, Scene> Scenes;
         private State nextState;
+        Dictionary<State, Scene> Scenes;
 
         public BrazucaGame()
         {
@@ -99,7 +107,7 @@ namespace BrazucaLibrary
             MouseCursor = MouseCursor.Normal;
             IsMouseVisible = true;
             Player = new Player();
-            Year = 2014;
+            Year = 2016;
         }
 
         protected override void Initialize()
@@ -167,13 +175,11 @@ namespace BrazucaLibrary
             
             IngameBall = new Ball();
             IngameBall.Animated = true;
-            IngameBall.CollisionRadius = 10;
+            IngameBall.CollisionRadius = 7;
             IngameBall.BallRadius = 7;
             IngameBall.Texture = Content.Load<Texture2D>("Ball/Ball spritesheet");
             IngameBall.ShadowTexture = Content.Load<Texture2D>("Ball/Ball Shadow");
-
-
-
+            
             InputInfo.LastMouseState = Mouse.GetState();
             InputInfo.LastKeyboardState = Keyboard.GetState();
 
@@ -186,28 +192,28 @@ namespace BrazucaLibrary
             LoadCountries();
             LoadClubs();
 
-            if (HARDCORE_INGAME_TESTING)
-            {
-                //CurrentState = State.IngamePlayerPossession;
-                //PreparePlayers(SimulationStep.ShotAttempt);
-                //ResetBall(BallPositionType.Kick);
-                Player.Contract.Club = Clubs[0];
-                Transition(State.SimulationRoling);
-                Simulation.Match = new Match(Clubs[0], Clubs[1]);
-                Simulation.Start();
-            }
+            //if (DebugMode)
+            //{
+            //    //CurrentState = State.IngamePlayerPossession;
+            //    //PreparePlayers(SimulationStep.ShotAttempt);
+            //    //ResetBall(BallPositionType.Kick);
+            //    Player.Contract.Club = Clubs[0];
+            //    Transition(State.SimulationRoling);
+            //    Simulation.Match = new Match(Clubs[0], Clubs[1]);
+            //    Simulation.Start();
+            //}
         }
 
         private void SetupFieldSize()
         {
             var fieldScale = 800f/1200f;
-            var innerGoalHeight = 34f;
             var goalBarWidth = 2f;
+            var innerGoalHeight = 34f;
+            GoalInsideGrassArea = 35f * fieldScale;
 
-
-            GoalInsideGrassArea = 45f*fieldScale; 
-            GoalHeight = 30f;
-
+            GoalHeight = 5f;
+            IngameBall.MaxHeight = 12f;
+            
             GameField = new Rectangle((int) ((WindowSize.X - ((float) Graphics.FieldBounds.Width*fieldScale))/2),
                 (int) (WindowSize.Y - ((float) Graphics.FieldBounds.Height*fieldScale)),
                 (int) (Graphics.FieldBounds.Width*fieldScale),
@@ -242,19 +248,15 @@ namespace BrazucaLibrary
                 (int) playableAreaSize.X,
                 (int) playableAreaSize.Y);
 
+            LeftBar = new Rectangle(GoalBounds.X, GameField.Y - 50, 4, 50);
+            RightBar = new Rectangle(GoalBounds.X + GoalBounds.Width - 4, GameField.Y - 50, 4, 50);
+
+            FieldRegions.Keeper = new Rectangle(GoalBounds.X + ((GoalBounds.Width / 4) * 2) - GoalBounds.Width / 4, GameField.Y, GoalBounds.Width / 2, 50);
             FieldRegions.Attack = new Rectangle(playableArea.X, playableArea.Y, playableArea.Width, playableArea.Height / 3);
             FieldRegions.MidAttack = new Rectangle(playableArea.X, playableArea.Height / 3 + playableArea.Y, playableArea.Width, playableArea.Height / 3);
             FieldRegions.MidField = new Rectangle(playableArea.X, playableArea.Height / 3 * 2 + playableArea.Y, playableArea.Width, playableArea.Height / 3);
         }
-
-        public float GoalInsideGrassArea { get; set; }
-
-        public float GoalHeight { get; set; }
-
-        public Rectangle SmallAreaBounds{ get; set; }
-
-        public Rectangle GoalShadowBounds { get; set; }
-
+        
         private void LoadCountries()
         {
             Country = new List<string>();
@@ -338,26 +340,28 @@ namespace BrazucaLibrary
 
         public void PreparePlayers(SimulationStep simulationStep)
         {
-            //Texture2D friend = Content.Load<Texture2D>("Player/Player2");
-            //Texture2D enemy = Content.Load<Texture2D>("Player/Player1");
+            Texture2D friend = Content.Load<Texture2D>("Player/Player2");
+            Texture2D enemy = Content.Load<Texture2D>("Player/Player1");
             Texture2D keeper = Content.Load<Texture2D>("Player/Keeper");
 
             Players = new List<Character>();
 
-            //CreatePlayers(PlayerType.Friend, FieldRegions.Attack, 2, friend);
-            //CreatePlayers(PlayerType.Friend, FieldRegions.MidAttack, 2, friend);
-            //CreatePlayers(PlayerType.Friend, FieldRegions.MidField, 2, friend);
+            CreatePlayers(PlayerType.Friend, FieldRegions.Attack, 2, friend);
+            CreatePlayers(PlayerType.Friend, FieldRegions.MidAttack, 2, friend);
+            CreatePlayers(PlayerType.Friend, FieldRegions.MidField, 2, friend);
 
-            //CreatePlayers(PlayerType.Adversary, FieldRegions.Attack, 2, enemy);
-            //CreatePlayers(PlayerType.Adversary, FieldRegions.MidAttack, 2, enemy);
-            //CreatePlayers(PlayerType.Adversary, FieldRegions.MidField, 2, enemy);
+            CreatePlayers(PlayerType.Adversary, FieldRegions.Attack, 2, enemy);
+            CreatePlayers(PlayerType.Adversary, FieldRegions.MidAttack, 2, enemy);
+            CreatePlayers(PlayerType.Adversary, FieldRegions.MidField, 2, enemy);
 
             Character gk = new Character();
             gk.Texture = keeper;
             gk.Speed = 3f;
+
             gk.Position = new Vector2(
-                WindowSize.X/2 - SmallAreaBounds.Width / 2 + rand.Next(0, SmallAreaBounds.Width),
-                GameField.Y + rand.Next(0, SmallAreaBounds.Height));
+                rand.Next(FieldRegions.Keeper.X, FieldRegions.Keeper.X + FieldRegions.Keeper.Width),
+                rand.Next(FieldRegions.Keeper.Y, FieldRegions.Keeper.Y + FieldRegions.Keeper.Height));
+
             gk.Type = PlayerType.Keeper;
 
             Players.Add(gk);
@@ -409,9 +413,39 @@ namespace BrazucaLibrary
 
         private Vector2 GetRandomPosition(Rectangle region)
         {
-            return new Vector2(
-                    rand.Next(region.X, region.X + region.Width),
-                    rand.Next(region.Y, region.Y + region.Height));
+            var requiredDistance = 50f;
+            var requiredDistanceToBall = 90;
+
+            var position = new Vector2(
+                rand.Next(region.X, region.X + region.Width),
+                rand.Next(region.Y, region.Y + region.Height));
+
+            if (Players == null || !Players.Any())
+            {
+                return position;
+            }
+
+            var free = false;
+
+            do
+            {
+                foreach (var p in Players)
+                {
+                    var distance = (p.Position - position).Length();
+                    var distanceToBall = (IngameBall.Position - position).Length();
+
+                    free = distance > requiredDistance && distanceToBall > requiredDistanceToBall;
+
+                    if (free == false)
+                    {
+                        position = new Vector2(rand.Next(region.X, region.X + region.Width), rand.Next(region.Y, region.Y + region.Height));
+                        break;
+                    }
+                }
+
+            } while (free == false);
+
+            return position;
         }
 
         /// <summary>
@@ -538,8 +572,7 @@ namespace BrazucaLibrary
             IngameBall.Kicked = false;
             IngameBall.Height = 0;
         }
-
-
+        
         internal void PlayerEventEnded(KickResult kickResult)
         {
             switch (kickResult)
@@ -739,6 +772,66 @@ namespace BrazucaLibrary
                     Player.Stats.Fame -= 5;
                 }
             }
+        }
+
+        public void DrawField()
+        {
+            spriteBatch.Draw(Graphics.FieldBackground, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
+            spriteBatch.Draw(Graphics.FieldBounds, GameField, Color.White);
+            spriteBatch.Draw(Graphics.GoalShadow, GoalShadowBounds, Color.White);
+            spriteBatch.Draw(Graphics.Goal, GoalBounds, Color.White);
+
+            Players.ForEach(p => spriteBatch.Draw(Graphics.PlayerMarker,
+                        new Rectangle(
+                            (int)(p.Position.X - Graphics.PlayerMarker.Width / 2),
+                            (int)(p.Position.Y - Graphics.PlayerMarker.Height / 2),
+                            Graphics.PlayerMarker.Width,
+                            Graphics.PlayerMarker.Height),
+                            (p.Type == PlayerType.Friend ? Color.Blue : Color.Red) * .4f));
+
+            if (!BallInsideGoal())
+            { spriteBatch.Draw(Graphics.GoalTopNet, GoalBounds, Color.White); }
+
+            List<GameObject> renderList = new List<GameObject>();
+            renderList.Add(IngameBall);
+            renderList.AddRange(Players);
+            renderList.Sort();
+            renderList.ForEach(o => o.Draw(spriteBatch));
+
+            //Players.ForEach(p => spriteBatch.Draw(Graphics.Circle, new Rectangle((int)(p.Position.X - p.VisionRange), (int)(p.Position.Y - p.VisionRange), (int)(p.VisionRange * 2), (int)p.VisionRange * 2), Color.Orange));
+
+            if(BallInsideGoal())
+            { spriteBatch.Draw(Graphics.GoalTopNet, GoalBounds, Color.White);}
+
+            //spriteBatch.Draw(Graphics.Selected, GoalBounds, Color.Yellow);
+            //spriteBatch.Draw(Graphics.Selected, new Rectangle(GoalBounds.X, GoalBounds.Y + GoalBounds.Height - (int)GoalInsideGrassArea, GoalBounds.Width, (int)GoalInsideGrassArea), Color.Orange);
+
+            if (DebugMode)
+            {
+                //spriteBatch.Draw(Graphics.Selected, FieldRegions.Keeper, Color.Orange);
+
+                //spriteBatch.Draw(Graphics.Selected, LeftBar, Color.Red);
+                //spriteBatch.Draw(Graphics.Selected, RightBar, Color.Red);
+                //spriteBatch.Draw(Graphics.Selected, new Rectangle((int)(IngameBall.Position.X - IngameBall.CollisionRadius), (int)(IngameBall.Position.Y - IngameBall.CollisionRadius), (int)IngameBall.CollisionRadius *2, (int)IngameBall.CollisionRadius * 2), Color.Red);
+                //spriteBatch.Draw(Graphics.Black, IngameBall.CollisionBounds, Color.Yellow);
+                //spriteBatch.Draw(Graphics.Selected, GameField, Color.Yellow);
+
+                //spriteBatch.DrawString(Fonts.Arial12, InputInfo.MousePosition.ToString(), InputInfo.MousePosition, Color.White);
+            }
+
+            string text = Simulation.CurrentTime.ToString("00");
+            spriteBatch.DrawString(Fonts.Pixelade90, text, new Vector2(20, 0), Color.White);
+        }
+
+        public bool BallInsideGoal()
+        {
+            var belowTopBar = IngameBall.Height < GoalHeight;
+            var pastEndLine = IngameBall.Position.Y + IngameBall.CollisionRadius < GameField.Y;
+            //var insideGoalArea = ball.Position.Y - ball.CollisionRadius >= Game.GoalInnerBounds.Y;
+
+            var betweenTwoBars = (IngameBall.Position.X - IngameBall.CollisionRadius > GoalBounds.X && IngameBall.Position.X + IngameBall.CollisionRadius < GoalBounds.X + GoalBounds.Width);
+
+            return belowTopBar && pastEndLine && betweenTwoBars;
         }
     }
 }

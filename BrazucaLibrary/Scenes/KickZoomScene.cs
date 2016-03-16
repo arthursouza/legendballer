@@ -56,8 +56,11 @@ namespace BrazucaLibrary.Scenes
             batch.Draw(kickAim, new Rectangle((int)(InputInfo.MousePosition.X - aimSize.X / 2), (int)(InputInfo.MousePosition.Y - aimSize.Y / 2), (int)aimSize.X, (int)aimSize.Y), Color.White);
 
             Vector2 efeito = (InputInfo.MousePosition - Game.KickBall.Position) / 100;
-            //batch.DrawString(Game.DefaultFont, string.Format("Chute ({0:0},{1:0})", efeito.X, efeito.Y), new Vector2(10, 10), Color.White);
 
+            if (BrazucaGame.DebugMode)
+            {
+                //batch.DrawString(Fonts.Arial26, string.Format("({0})", efeito.ToString()), InputInfo.MousePosition, Color.White);
+            }
 
             string text = Game.Simulation.CurrentTime.ToString("00");
             batch.DrawString(Fonts.Pixelade90, text, new Vector2(20, 0), Color.White);

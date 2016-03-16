@@ -19,11 +19,7 @@ namespace BrazucaLibrary.Scenes
 
         int selectedIndex;
         Vector2 buttonSize = new Vector2(160, 160);
-
-        Vector2 playerNamePos = new Vector2(57, 35);
-        Vector2 teamNamePos = new Vector2(57, 94);
-        Vector2 agePos = new Vector2(57, 129);
-
+        
         private TextureButton btnNextGame;
 
         public LobbyScene(BrazucaGame game)
@@ -62,12 +58,16 @@ namespace BrazucaLibrary.Scenes
         {
             batch.Draw(Graphics.BlankBackground, BrazucaGame.WindowBounds, Color.White);
             batch.Draw(Graphics.LobbyBackground, new Rectangle(0, 0, (int)BrazucaGame.WindowSize.X, (int)BrazucaGame.WindowSize.Y), Color.White);
-            
+
+            Vector2 playerNamePos = new Vector2(30, 35);
+            Vector2 teamNamePos = new Vector2(30, 94);
+            Vector2 agePos = new Vector2(30, 129);
+
             batch.DrawString(Fonts.Arial36, Game.Player.Name, playerNamePos, Color.White);
             batch.DrawString(Fonts.Arial18, Game.Player.Contract.Club.Name + " - Season "+ Game.Year, teamNamePos, Color.White);
             batch.DrawString(Fonts.Arial18, string.Format("Age {0}", Game.Player.Stats.Age, Game.Year), agePos, Color.White);
-            batch.DrawString(Fonts.Arial26, Game.Player.Stats.Fame.ToString(), new Vector2(647, 88), Color.White);
-            batch.DrawString(Fonts.Arial26, Game.Player.FameDescription(), new Vector2(550, 130), Color.White);
+            batch.DrawString(Fonts.Arial26, Game.Player.Stats.Fame.ToString(), new Vector2(30, 160), Color.White);
+            batch.DrawString(Fonts.Arial26, Game.Player.FameDescription(), new Vector2(30, 200), Color.White);
             
             for (int i = 0; i < options.Count; i++)
             {

@@ -73,13 +73,12 @@ namespace BrazucaLibrary.Simulation
             matchTimeStepDelay = 666;
             simulationDecisionDelay = 500;
 
-            #if DEBUG
-            SimulationSpeed = 50;
+            SimulationSpeed = 1;
+            
             var variation = 1.5f;
             matchTimeStepDelay = matchTimeStepDelay / (SimulationSpeed * variation);
             simulationDecisionDelay = simulationDecisionDelay / (SimulationSpeed * variation);
-            #endif
-
+            
             GameStatistics = new GameStatistics();
         }
 
@@ -114,17 +113,17 @@ namespace BrazucaLibrary.Simulation
                 {
                     timer = 0f;
                     CurrentTime++;
-                    //if (CurrentTime == 45)
-                    //{
-                    //    HalfTime();
-                    //}
-                    //else if (CurrentTime == 90)
-                    //{
-                    //    MatchEnded();
+                    if (CurrentTime == 45)
+                    {
+                        HalfTime();
+                    }
+                    else if (CurrentTime == 90)
+                    {
+                        MatchEnded();
 
-                    //    timer = 0f;
-                    //    CurrentTime = 0;
-                    //}
+                        timer = 0f;
+                        CurrentTime = 0;
+                    }
                 }
 
                 // Roll timer for game events
@@ -237,68 +236,62 @@ namespace BrazucaLibrary.Simulation
 
             #endregion
 
-            if (possessingTeam == game.PlayerClub.Name)
+            switch (CurrentSimulationStep)
             {
-                CreateShootingChance();
+                case SimulationStep.Defensive:
+                    if (playSuccessful)
+                    {
+                        CreateEvent(SimulationStep.Midfield, playSuccessful, game.Narration.GoodDefense);
+                    }
+                    else
+                    {
+                        CreateEvent(SimulationStep.Attack, playSuccessful, game.Narration.BadDefense);
+                    }
+                    break;
+                case SimulationStep.Midfield:
+                    if (playSuccessful)
+                    {
+                        if (possessingTeam == game.PlayerClub.Name && random.Next(1, 101) >= playerChance)
+                        {
+                            CreatePassChance();
+                        }
+                        else
+                        {
+                            CreateEvent(SimulationStep.Attack, playSuccessful, game.Narration.GoodMid);
+                        }
+                    }
+                    else
+                    {
+                        CreateEvent(SimulationStep.Defensive, playSuccessful, game.Narration.BadMid);
+                    }
+                    break;
+                case SimulationStep.Attack:
+                    if (playSuccessful)
+                    {
+                        //CreateEvent(SimulationStep.ShotAttempt, playSuccessful, game.Narration.GoodAttack);
+                        if (possessingTeam == game.PlayerClub.Name && random.Next(1, 101) >= playerChance)
+                        {
+                            CreateShootingChance();
+                        }
+                        else
+                        {
+                            CreateEvent(SimulationStep.ShotAttempt, playSuccessful, game.Narration.GoodAttack);
+                        }
+                    }
+                    else
+                    {
+                        CreateEvent(SimulationStep.Midfield, playSuccessful, game.Narration.BadAttack);
+                    }
+                    break;
+                case SimulationStep.ShotAttempt:
+                    bool scored = possessingTeam == game.PlayerClub.Name
+                        ? CreateFriendlyShotEvent()
+                        : CreateEnemyShotEvent();
+                    NextStep = scored ? SimulationStep.Midfield : SimulationStep.Defensive;
+                    possession = possession == Team.Away ? Team.Home : Team.Away;
+                    break;
             }
-            else
-            {
-                switch (CurrentSimulationStep)
-                {
-                    case SimulationStep.Defensive:
-                        if (playSuccessful)
-                        {
-                            CreateEvent(SimulationStep.Midfield, playSuccessful, game.Narration.GoodDefense);
-                        }
-                        else
-                        {
-                            CreateEvent(SimulationStep.Attack, playSuccessful, game.Narration.BadDefense);
-                        }
-                        break;
-                    case SimulationStep.Midfield:
-                        if (playSuccessful)
-                        {
-                            if (possessingTeam == game.PlayerClub.Name && random.Next(1, 101) >= playerChance)
-                            {
-                                CreatePassChance();
-                            }
-                            else
-                            {
-                                CreateEvent(SimulationStep.Attack, playSuccessful, game.Narration.GoodMid);
-                            }
-                        }
-                        else
-                        {
-                            CreateEvent(SimulationStep.Defensive, playSuccessful, game.Narration.BadMid);
-                        }
-                        break;
-                    case SimulationStep.Attack:
-                        if (playSuccessful)
-                        {
-                            //CreateEvent(SimulationStep.ShotAttempt, playSuccessful, game.Narration.GoodAttack);
-                            if (possessingTeam == game.PlayerClub.Name && random.Next(1, 101) >= playerChance)
-                            {
-                                CreateShootingChance();
-                            }
-                            else
-                            {
-                                CreateEvent(SimulationStep.ShotAttempt, playSuccessful, game.Narration.GoodAttack);
-                            }
-                        }
-                        else
-                        {
-                            CreateEvent(SimulationStep.Midfield, playSuccessful, game.Narration.BadAttack);
-                        }
-                        break;
-                    case SimulationStep.ShotAttempt:
-                        bool scored = possessingTeam == game.PlayerClub.Name
-                            ? CreateFriendlyShotEvent()
-                            : CreateEnemyShotEvent();
-                        NextStep = scored ? SimulationStep.Midfield : SimulationStep.Defensive;
-                        possession = possession == Team.Away ? Team.Home : Team.Away;
-                        break;
-                }
-            }
+            
         }
 
         private void CreateEvent(SimulationStep nextStep, bool playSuccessful, List<string> narrationMessages)
@@ -358,6 +351,9 @@ namespace BrazucaLibrary.Simulation
 
         private bool CreateFriendlyShotEvent()
         {
+            string possessingTeam = possession == Team.Home ? Match.Home.Name : Match.Away.Name;
+            string opposingTeam = possession == Team.Home ? Match.Away.Name : Match.Home.Name;
+
             GameEvents.Add(string.Format(game.Narration.GoalAttempts[random.Next(0, game.Narration.GoalAttempts.Count)], game.PlayerClub.Name));
 
             bool scored = random.Next(0, 101) < FriendlyTeamScoringChance;
@@ -369,7 +365,7 @@ namespace BrazucaLibrary.Simulation
             }
             else
             {
-                GameEvents.Add(game.Narration.MissedGoals[random.Next(0, game.Narration.MissedGoals.Count)]);
+                GameEvents.Add(string.Format(game.Narration.MissedGoals[random.Next(0, game.Narration.MissedGoals.Count)], possessingTeam, opposingTeam));
             }
 
             return scored;
@@ -377,6 +373,9 @@ namespace BrazucaLibrary.Simulation
 
         private bool CreateEnemyShotEvent()
         {
+            string possessingTeam = possession == Team.Home ? Match.Home.Name : Match.Away.Name;
+            string opposingTeam = possession == Team.Home ? Match.Away.Name : Match.Home.Name;
+
             GameEvents.Add(string.Format(game.Narration.GoalAttempts[random.Next(0, game.Narration.GoalAttempts.Count)], EnemyTeam.Name));
             bool scored = random.Next(0, 101) <= EnemyTeamScoringChance;
 
@@ -387,7 +386,7 @@ namespace BrazucaLibrary.Simulation
             }
             else
             {
-                GameEvents.Add(game.Narration.MissedGoals[random.Next(0, game.Narration.MissedGoals.Count)]);
+                GameEvents.Add(string.Format(game.Narration.MissedGoals[random.Next(0, game.Narration.MissedGoals.Count)], possessingTeam, opposingTeam));
             }
 
             return scored;
