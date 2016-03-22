@@ -18,7 +18,7 @@ namespace BrazucaLibrary.Scenes
         List<LobbyOption> options = new List<LobbyOption>();
 
         int selectedIndex;
-        Vector2 buttonSize = new Vector2(160, 160);
+        Vector2 lobbyButtonSize = new Vector2(160, 160);
         
         private TextureButton btnNextGame;
 
@@ -27,22 +27,35 @@ namespace BrazucaLibrary.Scenes
         {
             var lobbyOptions = new[]
                 {
-                    new LobbyOption("League", Vector2.Zero, buttonSize, LobbyOptionFunction.League),
-                    new LobbyOption("Business", Vector2.Zero, buttonSize, LobbyOptionFunction.Business),
-                    new LobbyOption("My Stats", Vector2.Zero, buttonSize, LobbyOptionFunction.MyStats),
-                    new LobbyOption("Training", Vector2.Zero, buttonSize, LobbyOptionFunction.Training)
+                    new LobbyOption("League", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.League),
+                    new LobbyOption("Business", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Business),
+                    new LobbyOption("My Stats", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.MyStats),
+                    new LobbyOption("Training", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Training),
+                    new LobbyOption("Shop", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Shop),
+                    new LobbyOption("News", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.RecentNews)
                 };
 
-            var buttonSpacing = (BrazucaGame.WindowBounds.Width - lobbyOptions.Length * buttonSize.X) / (lobbyOptions.Length + 1);
+            var buttonColumns = 4;
 
-            for (int i = 0; i < lobbyOptions.Length; i++)
+            var buttonSpacing = (BrazucaGame.WindowBounds.Width - (buttonColumns * lobbyButtonSize.X)) / (buttonColumns + 1);
+
+            for (int i = 0; i < 4; i++)
             {
                 lobbyOptions[i].UpdatePosition(new Vector2(
-                    buttonSpacing + (buttonSpacing * i) + (buttonSize.X * i),
-                    BrazucaGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2 + windowPadding + buttonSize.Y)
+                    buttonSpacing + (buttonSpacing * i) + (lobbyButtonSize.X * i),
+                    BrazucaGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2 + windowPadding + lobbyButtonSize.Y)
                     ));
             }
-            
+
+            for (int i = 4; i < 6; i++)
+            {
+                var iAlt = i - 2;
+                lobbyOptions[i].UpdatePosition(new Vector2(
+                    buttonSpacing + (buttonSpacing * iAlt) + (lobbyButtonSize.X * iAlt),
+                    BrazucaGame.WindowBounds.Height - ((windowPadding * 3) + (lobbyButtonSize.Y * 2) + UserInterface.ButtonGreen.Height / 2)
+                    ));
+            }
+
             btnNextGame = new TextureButton(
                 UserInterface.ButtonGreen, 
                 UserInterface.LabelNextGame, 

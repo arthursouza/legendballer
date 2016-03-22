@@ -12,14 +12,22 @@ namespace BrazucaLibrary.Scenes
 {
     public class PlayerStatsScene : Scene
     {
-        private SpriteFont font;
+        private SpriteFont textFont;
+        private SpriteFont titleFont;
+
         Button btnLobby;
+        private Vector2 textPosition;
+        private Color labelColor;
+        private int valuePadding;
+        private Color valueColor;
+        private SpriteBatch batch;
 
         public PlayerStatsScene(BrazucaGame game)
             : base(game)
         {
-            font = Fonts.Arial20;
-            
+            textFont = Fonts.Arial20;
+            titleFont = Fonts.Arial26;
+
             btnLobby = new Button(
                 "Lobby",
                 new Vector2(
@@ -28,36 +36,84 @@ namespace BrazucaLibrary.Scenes
                 Color.White,
                 UserInterface.ButtonGreen);
 
+            labelColor = Color.White;
+            valuePadding = 400;
+            valueColor = Color.Yellow;
+
             Controls.Add(btnLobby);
         }
 
         public override void Draw(SpriteBatch batch)
         {
+            textPosition = new Vector2(windowPadding, windowPadding);
+            this.batch = batch;
+
             batch.Draw(Graphics.BlankBackground, BrazucaGame.WindowBounds, Color.White);
-            int posY = 50;
-            int line = 40;
 
-            batch.DrawString(font, Game.Player.Name, new Vector2(30, posY), Color.White); posY += line;
-            batch.DrawString(font, "Age " + Game.Player.Stats.Age, new Vector2(30, posY), Color.White); posY += line;
-            batch.DrawString(font, "Club " + Game.Player.Contract.Club.Name, new Vector2(30, posY), Color.White); posY += line;
-            batch.DrawString(font, "Fame " + Game.Player.Stats.Fame + " (" + Game.Player.FameDescription() + ")", new Vector2(30, posY), Color.White); posY += line;
+            batch.DrawString(titleFont, Game.Player.Name, textPosition, Color.White);
+            textPosition.Y += titleFont.LineSpacing + windowPadding;
 
-            batch.DrawString(font, "Power " + Game.Player.Stats.Power, new Vector2(30, posY), Color.White); posY += line;
-            batch.DrawString(font, "Technique " + Game.Player.Stats.Technique, new Vector2(30, posY), Color.White); posY += line;
-            posY += line;
-            batch.DrawString(font, "Career games " + Game.Player.GamesPlayed, new Vector2(30, posY), Color.White); posY += line;
-            batch.DrawString(font, "Career goals " + Game.Player.Goals, new Vector2(30, posY), Color.White); posY += line;
-            batch.DrawString(font, "Career assists " + Game.Player.Assists, new Vector2(30, posY), Color.White); posY += line;
+            DrawLabel("Club Rating");
+            DrawValue(Game.PlayerClub.Rating.ToString());
+            textPosition.Y += textFont.LineSpacing;
+
+            DrawLabel("Age");
+            DrawValue(Game.Player.Stats.Age.ToString());
+            textPosition.Y += titleFont.LineSpacing;
             
-            batch.DrawString(font, "Games (year) " + Game.Player.GamesPlayedYear, new Vector2(30, posY), Color.White); posY += line;
-            batch.DrawString(font, "Goals (year) " + Game.Player.GoalsYear, new Vector2(30, posY), Color.White); posY += line;
-            batch.DrawString(font, "Assists (year) " + Game.Player.AssistsYear, new Vector2(30, posY), Color.White); posY += line;
+            DrawLabel("Club");
+            DrawValue(Game.Player.Contract.Club.Name);
+            textPosition.Y += titleFont.LineSpacing ;
 
-            if (Game.Player.Titles.FindAll(x => x.League == LeagueType.BrazLeague).Count > 0)
-                batch.DrawString(font, Game.Player.Titles.FindAll(x => x.League == LeagueType.BrazLeague).Count + "x Braz League Champion", new Vector2(30, posY), Color.White); posY += line;
+            DrawLabel("Fame");
+            DrawValue(Game.Player.Stats.Fame.ToString() + " ("+Game.Player.FameDescription()+")");
+            textPosition.Y += titleFont.LineSpacing ;
+            
+            DrawLabel("Power");
+            DrawValue(Game.Player.Stats.Power.ToString());
+            textPosition.Y += titleFont.LineSpacing ;
 
+            DrawLabel("Technique");
+            DrawValue(Game.Player.Stats.Technique.ToString());
+            textPosition.Y += titleFont.LineSpacing ;
+
+            DrawLabel("Career games");
+            DrawValue(Game.Player.GamesPlayed.ToString());
+            textPosition.Y += titleFont.LineSpacing ;
+
+            DrawLabel("Career goals");
+            DrawValue(Game.Player.Goals.ToString());
+            textPosition.Y += titleFont.LineSpacing ;
+
+            DrawLabel("Career assists");
+            DrawValue(Game.Player.Assists.ToString());
+            textPosition.Y += titleFont.LineSpacing;
+
+            DrawLabel("Games (year)");
+            DrawValue(Game.Player.GamesPlayedYear.ToString());
+            textPosition.Y += titleFont.LineSpacing;
+
+            DrawLabel("Goals (year)");
+            DrawValue(Game.Player.GoalsYear.ToString());
+            textPosition.Y += titleFont.LineSpacing;
+
+            DrawLabel("Assists (year)");
+            DrawValue(Game.Player.AssistsYear.ToString());
+            textPosition.Y += titleFont.LineSpacing;
+            
             btnLobby.Draw(batch);
+
             base.Draw(batch);
+        }
+
+        private void DrawValue(string value, SpriteFont font = null)
+        {
+            batch.DrawString(font ?? textFont, value, new Vector2(textPosition.X + valuePadding - textFont.MeasureString(value).X, textPosition.Y), valueColor);
+        }
+
+        private void DrawLabel(string label, SpriteFont font = null)
+        {
+            batch.DrawString(font ?? textFont, label, textPosition, labelColor);
         }
 
         public override void MouseClick(MouseButton button)

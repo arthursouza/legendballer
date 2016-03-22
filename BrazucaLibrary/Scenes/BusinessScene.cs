@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using BrazucaLibrary.Input;
@@ -13,11 +14,15 @@ namespace BrazucaLibrary.Scenes
     {
         Button btnLobby;
 
+        public SpriteFont textFont { get; set; }
+        public SpriteFont teamNameFont { get; set; }
+
         public BusinessScene(BrazucaGame game)
             : base(game)
         {
-            font = Fonts.Arial26;
-            
+            textFont = Fonts.Arial20;
+            teamNameFont = Fonts.Arial26;
+
             btnLobby = new Button(
                 "Lobby",
                 new Vector2(
@@ -33,12 +38,39 @@ namespace BrazucaLibrary.Scenes
         {
             batch.Draw(Graphics.BlankBackground, BrazucaGame.WindowBounds, Color.White);
 
-            batch.DrawString(font, Game.PlayerClub.Name, new Vector2(BrazucaGame.WindowBounds.Width / 2 - font.MeasureString(Game.PlayerClub.Name).X / 2, 100), Color.White);
-            batch.DrawString(font, string.Format("Club Rating {0} Popularity {1}", Game.Player.Contract.Club.Rating, Game.Player.Contract.Club.Popularity), new Vector2(40, 170), Color.White);
-            batch.DrawString(font, "Salary $" + Game.Player.Contract.Value, new Vector2(40, 220), Color.White);
-            batch.DrawString(font, "Victory Bonus $" + Game.Player.Contract.VictoryBonus, new Vector2(40, 270), Color.White);
-            batch.DrawString(font, "Goal Bonus $" + Game.Player.Contract.GoalBonus, new Vector2(40, 320), Color.White);
-            batch.DrawString(font, "Current money $" + Game.Player.Money, new Vector2(40, 370), Color.White);
+            var textPosition = new Vector2(windowPadding, windowPadding);
+
+            var labelColor = Color.White;
+            var valuePadding = 400;
+            var valueColor = Color.Yellow;
+
+            batch.DrawString(teamNameFont, Game.PlayerClub.Name, textPosition, Color.White);
+            textPosition.Y += teamNameFont.LineSpacing + windowPadding;
+
+            //{0} Popularity {1}" Game.Player.Contract.Club.Rating, Game.Player.Contract.Club.Popularity)
+
+            batch.DrawString(textFont, "Club Rating", textPosition, labelColor);
+            batch.DrawString(textFont, Game.PlayerClub.Rating.ToString(), new Vector2(textPosition.X + valuePadding - textFont.MeasureString(Game.PlayerClub.Rating.ToString()).X, textPosition.Y), valueColor);
+            textPosition.Y += textFont.LineSpacing;
+
+            batch.DrawString(textFont, "Club Popularity", textPosition, labelColor);
+            batch.DrawString(textFont, Game.PlayerClub.Popularity.ToString(), new Vector2(textPosition.X + valuePadding - textFont.MeasureString(Game.PlayerClub.Popularity.ToString()).X, textPosition.Y), valueColor);
+            textPosition.Y += textFont.LineSpacing;
+            
+            batch.DrawString(textFont, "Salary", textPosition, labelColor);
+            batch.DrawString(textFont, Game.Player.Contract.Value.ToString("C", new CultureInfo("en-us")), new Vector2(textPosition.X + valuePadding - textFont.MeasureString(Game.Player.Contract.Value.ToString("C", new CultureInfo("en-us"))).X, textPosition.Y), valueColor);
+            textPosition.Y += textFont.LineSpacing;
+
+            batch.DrawString(textFont, "Victory Bonus", textPosition, labelColor);
+            batch.DrawString(textFont, Game.Player.Contract.VictoryBonus.ToString("C", new CultureInfo("en-us")), new Vector2(textPosition.X + valuePadding - textFont.MeasureString(Game.Player.Contract.VictoryBonus.ToString("C", new CultureInfo("en-us"))).X, textPosition.Y), valueColor);
+            textPosition.Y += textFont.LineSpacing;
+
+            batch.DrawString(textFont, "Goal Bonus", textPosition, labelColor);
+            batch.DrawString(textFont, Game.Player.Contract.GoalBonus.ToString("C", new CultureInfo("en-us")), new Vector2(textPosition.X + valuePadding - textFont.MeasureString(Game.Player.Contract.GoalBonus.ToString("C", new CultureInfo("en-us"))).X, textPosition.Y), valueColor);
+            textPosition.Y += textFont.LineSpacing;
+
+            batch.DrawString(textFont, "Current money", textPosition, labelColor);
+            batch.DrawString(textFont, Game.Player.Money.ToString("C", new CultureInfo("en-us")), new Vector2(textPosition.X + valuePadding - textFont.MeasureString(Game.Player.Money.ToString("C", new CultureInfo("en-us"))).X, textPosition.Y), valueColor);
 
             btnLobby.Draw(batch);
             base.Draw(batch);
@@ -52,7 +84,5 @@ namespace BrazucaLibrary.Scenes
             }
             base.MouseClick(button);
         }
-
-        public SpriteFont font { get; set; }
     }
 }
