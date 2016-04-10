@@ -101,7 +101,12 @@ namespace BrazucaLibrary
             Content.RootDirectory = "Content";
             Window.Title = "Legend Baller";
             Narration = new Narration();
-            WindowSize = new Vector2(800, 600);
+
+            var aspectRatio = 16f/9f;
+            var resolutionDownscale = .7f;
+
+            WindowSize = new Vector2(1080f / aspectRatio * resolutionDownscale, 1080f * resolutionDownscale);
+            
             graphics.PreferredBackBufferWidth = (int)WindowSize.X;
             graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
             MouseCursor = MouseCursor.Normal;
