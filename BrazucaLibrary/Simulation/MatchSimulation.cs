@@ -315,7 +315,7 @@ namespace BrazucaLibrary.Simulation
         private void LogSimulation(string message)
         {
 #if DEBUG
-            File.AppendAllText("simulation-" + DateTime.Now.ToString("dd/MM/yy") + ".sl", message + Environment.NewLine);
+            //File.AppendAllText("simulation-" + DateTime.Now.ToString("dd/MM/yy") + ".sl", message + Environment.NewLine);
 #endif
         }
 

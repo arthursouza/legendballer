@@ -31,7 +31,7 @@ namespace BrazucaLibrary.Scenes
             btnLobby = new Button(
                 "Lobby",
                 new Vector2(
-                    BrazucaGame.WindowBounds.Width - (windowPadding + UserInterface.ButtonGreen.Width),
+                   windowPadding,
                     BrazucaGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height / 2)),
                 Color.White,
                 UserInterface.ButtonGreen);

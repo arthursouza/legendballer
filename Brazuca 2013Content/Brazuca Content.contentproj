@@ -252,12 +252,6 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
-    <Compile Include="Fonts\MaybeMaybeNot.spritefont">
-      <Name>MaybeMaybeNot</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <SubType>Designer</SubType>
-    </Compile>
     <Compile Include="Fonts\Impact26.spritefont">
       <Name>Impact26</Name>
       <Importer>FontDescriptionImporter</Importer>

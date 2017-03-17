@@ -102,7 +102,7 @@ namespace BrazucaLibrary
             Window.Title = "Legend Baller";
             Narration = new Narration();
 
-            var aspectRatio = 16f/9f;
+            var aspectRatio = 16f/16f;
             var resolutionDownscale = .7f;
 
             WindowSize = new Vector2(1080f / aspectRatio * resolutionDownscale, 1080f * resolutionDownscale);
@@ -339,7 +339,7 @@ namespace BrazucaLibrary
             Fonts.Arial18 = Content.Load<SpriteFont>("Fonts/Arial18");
             Fonts.Arial20 = Content.Load<SpriteFont>("Fonts/Arial20");
             Fonts.Arial42 = Content.Load<SpriteFont>("Fonts/Arial42");
-            Fonts.MaybeMaybeNot = Content.Load<SpriteFont>("Fonts/MaybeMaybeNot");
+            //Fonts.MaybeMaybeNot = Content.Load<SpriteFont>("Fonts/MaybeMaybeNot");
             Fonts.TimesNewRoman26 = Content.Load<SpriteFont>("Fonts/TimesNR26");
         }
 
