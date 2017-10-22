@@ -322,19 +322,13 @@ namespace LegendBaller.Library
             UserInterface.LobbyButton = Content.Load<Texture2D>("UI/Lobby Button");
             UserInterface.LabelNextGame = Content.Load<Texture2D>("UI/Button Labels/Next Game");
 
-            Fonts.DefaultFont = Content.Load<SpriteFont>("Fonts/SpriteFont1");
-            Fonts.BigFont = Content.Load<SpriteFont>("Fonts/BigFont");
-            Fonts.MediumFont = Content.Load<SpriteFont>("Fonts/MediumFont");
-            Fonts.Pixelade90 = Content.Load<SpriteFont>("Fonts/Pixelade90");
-            Fonts.Impact26 = Content.Load<SpriteFont>("Fonts/Impact26");
-            Fonts.Arial54 = Content.Load<SpriteFont>("Fonts/Arial54");
-            Fonts.Arial26 = Content.Load<SpriteFont>("Fonts/Arial26");
-            Fonts.Arial36 = Content.Load<SpriteFont>("Fonts/Arial36");
             Fonts.Arial12 = Content.Load<SpriteFont>("Fonts/Arial12");
             Fonts.Arial18 = Content.Load<SpriteFont>("Fonts/Arial18");
             Fonts.Arial20 = Content.Load<SpriteFont>("Fonts/Arial20");
+            Fonts.Arial26 = Content.Load<SpriteFont>("Fonts/Arial26");
+            Fonts.Arial36 = Content.Load<SpriteFont>("Fonts/Arial36");
             Fonts.Arial42 = Content.Load<SpriteFont>("Fonts/Arial42");
-            //Fonts.MaybeMaybeNot = Content.Load<SpriteFont>("Fonts/MaybeMaybeNot");
+            Fonts.Arial54 = Content.Load<SpriteFont>("Fonts/Arial54");
             Fonts.TimesNewRoman26 = Content.Load<SpriteFont>("Fonts/TimesNR26");
         }
 
@@ -820,7 +814,7 @@ namespace LegendBaller.Library
             }
 
             string text = Simulation.CurrentTime.ToString("00");
-            spriteBatch.DrawString(Fonts.Pixelade90, text, new Vector2(20, 0), Color.White);
+            spriteBatch.DrawString(Fonts.Arial54, text, new Vector2(20, 0), Color.White);
         }
 
         public bool BallInsideGoal()

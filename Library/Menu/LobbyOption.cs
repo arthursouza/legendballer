@@ -55,7 +55,7 @@ namespace LegendBaller.Library.Menu
 
             batch.Draw(UserInterface.LobbyButton, Bounds, sourceRect, Color.White);
 
-            var font = Fonts.Impact26;
+            var font = Fonts.Arial26;
             var textSize = font.MeasureString(Text);
 
             batch.DrawString(

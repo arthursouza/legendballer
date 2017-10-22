@@ -30,7 +30,7 @@ namespace LegendBaller.Library.UI
 
         public void Draw(SpriteBatch batch)
         {
-            var font = Fonts.Impact26;
+            var font = Fonts.Arial26;
 
             Vector2 textPosition = new Vector2(
                 Bounds.X + Bounds.Width/2 - font.MeasureString(Label).X/2,

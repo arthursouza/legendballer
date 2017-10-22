@@ -82,9 +82,9 @@ namespace LegendBaller.Library.Scenes
                         break;
                 }
 
-                Vector2 textSize = Fonts.BigFont.MeasureString(text);
+                Vector2 textSize = Fonts.Arial26.MeasureString(text);
 
-                batch.DrawString(Fonts.BigFont, text,
+                batch.DrawString(Fonts.Arial26, text,
                     new Vector2(BrazucaGame.WindowSize.X / 2 - textSize.X / 2, BrazucaGame.WindowSize.Y / 2 - textSize.Y / 2), Color.White);
             }
         }
