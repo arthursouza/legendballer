@@ -42,6 +42,68 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="Library\BrazucaGame.cs" />
+    <Compile Include="Library\Characters\Character.cs" />
+    <Compile Include="Library\Characters\Contract.cs" />
+    <Compile Include="Library\Characters\Player.cs" />
+    <Compile Include="Library\Characters\PlayerStats.cs" />
+    <Compile Include="Library\GameConstants.cs" />
+    <Compile Include="Library\GameSave.cs" />
+    <Compile Include="Library\GameState.cs" />
+    <Compile Include="Library\Input\InputInfo.cs" />
+    <Compile Include="Library\Input\MouseButton.cs" />
+    <Compile Include="Library\Input\MouseCursor.cs" />
+    <Compile Include="Library\IO\DataReader.cs" />
+    <Compile Include="Library\IO\FileDataReader.cs" />
+    <Compile Include="Library\Items\Item.cs" />
+    <Compile Include="Library\Leagues\Club.cs" />
+    <Compile Include="Library\Leagues\League.cs" />
+    <Compile Include="Library\Leagues\LeagueStandings.cs" />
+    <Compile Include="Library\Leagues\Match.cs" />
+    <Compile Include="Library\Leagues\Title.cs" />
+    <Compile Include="Library\Menu\LobbyOption.cs" />
+    <Compile Include="Library\Scenes\BusinessScene.cs" />
+    <Compile Include="Library\Scenes\KickResultScene.cs" />
+    <Compile Include="Library\Scenes\KickZoomScene.cs" />
+    <Compile Include="Library\Scenes\LeagueFixturesScene.cs" />
+    <Compile Include="Library\Scenes\LobbyScene.cs" />
+    <Compile Include="Library\Scenes\MainMenuScene.cs" />
+    <Compile Include="Library\Scenes\NewCareerScene.cs" />
+    <Compile Include="Library\Scenes\NewspaperChampionScene.cs" />
+    <Compile Include="Library\Scenes\NewspaperScene.cs" />
+    <Compile Include="Library\Scenes\PlayerPossessionScene.cs" />
+    <Compile Include="Library\Scenes\PlayerStatsScene.cs" />
+    <Compile Include="Library\Scenes\Scene.cs" />
+    <Compile Include="Library\Scenes\SeasonResultsScene.cs" />
+    <Compile Include="Library\Scenes\ShopScene.cs" />
+    <Compile Include="Library\Scenes\SignContractScene.cs" />
+    <Compile Include="Library\Scenes\SimulationScene.cs" />
+    <Compile Include="Library\Simulation\Ball.cs" />
+    <Compile Include="Library\Simulation\BallPositionType.cs" />
+    <Compile Include="Library\Simulation\FieldRegions.cs" />
+    <Compile Include="Library\Simulation\GameStatistics.cs" />
+    <Compile Include="Library\Simulation\KickResultEnum.cs" />
+    <Compile Include="Library\Simulation\MatchPeriod.cs" />
+    <Compile Include="Library\Simulation\MatchSimulation.cs" />
+    <Compile Include="Library\Simulation\Narration.cs" />
+    <Compile Include="Library\Simulation\SimulationStep.cs" />
+    <Compile Include="Library\Simulation\TeamEnum.cs" />
+    <Compile Include="Library\Transition.cs" />
+    <Compile Include="Library\UI\Button.cs" />
+    <Compile Include="Library\UI\Fonts.cs" />
+    <Compile Include="Library\UI\Graphics.cs" />
+    <Compile Include="Library\UI\IButton.cs" />
+    <Compile Include="Library\UI\MessageBox.cs" />
+    <Compile Include="Library\UI\Textbox.cs" />
+    <Compile Include="Library\UI\TextureButton.cs" />
+    <Compile Include="Library\UI\Tooltip.cs" />
+    <Compile Include="Library\UI\UIControl.cs" />
+    <Compile Include="Library\UI\UserInterface.cs" />
+    <Compile Include="Library\Util\GameObject.cs" />
+    <Compile Include="Library\Util\Log.cs" />
+    <Compile Include="Library\Util\Position.cs" />
+    <Compile Include="Library\Util\Serializer.cs" />
+    <Compile Include="Library\Util\Size.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,8 +118,8 @@
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+    <None Include="Library\Content\Content.mgcb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
