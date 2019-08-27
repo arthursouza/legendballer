@@ -1,7 +1,7 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:..\baller.windows\bin\Windows\x86\Debug\Content
+/outputDir:..\Baller.Windows\Content
 /intermediateDir:obj
 /platform:Windows
 /config:

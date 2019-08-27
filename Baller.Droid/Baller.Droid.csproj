@@ -62,83 +62,43 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity1.cs" />
-    <Compile Include="Game1.cs" />
-    <Compile Include="Library\BallerGame.cs" />
-    <Compile Include="Library\Characters\Character.cs" />
-    <Compile Include="Library\Characters\Contract.cs" />
-    <Compile Include="Library\Characters\Player.cs" />
-    <Compile Include="Library\Characters\PlayerStats.cs" />
-    <Compile Include="Library\GameConstants.cs" />
-    <Compile Include="Library\GameSave.cs" />
-    <Compile Include="Library\GameState.cs" />
-    <Compile Include="Library\Input\InputInfo.cs" />
-    <Compile Include="Library\Input\MouseButton.cs" />
-    <Compile Include="Library\Input\MouseCursor.cs" />
-    <Compile Include="Library\IO\DataReader.cs" />
-    <Compile Include="Library\IO\FileDataReader.cs" />
-    <Compile Include="Library\Items\Item.cs" />
-    <Compile Include="Library\Leagues\Club.cs" />
-    <Compile Include="Library\Leagues\League.cs" />
-    <Compile Include="Library\Leagues\LeagueStandings.cs" />
-    <Compile Include="Library\Leagues\Match.cs" />
-    <Compile Include="Library\Leagues\Title.cs" />
-    <Compile Include="Library\Menu\LobbyOption.cs" />
-    <Compile Include="Library\Scenes\BusinessScene.cs" />
-    <Compile Include="Library\Scenes\KickResultScene.cs" />
-    <Compile Include="Library\Scenes\KickZoomScene.cs" />
-    <Compile Include="Library\Scenes\LeagueFixturesScene.cs" />
-    <Compile Include="Library\Scenes\LobbyScene.cs" />
-    <Compile Include="Library\Scenes\MainMenuScene.cs" />
-    <Compile Include="Library\Scenes\NewCareerScene.cs" />
-    <Compile Include="Library\Scenes\NewspaperChampionScene.cs" />
-    <Compile Include="Library\Scenes\NewspaperScene.cs" />
-    <Compile Include="Library\Scenes\PlayerPossessionScene.cs" />
-    <Compile Include="Library\Scenes\PlayerStatsScene.cs" />
-    <Compile Include="Library\Scenes\Scene.cs" />
-    <Compile Include="Library\Scenes\SeasonResultsScene.cs" />
-    <Compile Include="Library\Scenes\ShopScene.cs" />
-    <Compile Include="Library\Scenes\SignContractScene.cs" />
-    <Compile Include="Library\Scenes\SimulationScene.cs" />
-    <Compile Include="Library\Simulation\Ball.cs" />
-    <Compile Include="Library\Simulation\BallPositionType.cs" />
-    <Compile Include="Library\Simulation\FieldRegions.cs" />
-    <Compile Include="Library\Simulation\GameStatistics.cs" />
-    <Compile Include="Library\Simulation\KickResultEnum.cs" />
-    <Compile Include="Library\Simulation\MatchPeriod.cs" />
-    <Compile Include="Library\Simulation\MatchSimulation.cs" />
-    <Compile Include="Library\Simulation\Narration.cs" />
-    <Compile Include="Library\Simulation\SimulationStep.cs" />
-    <Compile Include="Library\Simulation\TeamEnum.cs" />
-    <Compile Include="Library\Transition.cs" />
-    <Compile Include="Library\UI\Button.cs" />
-    <Compile Include="Library\UI\Fonts.cs" />
-    <Compile Include="Library\UI\Graphics.cs" />
-    <Compile Include="Library\UI\IButton.cs" />
-    <Compile Include="Library\UI\MessageBox.cs" />
-    <Compile Include="Library\UI\Textbox.cs" />
-    <Compile Include="Library\UI\TextureButton.cs" />
-    <Compile Include="Library\UI\Tooltip.cs" />
-    <Compile Include="Library\UI\UIControl.cs" />
-    <Compile Include="Library\UI\UserInterface.cs" />
-    <Compile Include="Library\Util\GameObject.cs" />
-    <Compile Include="Library\Util\Log.cs" />
-    <Compile Include="Library\Util\Position.cs" />
-    <Compile Include="Library\Util\Serializer.cs" />
-    <Compile Include="Library\Util\Size.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Content.mgcb" />
-    <AndroidAsset Include="Assets\Content\Data\Countries" />
-    <AndroidAsset Include="Assets\Content\Fonts\Arial12.spritefont" />
-    <AndroidAsset Include="Assets\Content\Fonts\Arial18.spritefont" />
-    <AndroidAsset Include="Assets\Content\Fonts\Arial20.spritefont" />
-    <AndroidAsset Include="Assets\Content\Fonts\Arial26.spritefont" />
-    <AndroidAsset Include="Assets\Content\Fonts\Arial36.spritefont" />
-    <AndroidAsset Include="Assets\Content\Fonts\Arial42.spritefont" />
-    <AndroidAsset Include="Assets\Content\Fonts\Arial54.spritefont" />
-    <AndroidAsset Include="Assets\Content\Fonts\TimesNR26.spritefont" />
+    <AndroidAsset Include="Assets\Content\Seta.xnb" />
+    <AndroidAsset Include="Assets\Content\RedSquare.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Alert.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Background.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Field.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\FieldBounds.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Game Lobby.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Goal.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\GoalShadow.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\GoalTopNet.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Jornal Championship.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Jornal.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\KickBackground - Copy.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\KickBackground.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\KickBackground2.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Light Blue Bg.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Main Menu.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\MessageBox.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\NewsPaperContract.xnb" />
+    <AndroidAsset Include="Assets\Content\Backgrounds\Simulation BG.xnb" />
+    <AndroidAsset Include="Assets\Content\Ball\Ball Shadow.xnb" />
+    <AndroidAsset Include="Assets\Content\Ball\Ball spritesheet.xnb" />
+    <AndroidAsset Include="Assets\Content\Ball\Ball.xnb" />
+    <AndroidAsset Include="Assets\Content\Crowd\CrowdGuy.xnb" />
+    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt1.xnb" />
+    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt2.xnb" />
+    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt3.xnb" />
+    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt4.xnb" />
+    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt5.xnb" />
+    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt6.xnb" />
+    <AndroidAsset Include="Assets\Content\Flags\Flag Flat.xnb" />
+    <AndroidAsset Include="Assets\Content\Flags\Flag Half Stripe.xnb" />
+    <AndroidAsset Include="Assets\Content\Flags\Flag Stripe.xnb" />
     <AndroidAsset Include="Assets\Content\Fonts\Arial12.xnb" />
     <AndroidAsset Include="Assets\Content\Fonts\Arial18.xnb" />
     <AndroidAsset Include="Assets\Content\Fonts\Arial20.xnb" />
@@ -147,7 +107,33 @@
     <AndroidAsset Include="Assets\Content\Fonts\Arial42.xnb" />
     <AndroidAsset Include="Assets\Content\Fonts\Arial54.xnb" />
     <AndroidAsset Include="Assets\Content\Fonts\TimesNR26.xnb" />
-    <None Include="Library\Content\Content.mgcb" />
+    <AndroidAsset Include="Assets\Content\MainMenu\LoginGameJolt.xnb" />
+    <AndroidAsset Include="Assets\Content\MainMenu\LoginGameJolt_Hover.xnb" />
+    <AndroidAsset Include="Assets\Content\Mouse\Cursor1.xnb" />
+    <AndroidAsset Include="Assets\Content\Mouse\Cursor2.xnb" />
+    <AndroidAsset Include="Assets\Content\Player\Flat.xnb" />
+    <AndroidAsset Include="Assets\Content\Player\Keeper.xnb" />
+    <AndroidAsset Include="Assets\Content\Player\Player1.xnb" />
+    <AndroidAsset Include="Assets\Content\Player\Player2.xnb" />
+    <AndroidAsset Include="Assets\Content\Player\PlayerMarker.xnb" />
+    <AndroidAsset Include="Assets\Content\Player\PlayerShadow.xnb" />
+    <AndroidAsset Include="Assets\Content\Player\SingleStripe.xnb" />
+    <AndroidAsset Include="Assets\Content\Player\Stripes.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\big button.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\green button.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\Load career.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\Lobby Button.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\menu button.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\red button.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\Selected.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\Button Labels\Load career.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\Button Labels\New career.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\Button Labels\Next Game.xnb" />
+    <AndroidAsset Include="Assets\Content\Alert.xnb" />
+    <AndroidAsset Include="Assets\Content\Black.xnb" />
+    <AndroidAsset Include="Assets\Content\Circle.xnb" />
+    <AndroidAsset Include="Assets\Content\GameJolt.xnb" />
+    <AndroidAsset Include="Assets\Content\Kick Aim.xnb" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
@@ -169,186 +155,7 @@
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\MainMenu\LoginGameJolt.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\MainMenu\LoginGameJolt_Hover.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Alert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Black.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Alert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Background.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Field.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\FieldBounds.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Game Lobby.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Goal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\GoalShadow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\GoalTopNet.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Jornal Championship.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Jornal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\KickBackground - Copy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\KickBackground.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\KickBackground2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Light Blue Bg.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Main Menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\MessageBox.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\NewsPaperContract.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Backgrounds\Simulation BG.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Ball\Ball Shadow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Ball\Ball spritesheet.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Ball\Ball.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Crowd\CrowdGuy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt6.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Flags\Flag Flat.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Flags\Flag Half Stripe.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Flags\Flag Stripe.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Mouse\Cursor1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Mouse\Cursor2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Player\Flat.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Player\Keeper.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Player\Player1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Player\Player2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Player\PlayerMarker.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Player\PlayerShadow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Player\SingleStripe.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Player\Stripes.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\big button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\green button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\Load career.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\Lobby Button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\menu button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\red button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\Selected.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\Button Labels\Load career.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\Button Labels\New career.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\UI\Button Labels\Next Game.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\GameJolt.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Kick Aim.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\RedSquare.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Seta.png" />
-  </ItemGroup>
+  <Import Project="..\Shared\Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

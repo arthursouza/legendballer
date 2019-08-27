@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>262dcba1-8b6e-412a-9f78-3640c88586ae</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Baller.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Library\BallerGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Characters\Character.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Characters\Contract.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Characters\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Characters\PlayerStats.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\GameConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\GameSave.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\GameState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Input\InputInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Input\MouseButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Input\MouseCursor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\IO\DataReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\IO\FileDataReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Items\Item.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Leagues\Club.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Leagues\League.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Leagues\LeagueStandings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Leagues\Match.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Leagues\Title.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Menu\LobbyOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\BusinessScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\KickResultScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\KickZoomScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\LeagueFixturesScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\LobbyScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\MainMenuScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\NewCareerScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\NewspaperChampionScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\NewspaperScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\PlayerPossessionScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\PlayerStatsScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\SeasonResultsScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\ShopScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\SignContractScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Scenes\SimulationScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\Ball.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\BallPositionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\FieldRegions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\GameStatistics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\KickResultEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\MatchPeriod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\MatchSimulation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\Narration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\SimulationStep.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\TeamEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Transition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Button.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Fonts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Graphics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\IButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\MessageBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Textbox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\TextureButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Tooltip.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\UIControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\UserInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Util\GameObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Util\Log.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Util\Position.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Util\Serializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\Util\Size.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+  </ItemGroup>
+</Project>

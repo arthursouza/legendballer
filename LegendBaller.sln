@@ -14,7 +14,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{7AB9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baller.Droid", "Baller.Droid\Baller.Droid.csproj", "{1263B8B9-0BC2-4B1D-A1B7-BF5647DA4E0A}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Baller.Shared", "Shared\Baller.Shared.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.projitems*{1263b8b9-0bc2-4b1d-a1b7-bf5647da4e0a}*SharedItemsImports = 4
+		Shared\Shared.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
+		Shared\Shared.projitems*{a2ffd430-0ce9-4bee-a80f-4aed16316b6a}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
@@ -23,6 +30,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A2FFD430-0CE9-4BEE-A80F-4AED16316B6A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A2FFD430-0CE9-4BEE-A80F-4AED16316B6A}.Debug|Any CPU.Build.0 = Debug|x86
 		{A2FFD430-0CE9-4BEE-A80F-4AED16316B6A}.Debug|x86.ActiveCfg = Debug|x86
 		{A2FFD430-0CE9-4BEE-A80F-4AED16316B6A}.Debug|x86.Build.0 = Debug|x86
 		{A2FFD430-0CE9-4BEE-A80F-4AED16316B6A}.Release|Any CPU.ActiveCfg = Release|x86

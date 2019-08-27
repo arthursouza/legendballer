@@ -2,7 +2,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
-using Baller.Droid.Library;
+using Baller.Library;
 
 namespace Baller.Droid
 {

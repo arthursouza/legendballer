@@ -1,7 +1,7 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:..\Baller.Droid\Content
+/outputDir:..\Baller.Droid\Assets\Content
 /intermediateDir:obj
 /platform:Android
 /config:
