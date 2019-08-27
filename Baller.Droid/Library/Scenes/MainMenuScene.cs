@@ -122,6 +122,57 @@ namespace Baller.Droid.Library.Scenes
                 return;
             }
         }
+        
+        public override void Touch(Vector2 position)
+        {
+            if (btnNewGame.Bounds.Contains(position.X, position.Y))
+            {
+                selectedIndex = 0;
+            }
+            else if (btnLoadGame.Bounds.Contains(position.X, position.Y))
+            {
+                selectedIndex = 1;
+            }
+            else
+                selectedIndex = -1;
+
+            if (selectedIndex == 0)
+            {
+                if (GameSave.CurrentExists())
+                {
+                    // Show override save
+                    if (!alerted)
+                    {
+                        overrideSave.Visible = true;
+                        alerted = true;
+                    }
+                    else
+                    {
+                        Game.Transition(State.NewCareer);
+                    }
+                }
+                else
+                {
+                    Game.Transition(State.NewCareer);
+                }
+                return;
+            }
+            else if (selectedIndex == 1)
+            {
+                if (GameSave.CurrentExists())
+                {
+                    LoadGame();
+                    Game.Transition(State.Lobby);
+                    return;
+                }
+            }
+            // If override save is visible
+            else if (overrideSave.Visible)
+            {
+                overrideSave.MouseClick(MouseButton.Left);
+                return;
+            }
+        }
 
         void newCareer_Close()
         {

@@ -12,6 +12,7 @@ using Baller.Droid.Library.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using MessageBox = Baller.Droid.Library.UI.MessageBox;
 using MouseCursor = Baller.Droid.Library.Input.MouseCursor;
 
@@ -463,14 +464,22 @@ namespace Baller.Droid.Library
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            PlayedSpan = PlayedSpan.Add(new TimeSpan(0, 0, 0, 0, (int) gameTime.ElapsedGameTime.TotalMilliseconds));
+
+            #if ANDROID
+
+            UpdateAndroid(gameTime);
+
+            #endif
+
+            #region Not Android
+            #if !ANDROID
+            
             InputInfo.MouseState = Mouse.GetState();
             InputInfo.KeyboardState = Keyboard.GetState();
 
-            PlayedSpan = PlayedSpan.Add(new TimeSpan(0, 0, 0, 0, (int) gameTime.ElapsedGameTime.TotalMilliseconds));
-
             if (IsActive)
             {
-
                 if (InputInfo.MouseState.LeftButton == ButtonState.Released && InputInfo.LastMouseState.LeftButton == ButtonState.Pressed)
                 {
                     MouseClick(MouseButton.Left);
@@ -480,25 +489,55 @@ namespace Baller.Droid.Library
                     MouseDown(MouseButton.Left);
                 }
 
-                if (InputInfo.MouseState.RightButton == ButtonState.Released && InputInfo.LastMouseState.RightButton == ButtonState.Pressed)
-                {
-                    MouseClick(MouseButton.Right);
-                }
-                else if (InputInfo.MouseState.RightButton == ButtonState.Pressed)
-                {
-                    MouseDown(MouseButton.Right);
-                }
+                //if (InputInfo.MouseState.RightButton == ButtonState.Released && InputInfo.LastMouseState.RightButton == ButtonState.Pressed)
+                //{
+                //    MouseClick(MouseButton.Right);
+                //}
+                //else if (InputInfo.MouseState.RightButton == ButtonState.Pressed)
+                //{
+                //    MouseDown(MouseButton.Right);
+                //}
 
-                Scenes[CurrentState].Update(gameTime);
-                
-                if (transition != null && transition.Animating)
-                {
-                    transition.Update(gameTime);
-                }
 
                 InputInfo.LastMouseState = InputInfo.MouseState;
                 InputInfo.LastKeyboardState = InputInfo.KeyboardState;
-                base.Update(gameTime);
+            }
+
+            #endif
+            #endregion
+            
+            Scenes[CurrentState].Update(gameTime);
+                
+            if (transition != null && transition.Animating)
+            {
+                transition.Update(gameTime);
+            }
+            
+            #region Not Android
+            #if !ANDROID
+            if (IsActive)
+            {
+                InputInfo.LastMouseState = InputInfo.MouseState;
+                InputInfo.LastKeyboardState = InputInfo.KeyboardState;
+            }
+            #endif
+            #endregion
+
+            base.Update(gameTime);
+        }
+
+        private void UpdateAndroid(GameTime gameTime)
+        {
+            TouchCollection touchCollection = TouchPanel.GetState();
+
+            if (touchCollection.Count > 0)
+            {
+                //Only Fire Select Once it's been released
+                if (touchCollection[0].State == TouchLocationState.Moved ||
+                    touchCollection[0].State == TouchLocationState.Pressed)
+                {
+                    Scenes[CurrentState].Touch(touchCollection[0].Position);
+                }
             }
         }
 

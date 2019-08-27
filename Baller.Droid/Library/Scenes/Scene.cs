@@ -45,5 +45,9 @@ namespace Baller.Droid.Library.Scenes
         public virtual void MouseClick(MouseButton button)
         {
         }
+
+        public virtual void Touch(Vector2 position)
+        {
+        }
     }
 }
