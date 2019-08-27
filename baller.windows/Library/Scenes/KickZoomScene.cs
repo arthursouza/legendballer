@@ -17,14 +17,14 @@ namespace baller.windows.Library.Scenes
         {
             this.Game = game;
 
-            kickBackground = Game.Content.Load<Texture2D>("Backgrounds/KickBackground");
-            kickAim = Game.Content.Load<Texture2D>("Kick Aim");
+            kickBackground = Game.Graphics.Load("Backgrounds/KickBackground");
+            kickAim = Game.Graphics.Load("Kick Aim");
             
             Game.KickBall = new Ball();
             Game.KickBall.Position = new Vector2(BallerGame.WindowSize.X / 2, BallerGame.WindowSize.Y * .75f);
             Game.KickBall.CollisionRadius = 100;
             Game.KickBall.BallRadius = 100;
-            Game.KickBall.Texture = Game.Content.Load<Texture2D>("Ball/Ball");
+            Game.KickBall.Texture = Game.Graphics.Load("Ball/Ball");
         }
         
         public override void MouseClick(MouseButton button)

@@ -179,8 +179,8 @@ namespace baller.windows.Library
             IngameBall.Animated = true;
             IngameBall.CollisionRadius = 7;
             IngameBall.BallRadius = 7;
-            IngameBall.Texture = Content.Load<Texture2D>("Ball/Ball spritesheet");
-            IngameBall.ShadowTexture = Content.Load<Texture2D>("Ball/Ball Shadow");
+            IngameBall.Texture = Graphics.Load("Ball/Ball spritesheet");
+            IngameBall.ShadowTexture = Graphics.Load("Ball/Ball Shadow");
             
             InputInfo.LastMouseState = Mouse.GetState();
             InputInfo.LastKeyboardState = Keyboard.GetState();
@@ -311,18 +311,18 @@ namespace baller.windows.Library
         {
             Graphics.LoadGraphics(Content);
             
-            UserInterface.MessageBox = Content.Load<Texture2D>("Backgrounds/MessageBox");
+            UserInterface.MessageBox = Graphics.Load("Backgrounds/MessageBox");
 
-            UserInterface.Cursor = Content.Load<Texture2D>("Mouse/Cursor1");
-            UserInterface.ClickCursor = Content.Load<Texture2D>("Mouse/Cursor2");
+            UserInterface.Cursor = Graphics.Load("Mouse/Cursor1");
+            UserInterface.ClickCursor = Graphics.Load("Mouse/Cursor2");
 
-            UserInterface.MainNewCareer = Content.Load<Texture2D>("UI/Button Labels/New career");
-            UserInterface.MainLoadCareer = Content.Load<Texture2D>("UI/Button Labels/Load career");
-            UserInterface.ButtonBlue = Content.Load<Texture2D>("UI/menu button");
-            UserInterface.ButtonGreen = Content.Load<Texture2D>("UI/green button");
-            UserInterface.ButtonRed = Content.Load<Texture2D>("UI/red button");
-            UserInterface.LobbyButton = Content.Load<Texture2D>("UI/Lobby Button");
-            UserInterface.LabelNextGame = Content.Load<Texture2D>("UI/Button Labels/Next Game");
+            UserInterface.MainNewCareer = Graphics.Load("UI/Button Labels/New career");
+            UserInterface.MainLoadCareer = Graphics.Load("UI/Button Labels/Load career");
+            UserInterface.ButtonBlue = Graphics.Load("UI/menu button");
+            UserInterface.ButtonGreen = Graphics.Load("UI/green button");
+            UserInterface.ButtonRed = Graphics.Load("UI/red button");
+            UserInterface.LobbyButton = Graphics.Load("UI/Lobby Button");
+            UserInterface.LabelNextGame = Graphics.Load("UI/Button Labels/Next Game");
 
             Fonts.Arial12 = Content.Load<SpriteFont>("Fonts/Arial12");
             Fonts.Arial18 = Content.Load<SpriteFont>("Fonts/Arial18");
@@ -336,9 +336,9 @@ namespace baller.windows.Library
 
         public void PreparePlayers(SimulationStep simulationStep)
         {
-            Texture2D friend = Content.Load<Texture2D>("Player/Player2");
-            Texture2D enemy = Content.Load<Texture2D>("Player/Player1");
-            Texture2D keeper = Content.Load<Texture2D>("Player/Keeper");
+            Texture2D friend = Graphics.Load("Player/Player2");
+            Texture2D enemy = Graphics.Load("Player/Player1");
+            Texture2D keeper = Graphics.Load("Player/Keeper");
 
             Players = new List<Character>();
 

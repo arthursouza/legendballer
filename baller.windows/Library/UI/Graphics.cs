@@ -31,35 +31,35 @@ namespace baller.windows.Library.UI
 
         public static void LoadGraphics(ContentManager content)
         {
-            GameJoltLogin = content.Load<Texture2D>("MainMenu/LoginGameJolt");
-            GameJoltLoginHover = content.Load<Texture2D>("MainMenu/LoginGameJolt_Hover");
+            GameJoltLogin = Graphics.Load("MainMenu/LoginGameJolt");
+            GameJoltLoginHover = Graphics.Load("MainMenu/LoginGameJolt_Hover");
 
-            Black = content.Load<Texture2D>("Black");
-            FlatFlag = content.Load<Texture2D>("Flags/Flag Flat");
-            FlagStripe = content.Load<Texture2D>("Flags/Flag Stripe");
-            FlatUniform = content.Load<Texture2D>("Player/Flat");
-            StripesUniform = content.Load<Texture2D>("Player/Stripes");
-            Circle = content.Load<Texture2D>("Circle");
-            RedSquare = content.Load<Texture2D>("RedSquare");
+            Black = Graphics.Load("Black");
+            FlatFlag = Graphics.Load("Flags/Flag Flat");
+            FlagStripe = Graphics.Load("Flags/Flag Stripe");
+            FlatUniform = Graphics.Load("Player/Flat");
+            StripesUniform = Graphics.Load("Player/Stripes");
+            Circle = Graphics.Load("Circle");
+            RedSquare = Graphics.Load("RedSquare");
 
-            NewspaperBackground = content.Load<Texture2D>("Backgrounds/Jornal");
+            NewspaperBackground = Graphics.Load("Backgrounds/Jornal");
 
-            NewspaperSignContract = content.Load<Texture2D>("Backgrounds/NewsPaperContract");
+            NewspaperSignContract = Graphics.Load("Backgrounds/NewsPaperContract");
 
-            NewspaperChampion = content.Load<Texture2D>("Backgrounds/Jornal Championship");
-            BlankBackground = content.Load<Texture2D>("Backgrounds/Light Blue Bg");
+            NewspaperChampion = Graphics.Load("Backgrounds/Jornal Championship");
+            BlankBackground = Graphics.Load("Backgrounds/Light Blue Bg");
 
-            FieldBounds = content.Load<Texture2D>("Backgrounds/FieldBounds");
-            FieldBackground = content.Load<Texture2D>("Backgrounds/Field");
-            Goal = content.Load<Texture2D>("Backgrounds/Goal");
-            GoalTopNet = content.Load<Texture2D>("Backgrounds/GoalTopNet");
-            GoalShadow = content.Load<Texture2D>("Backgrounds/GoalShadow");
+            FieldBounds = Graphics.Load("Backgrounds/FieldBounds");
+            FieldBackground = Graphics.Load("Backgrounds/Field");
+            Goal = Graphics.Load("Backgrounds/Goal");
+            GoalTopNet = Graphics.Load("Backgrounds/GoalTopNet");
+            GoalShadow = Graphics.Load("Backgrounds/GoalShadow");
 
-            SimulationBG = content.Load<Texture2D>("Backgrounds/Simulation BG");
-            LobbyBackground = content.Load<Texture2D>("Backgrounds/Game Lobby");
-            MainMenu = content.Load<Texture2D>("Backgrounds/Main Menu");
-            PlayerMarker = content.Load<Texture2D>("Player/PlayerMarker");
-            Selected = content.Load<Texture2D>("UI/Selected");
+            SimulationBG = Graphics.Load("Backgrounds/Simulation BG");
+            LobbyBackground = Graphics.Load("Backgrounds/Game Lobby");
+            MainMenu = Graphics.Load("Backgrounds/Main Menu");
+            PlayerMarker = Graphics.Load("Player/PlayerMarker");
+            Selected = Graphics.Load("UI/Selected");
         }
 
         public static Texture2D Goal { get; set; }

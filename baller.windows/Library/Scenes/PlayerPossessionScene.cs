@@ -19,7 +19,7 @@ namespace baller.windows.Library.Scenes
             : base(game)
         {
             this.Game = game;
-            seta = Game.Content.Load<Texture2D>("Seta");                       
+            seta = Game.Graphics.Load("Seta");                       
         }
 
         public override void MouseDown(MouseButton button)
