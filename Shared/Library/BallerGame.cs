@@ -99,9 +99,9 @@ namespace Baller.Library
             Content.RootDirectory = "Content";
             Window.Title = "Legend Baller";
             Narration = new Narration();
-
             
             var resolutionDownscale = 0.5f;
+
             WindowSize = new Vector2(1080, 1920);
             WindowSize = new Vector2(WindowSize.X * resolutionDownscale, WindowSize.Y * resolutionDownscale);
             
@@ -478,23 +478,13 @@ namespace Baller.Library
             {
                 if (InputInfo.MouseState.LeftButton == ButtonState.Released && InputInfo.LastMouseState.LeftButton == ButtonState.Pressed)
                 {
-                    MouseClick(MouseButton.Left);
+                    MainInput(InputInfo.MousePosition);
                 }
                 else if (InputInfo.MouseState.LeftButton == ButtonState.Pressed)
                 {
-                    MouseDown(MouseButton.Left);
+                    MainInput(InputInfo.MousePosition);
                 }
-
-                //if (InputInfo.MouseState.RightButton == ButtonState.Released && InputInfo.LastMouseState.RightButton == ButtonState.Pressed)
-                //{
-                //    MouseClick(MouseButton.Right);
-                //}
-                //else if (InputInfo.MouseState.RightButton == ButtonState.Pressed)
-                //{
-                //    MouseDown(MouseButton.Right);
-                //}
-
-
+            
                 InputInfo.LastMouseState = InputInfo.MouseState;
                 InputInfo.LastKeyboardState = InputInfo.KeyboardState;
             }
@@ -532,21 +522,26 @@ namespace Baller.Library
                 if (touchCollection[0].State == TouchLocationState.Moved ||
                     touchCollection[0].State == TouchLocationState.Pressed)
                 {
-                    Scenes[CurrentState].Touch(touchCollection[0].Position);
+                    Scenes[CurrentState].MainInput(touchCollection[0].Position);
                 }
             }
         }
-
-        private void MouseDown(MouseButton mouseButton)
+        
+        private void MainInput(Vector2 pos)
         {
-            Scenes[CurrentState].MouseDown(mouseButton);
+            Scenes[CurrentState].MainInput(pos);
         }
 
-        private void MouseClick(MouseButton mouseButton)
-        {
-            Scenes[CurrentState].MouseClick(mouseButton);
+        //private void MouseDown(MouseButton mouseButton)
+        //{
+        //    Scenes[CurrentState].MouseDown(mouseButton);
+        //}
 
-        }
+        //private void MouseClick(MouseButton mouseButton)
+        //{
+        //    Scenes[CurrentState].MouseClick(mouseButton);
+
+        //}
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -866,6 +861,13 @@ namespace Baller.Library
             var betweenTwoBars = (IngameBall.Position.X - IngameBall.CollisionRadius > GoalBounds.X && IngameBall.Position.X + IngameBall.CollisionRadius < GoalBounds.X + GoalBounds.Width);
 
             return belowTopBar && pastEndLine && betweenTwoBars;
+        }
+
+        public void SetGameResolution(int width, int height)
+        {
+            WindowSize = new Vector2(width, height);
+            graphics.PreferredBackBufferWidth = (int)WindowSize.X;
+            graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
         }
     }
 }

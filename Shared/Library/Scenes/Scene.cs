@@ -28,7 +28,7 @@ namespace Baller.Library
 
             foreach (IButton btn in Controls.FindAll(x => x is IButton))
             {
-                if (btn.MouseOver())
+                if (btn.Pressed())
                 {
                     mouseOver = true;
                 }
@@ -37,16 +37,34 @@ namespace Baller.Library
             Game.MouseCursor = mouseOver? MouseCursor.MouseOver : MouseCursor.Normal;
         }
 
-        public virtual void MouseDown(MouseButton button)
+        //public virtual void MouseDown(MouseButton button)
+        //{
+        //}
+
+        //public virtual void MouseClick(MouseButton button)
+        //{
+        //}
+
+        //public virtual void Touch(Vector2 position)
+        //{
+        //}
+
+        public virtual void MainInput(Vector2 pos)
         {
         }
 
-        public virtual void MouseClick(MouseButton button)
+        public virtual void SecondInput(Vector2 pos)
         {
         }
 
-        public virtual void Touch(Vector2 position)
+        public virtual void InputDown(Vector2 pos)
         {
+
+        }
+
+        public virtual void InputUp(Vector2 pos)
+        {
+
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Baller.Droid
         {
             base.OnCreate(bundle);
             var g = new BallerGame();
+            g.SetGameResolution(Resources.DisplayMetrics.WidthPixels, Resources.DisplayMetrics.HeightPixels);
+            
             SetContentView((View)g.Services.GetService(typeof(View)));
             g.Run();
         }

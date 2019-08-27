@@ -80,26 +80,26 @@ namespace Baller.Library.Scenes
             }
         }
 
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
             if (firstContractMessage.Visible)
             {
-                firstContractMessage.MouseClick(button);
+                firstContractMessage.MainInput();
                 return;
             }
             else if (contractOfferedMessage.Visible)
             {
-                contractOfferedMessage.MouseClick(button);
+                contractOfferedMessage.MainInput();
                 return;
             }
             else
             {
-                if (rejectButton.MouseOver())
+                if (rejectButton.Pressed())
                 {
                     firstContractMessage.Visible = true;
                     return;
                 }
-                else if (signButton.MouseOver())
+                else if (signButton.Pressed())
                 {
                     Game.LatestNews = Game.ContractProposition.Club.Name + " bets on youth player";
                     Game.CurrentContract = Game.ContractProposition;

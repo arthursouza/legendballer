@@ -24,5 +24,16 @@ namespace Baller.Library.Input
         {
             return (LastKeyboardState.IsKeyUp(keys) && KeyboardState.IsKeyDown(keys));
         }
+        
+        public static bool Clicked()
+        {
+            #if WINDOWS
+
+            return InputInfo.MouseState.LeftButton == ButtonState.Released && InputInfo.LastMouseState.LeftButton == ButtonState.Pressed;
+
+            #endif
+
+            return false;
+        }
     }
 }

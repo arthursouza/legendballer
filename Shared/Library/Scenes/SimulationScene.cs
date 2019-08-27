@@ -120,9 +120,9 @@ namespace Baller.Library.Scenes
             }
         }
 
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
-            if (btnKickOff.MouseOver())
+            if (btnKickOff.Pressed())
             {
                 if (Game.Simulation.Period == MatchPeriod.BeforeGame)
                 {

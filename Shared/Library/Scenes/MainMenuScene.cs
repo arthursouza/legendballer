@@ -75,54 +75,7 @@ namespace Baller.Library.Scenes
             base.Update(gameTime);
         }
 
-        public override void MouseClick(MouseButton button)
-        {
-            if (studioLogo.Contains(InputInfo.MousePositionPoint.X, InputInfo.MousePositionPoint.Y))
-            {
-                //Process.Start("www.facebook.com/lotuzgames");
-                base.MouseClick(button);
-                return;
-            }
-            // NEW GAME
-            if (selectedIndex == 0)
-            {
-                if (GameSave.CurrentExists())
-                {
-                    // Show override save
-                    if (!alerted)
-                    {
-                        overrideSave.Visible = true;
-                        alerted = true;
-                    }
-                    else
-                    {
-                        Game.Transition(State.NewCareer);
-                    }
-                }
-                else
-                {
-                    Game.Transition(State.NewCareer);
-                }
-                return;
-            }
-            else if (selectedIndex == 1)
-            {
-                if (GameSave.CurrentExists())
-                {
-                    LoadGame();
-                    Game.Transition(State.Lobby);
-                    return;
-                }
-            }
-            // If override save is visible
-            else if (overrideSave.Visible)
-            {
-                overrideSave.MouseClick(MouseButton.Left);
-                return;
-            }
-        }
-        
-        public override void Touch(Vector2 position)
+        public override void MainInput(Vector2 position)
         {
             if (btnNewGame.Bounds.Contains(position.X, position.Y))
             {
@@ -137,18 +90,11 @@ namespace Baller.Library.Scenes
 
             if (selectedIndex == 0)
             {
-                if (GameSave.CurrentExists())
+                if (GameSave.CurrentExists() && !alerted)
                 {
                     // Show override save
-                    if (!alerted)
-                    {
-                        overrideSave.Visible = true;
-                        alerted = true;
-                    }
-                    else
-                    {
-                        Game.Transition(State.NewCareer);
-                    }
+                    overrideSave.Visible = true;
+                    alerted = true;
                 }
                 else
                 {
@@ -168,7 +114,7 @@ namespace Baller.Library.Scenes
             // If override save is visible
             else if (overrideSave.Visible)
             {
-                overrideSave.MouseClick(MouseButton.Left);
+                overrideSave.MainInput();
                 return;
             }
         }

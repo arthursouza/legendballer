@@ -22,48 +22,31 @@ namespace Baller.Library.Scenes
             seta = Graphics.KickArrow;
         }
 
-        public override void MouseDown(MouseButton button)
+        public override void InputDown(Vector2 pos)
         {
             if (ballClicked)
             {
-                Vector2 diff = InputInfo.MousePosition - Game.IngameBall.Position;
+                Vector2 diff = pos - Game.IngameBall.Position;
                 Game.KickDirection = diff * -1;                
                 Game.KickPower = Math.Min(diff.Length(), Game.Player.Stats.Power);
                 Game.KickPower = Math.Max(Game.KickPower, 1);
             }
             else
             {
-                ballClicked = Game.IngameBall.CollisionBounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
+                ballClicked = Game.IngameBall.CollisionBounds.Contains((int)pos.X, (int)pos.Y);
             }
-
-            if (button == MouseButton.Right)
-            {
-                Game.IngameBall.Position = InputInfo.MousePosition;
-            }
-
-            //Game.IngameBall.Position = InputInfo.MousePosition;
         }
 
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
-            if (button == MouseButton.Left)
+            if (ballClicked)
             {
-                if (ballClicked)
-                {
-                    Game.LastBallPosition = Game.IngameBall.Position;
-                    Game.CurrentState = State.IngameKickZoom;
-                    ballClicked = false;
-                }
+                Game.LastBallPosition = Game.IngameBall.Position;
+                Game.CurrentState = State.IngameKickZoom;
+                ballClicked = false;
             }
-            else
-            {
-                if (BallerGame.DebugMode)
-                {
-                    Game.IngameBall.Position = InputInfo.MousePosition;
-                }
-            }
-
-            base.MouseClick(button);
+        
+            base.MainInput(pos);
         }
 
         public override void Draw(SpriteBatch batch)

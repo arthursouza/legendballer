@@ -106,7 +106,7 @@ namespace Baller.Library.Scenes
             base.Update(gameTime);
         }
 
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
             if (selectedIndex != -1)
             {
@@ -134,7 +134,7 @@ namespace Baller.Library.Scenes
             {
                 NextGame();
             }
-    }
+        }
 
         private void NextGame()
         {

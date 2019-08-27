@@ -2,6 +2,6 @@
 {
     public interface IButton
     {
-        bool MouseOver();
+        bool Pressed();
     }
 }

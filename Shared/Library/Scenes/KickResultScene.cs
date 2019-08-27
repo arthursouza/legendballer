@@ -38,15 +38,7 @@ namespace Baller.Library.Scenes
         {
             this.Game = game;
         }
-
-        public override void MouseDown(MouseButton button)
-        {
-        }
-
-        public override void MouseClick(MouseButton button)
-        {
-        }
-
+        
         public override void Draw(SpriteBatch batch)
         {
             Game.DrawField();

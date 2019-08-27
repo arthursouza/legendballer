@@ -54,43 +54,42 @@ namespace Baller.Library.Scenes
             if(alertEmptyName.Visible)
                 alertEmptyName.Draw(batch);
         }
+        
         public override void Update(GameTime gameTime)
         {
             txtName.Update(gameTime);
             base.Update(gameTime);
         }
-        public override void MouseClick(MouseButton button)
-        {
-            if (button == MouseButton.Left)
-            {
-                if (alertEmptyName.Visible)
-                {
-                    alertEmptyName.MouseClick(button);
-                    return;
-                }
 
-                if (acceptButton.MouseOver())
-                {
-                    if(string.IsNullOrEmpty(txtName.Text))
-                    {
-                        alertEmptyName.Visible = true;
-                        return;
-                    }
-                    else
-                    {
-                        Game.Player.Name = txtName.Text;
-                        // salvar informações do jogador criado e tal
-                        Game.FirstContract();
-                    }
-                    return;
-                }
-                else if (txtName.MouseOver)
-                {
-                    txtName.HasFocus = true;
-                    return;
-                }
-                txtName.HasFocus = false;
+        public override void MainInput(Vector2 pos)
+        {
+            if (alertEmptyName.Visible)
+            {
+                alertEmptyName.MainInput();
+                return;
             }
+
+            if (acceptButton.Pressed())
+            {
+                if(string.IsNullOrEmpty(txtName.Text))
+                {
+                    alertEmptyName.Visible = true;
+                    return;
+                }
+                else
+                {
+                    Game.Player.Name = txtName.Text;
+                    // salvar informações do jogador criado e tal
+                    Game.FirstContract();
+                }
+                return;
+            }
+            else if (txtName.MouseOver)
+            {
+                txtName.HasFocus = true;
+                return;
+            }
+            txtName.HasFocus = false;
         }
     }
 }

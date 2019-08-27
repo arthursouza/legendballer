@@ -26,9 +26,9 @@ namespace Baller.Library.Scenes
             Game.KickBall.Texture = game.Content.Load<Texture2D>("Ball/Ball");
         }
         
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
-            Vector2 efeito = InputInfo.MousePosition - Game.KickBall.Position;
+            Vector2 efeito = pos - Game.KickBall.Position;
             if (efeito.Length() <= Game.KickBall.CollisionRadius)
             {
                 kickVector = efeito / 100;

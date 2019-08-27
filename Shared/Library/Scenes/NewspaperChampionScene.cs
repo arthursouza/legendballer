@@ -35,17 +35,15 @@ namespace Baller.Library.Scenes
             base.Draw(batch);
         }
 
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
-            if (button == MouseButton.Left)
+            if (continueButton.Pressed())
             {
-                if (continueButton.MouseOver())
-                {
-                    Game.Transition(State.SeasonResults);
-                    return;
-                }
+                Game.Transition(State.SeasonResults);
+                return;
             }
-            base.MouseClick(button);
+
+            base.MainInput(pos);
         }
     }
 }

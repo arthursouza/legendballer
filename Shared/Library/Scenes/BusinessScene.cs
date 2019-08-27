@@ -71,14 +71,15 @@ namespace Baller.Library.Scenes
             btnLobby.Draw(batch);
             base.Draw(batch);
         }
-
-        public override void MouseClick(MouseButton button)
+        
+        public override void MainInput(Vector2 position)
         {
-            if (btnLobby.MouseOver())
+            if (btnLobby.Pressed())
             {
                 Game.Transition(State.Lobby);
             }
-            base.MouseClick(button);
+
+            base.MainInput(position);
         }
     }
 }

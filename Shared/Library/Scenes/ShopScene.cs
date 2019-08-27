@@ -32,14 +32,14 @@ namespace Baller.Library.Scenes
             base.Draw(batch);
         }
         
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
-            if (btnLobby.MouseOver())
+            if (btnLobby.Pressed())
             {
                 Game.Transition(State.Lobby);
             }
 
-            base.MouseClick(button);
+            base.MainInput(pos);
         }
     }
 }

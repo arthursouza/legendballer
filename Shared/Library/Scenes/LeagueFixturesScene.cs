@@ -126,13 +126,13 @@ namespace Baller.Library.Scenes
             base.Update(gameTime);
         }
 
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
-            if (btnBack.MouseOver())
+            if (btnBack.Pressed())
             {
                 Game.Transition(State.Lobby);
             }
-            else if (btnFixtureStandings.MouseOver())
+            else if (btnFixtureStandings.Pressed())
             {
                 standings = !standings;
 
@@ -141,7 +141,7 @@ namespace Baller.Library.Scenes
                 else
                     btnFixtureStandings.Label = "Standings";
             }
-            base.MouseClick(button);
+            base.MainInput(pos);
         }
     }
 }

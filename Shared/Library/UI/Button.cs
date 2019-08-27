@@ -1,6 +1,7 @@
 ﻿using Baller.Library.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Baller.Library
 {
@@ -42,9 +43,34 @@ namespace Baller.Library
             batch.DrawString(font, Label, textPosition, TextColor);
         }
 
-        public bool MouseOver()
+        private bool MouseOver()
         {
             return Bounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
+        }
+        
+        public bool Pressed()
+        {
+            #if ANDROID
+            TouchCollection touchCollection = TouchPanel.GetState();
+
+            if (touchCollection.Count > 0)
+            {
+                //Only Fire Select Once it's been released
+                if (touchCollection[0].State == TouchLocationState.Moved ||
+                    touchCollection[0].State == TouchLocationState.Pressed)
+                {
+                    return this.Bounds.Contains(touchCollection[0].Position);
+                }
+            }
+
+            return false;
+            #endif
+
+            #if WINDOWS
+            
+            return MouseOver() && InputInfo.Clicked();
+
+            #endif
         }
     }
 }

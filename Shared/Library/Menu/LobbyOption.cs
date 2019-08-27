@@ -2,6 +2,7 @@
 using Baller.Library.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Baller.Library.Menu
 {
@@ -41,12 +42,9 @@ namespace Baller.Library.Menu
         {
             get; set; 
         }
+        
         public Vector2 Position { get; set; }
-        public bool MouseOver()
-        {
-            return Bounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
-        }
-
+        
         internal void Draw(SpriteBatch batch, bool selected = false)
         {
             //var color = selected ? Color.LightBlue : Color.White;
@@ -63,6 +61,37 @@ namespace Baller.Library.Menu
                 Text,
                 Position + new Vector2(Bounds.Width / 2 - textSize.X / 2, Bounds.Height / 2 - textSize.Y / 2), 
                 Color.White);
+        }
+
+        
+        public bool MouseOver()
+        {
+            return Bounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
+        }
+        
+        public bool Pressed()
+        {
+#if ANDROID
+            TouchCollection touchCollection = TouchPanel.GetState();
+
+            if (touchCollection.Count > 0)
+            {
+                //Only Fire Select Once it's been released
+                if (touchCollection[0].State == TouchLocationState.Moved ||
+                    touchCollection[0].State == TouchLocationState.Pressed)
+                {
+                    return this.Bounds.Contains(touchCollection[0].Position);
+                }
+            }
+
+            return false;
+#endif
+
+#if WINDOWS
+            
+            return MouseOver() && InputInfo.Clicked();
+
+#endif
         }
     }
 }

@@ -20,8 +20,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Library\Input\InputInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\Input\MouseButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\Input\MouseCursor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Library\IO\DataReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Library\IO\FileDataReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\Items\Item.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\Leagues\Club.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\Leagues\League.cs" />
@@ -74,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Content\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Library\IO\" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />

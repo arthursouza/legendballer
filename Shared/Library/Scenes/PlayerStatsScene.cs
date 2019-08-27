@@ -111,13 +111,14 @@ namespace Baller.Library.Scenes
             batch.DrawString(font ?? textFont, label, textPosition, labelColor);
         }
 
-        public override void MouseClick(MouseButton button)
+        public override void MainInput(Vector2 pos)
         {
-            if (btnLobby.MouseOver())
+            if (btnLobby.Pressed())
             {
                 Game.Transition(State.Lobby);
             }
-            base.MouseClick(button);
+
+            base.MainInput(pos);
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using Baller.Library.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Baller.Library.UI
 {
@@ -37,7 +38,7 @@ namespace Baller.Library.UI
 
         public void Draw(SpriteBatch batch)
         {
-            var sourceRect = new Rectangle(0, MouseOver() ? BackgroundTexture.Height / 2 : 0, BackgroundTexture.Width, BackgroundTexture.Height/2);
+            var sourceRect = new Rectangle(0, MouseOver() ? BackgroundTexture.Height / 2 : 0, BackgroundTexture.Width, BackgroundTexture.Height / 2);
             batch.Draw(BackgroundTexture, Bounds, sourceRect, Color.White);
             batch.Draw(Texture, InnerBounds, Color.White);
         }
@@ -45,6 +46,32 @@ namespace Baller.Library.UI
         public bool MouseOver()
         {
             return Bounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
+        }
+
+        public bool Pressed()
+        {
+
+#if ANDROID
+            TouchCollection touchCollection = TouchPanel.GetState();
+
+            if (touchCollection.Count > 0)
+            {
+                //Only Fire Select Once it's been released
+                if (touchCollection[0].State == TouchLocationState.Moved ||
+                    touchCollection[0].State == TouchLocationState.Pressed)
+                {
+                    return this.Bounds.Contains(touchCollection[0].Position);
+                }
+            }
+
+            return false;
+#endif
+
+#if WINDOWS
+            
+            return MouseOver() && InputInfo.Clicked();
+
+#endif
         }
     }
 }

@@ -96,15 +96,12 @@ namespace Baller.Library
             CancelButton?.Draw(batch);
         }
 
-        public void MouseClick(MouseButton button)
+        public void MainInput()
         {
-            if (button == MouseButton.Left)
+            if (OkButton.Pressed())
             {
-                if (OkButton.MouseOver())
-                {
-                    if (Close != null)
-                        Close.Invoke();
-                }
+                if (Close != null)
+                    Close.Invoke();
             }
         }
 
