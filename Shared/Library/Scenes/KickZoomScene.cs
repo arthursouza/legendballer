@@ -20,7 +20,7 @@ namespace Baller.Library.Scenes
             kickAim = game.Content.Load<Texture2D>("Kick Aim");
             
             Game.KickBall = new Ball();
-            Game.KickBall.Position = new Vector2(BallerGame.WindowSize.X / 2, BallerGame.WindowSize.Y * .75f);
+            Game.KickBall.Position = new Vector2(BallerGame.NativeResolution.Width / 2f, BallerGame.NativeResolution.Height * .75f);
             Game.KickBall.CollisionRadius = 100;
             Game.KickBall.BallRadius = 100;
             Game.KickBall.Texture = game.Content.Load<Texture2D>("Ball/Ball");

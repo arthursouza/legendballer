@@ -36,20 +36,25 @@ namespace Baller.Library
 
         public static Size NativeResolution = new Size(1080, 1920);
 
+        public static float Margin { get; set; }
+        
         public static float Scale
         {
-            get { return WindowSize.X / NativeResolution.Width; }
+            get
+            {
+                return WindowSize.Y / NativeResolution.Height;
+            }
         }
 
         Random rand = new Random(DateTime.Now.Millisecond);
         GraphicsDeviceManager graphics;
         //SpriteBatch spriteBatch;
         public State CurrentState;
-        public static Vector2 WindowSize;
+        private static Vector2 WindowSize;
         public Player Player;
         public static Rectangle WindowBounds
         {
-            get { return new Rectangle(0, 0, (int)WindowSize.X, (int)WindowSize.Y); }
+            get { return new Rectangle(0, 0, (int)NativeResolution.Width, (int)NativeResolution.Height); }
         }
 
         public Club PlayerClub
@@ -108,13 +113,11 @@ namespace Baller.Library
             Window.Title = "Legend Baller";
             Narration = new Narration();
             
-            var resolutionDownscale = 0.5f;
+            //var resolutionDownscale = 0.5f;
 
-            WindowSize = NativeResolution.ToVector();
-            WindowSize = new Vector2(WindowSize.X * resolutionDownscale, WindowSize.Y * resolutionDownscale);
-            
-            graphics.PreferredBackBufferWidth = (int)WindowSize.X;
-            graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
+            //graphics.PreferredBackBufferWidth = (int)WindowSize.X;
+            //graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
+
             MouseCursor = MouseCursor.Normal;
             IsMouseVisible = true;
             Player = new Player();
@@ -133,6 +136,17 @@ namespace Baller.Library
             CurrentState = State.MainMenu;
             Players = new List<Character>();
             Graphics.GraphicsDevice = this.GraphicsDevice;
+            
+            //WindowSize = NativeResolution.ToVector();
+            //WindowSize = new Vector2(
+            //    graphics.GraphicsDevice.Viewport.Height * ((float)NativeResolution.Width / NativeResolution.Height), 
+            //    graphics.GraphicsDevice.Viewport.Height);
+            
+            //graphics.PreferredBackBufferWidth = (int)WindowSize.X;
+            //graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
+
+            Margin = (graphics.GraphicsDevice.Viewport.Width - (Scale * NativeResolution.Width)) / 2f;
+
             base.Initialize();
         }
 
@@ -549,18 +563,20 @@ namespace Baller.Library
 
             if (touchCollection.Count > 0)
             {
+                var pos = touchCollection[0].Position / Scale;
+
                 //Only Fire Select Once it's been released
                 if (touchCollection[0].State == TouchLocationState.Pressed)
                 {
-                    Scenes[CurrentState].MainInput(touchCollection[0].Position);
+                    Scenes[CurrentState].MainInput(pos);
                 }
                 else if(touchCollection[0].State == TouchLocationState.Moved)
                 {
-                    Scenes[CurrentState].InputMoved(touchCollection[0].Position);
+                    Scenes[CurrentState].InputMoved(pos);
                 }
                 else if (touchCollection[0].State == TouchLocationState.Released)
                 {
-                    Scenes[CurrentState].InputReleased(touchCollection[0].Position);
+                    Scenes[CurrentState].InputReleased(pos);
                 }
             }
         }
@@ -591,7 +607,12 @@ namespace Baller.Library
             
             using (var sprite = new SpriteBatch(GraphicsDevice))
             {
-                sprite.Begin();
+                var translate = new Vector3(BallerGame.Margin, 0, 0);
+                var translateMatrix = Matrix.CreateTranslation(translate);
+                Matrix.CreateScale(Scale, out translateMatrix);
+                
+
+                sprite.Begin(SpriteSortMode.Deferred, null, null, null, null, null, translateMatrix);
                 
                 if (Scenes != null && Scenes.ContainsKey(CurrentState))
                 {

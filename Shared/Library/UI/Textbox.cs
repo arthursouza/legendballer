@@ -154,19 +154,9 @@ namespace Baller.Library
         public bool Pressed()
         {
 #if ANDROID
-            TouchCollection touchCollection = TouchPanel.GetState();
+            var pos = InputInfo.GetTouchPosition();
 
-            if (touchCollection.Count > 0)
-            {
-                //Only Fire Select Once it's been released
-                if (touchCollection[0].State == TouchLocationState.Moved ||
-                    touchCollection[0].State == TouchLocationState.Pressed)
-                {
-                    return this.Bounds.Contains(touchCollection[0].Position);
-                }
-            }
-
-            return false;
+            return pos.HasValue && Bounds.Contains(pos.Value);
 #endif
 
 #if WINDOWS

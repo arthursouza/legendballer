@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Baller.Library.Input
 {
@@ -10,14 +11,31 @@ namespace Baller.Library.Input
         public static KeyboardState KeyboardState;
         public static KeyboardState LastKeyboardState;
 
+        public static Vector2? GetTouchPosition()
+        {
+            TouchCollection touchCollection = TouchPanel.GetState();
+
+            if (touchCollection.Count > 0)
+            {
+                //Only Fire Select Once it's been released
+                if (touchCollection[0].State == TouchLocationState.Moved ||
+                    touchCollection[0].State == TouchLocationState.Pressed)
+                {
+                    return touchCollection[0].Position / BallerGame.Scale;
+                }
+            }
+
+            return null;
+        }
+
         public static Vector2 MousePosition
         {
-            get { return new Vector2(MouseState.X, MouseState.Y); }
+            get { return new Vector2(MouseState.X / BallerGame.Scale, MouseState.Y / BallerGame.Scale); }
         }
 
         public static Position MousePositionPoint
         {
-            get { return new Position(MouseState.X, MouseState.Y); }
+            get { return new Position((int)(MouseState.X / BallerGame.Scale),(int) (MouseState.Y / BallerGame.Scale)); }
         }
 
         public static bool KeyPress(Keys keys)

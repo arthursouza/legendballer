@@ -78,7 +78,7 @@ namespace Baller.Library.Scenes
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
             batch.Draw(Graphics.BlankBackground, BallerGame.WindowBounds, Color.White);
-            batch.Draw(Graphics.LobbyBackground, new Rectangle(0, 0, (int)BallerGame.WindowSize.X, (int)BallerGame.WindowSize.Y), Color.White);
+            batch.Draw(Graphics.LobbyBackground, BallerGame.WindowBounds, Color.White);
 
             var playerNamePos = new Vector2(windowPadding, windowPadding);
             var teamNamePos = new Vector2(windowPadding, 94);

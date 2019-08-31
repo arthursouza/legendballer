@@ -54,13 +54,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\SimulationStep.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\Simulation\TeamEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\Transition.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Button.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Buttons\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Fonts.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Graphics.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\IButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Buttons\IButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\UI\MessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Textbox.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\TextureButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Buttons\BaseButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Buttons\TextureButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\UI\Tooltip.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\UI\UIControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Library\UI\UserInterface.cs" />
@@ -73,6 +74,7 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Content\" />
     <Folder Include="$(MSBuildThisFileDirectory)Library\IO\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Library\UI\Buttons\" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />

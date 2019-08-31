@@ -17,7 +17,7 @@ namespace Baller.Library.Menu
         Business
     }
 
-    public class LobbyOption : IControl, IButton
+    public class LobbyOption : BaseButton
     {
         public LobbyOption(string text, Vector2 position, Vector2 buttonSize, LobbyOptionFunction option)
         {
@@ -29,7 +29,7 @@ namespace Baller.Library.Menu
         }
 
         public LobbyOptionFunction Option { get; set; }
-        public Rectangle Bounds { get; set; }
+        public new Rectangle Bounds { get; set; }
 
         public void UpdatePosition(Vector2 position)
         {
@@ -42,8 +42,6 @@ namespace Baller.Library.Menu
         {
             get; set; 
         }
-        
-        public Vector2 Position { get; set; }
         
         internal void Draw(SpriteBatch batch, bool selected = false)
         {
@@ -61,36 +59,6 @@ namespace Baller.Library.Menu
                 Text,
                 Position + new Vector2(Bounds.Width / 2 - textSize.X / 2, Bounds.Height / 2 - textSize.Y / 2), 
                 Color.White);
-        }
-
-        private bool MouseOver()
-        {
-            return Bounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
-        }
-        
-        public bool Pressed()
-        {
-#if ANDROID
-            TouchCollection touchCollection = TouchPanel.GetState();
-
-            if (touchCollection.Count > 0)
-            {
-                //Only Fire Select Once it's been released
-                if (touchCollection[0].State == TouchLocationState.Moved ||
-                    touchCollection[0].State == TouchLocationState.Pressed)
-                {
-                    return this.Bounds.Contains(touchCollection[0].Position);
-                }
-            }
-
-            return false;
-#endif
-
-#if WINDOWS
-            
-            return MouseOver() && InputInfo.Clicked();
-
-#endif
         }
     }
 }

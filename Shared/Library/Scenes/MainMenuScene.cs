@@ -77,18 +77,7 @@ namespace Baller.Library.Scenes
 
         public override void MainInput(Vector2 position)
         {
-            if (btnNewGame.Bounds.Contains(position.X, position.Y))
-            {
-                selectedIndex = 0;
-            }
-            else if (btnLoadGame.Bounds.Contains(position.X, position.Y))
-            {
-                selectedIndex = 1;
-            }
-            else
-                selectedIndex = -1;
-
-            if (selectedIndex == 0)
+            if (btnNewGame.Pressed())
             {
                 if (GameSave.CurrentExists() && !alerted)
                 {
@@ -100,22 +89,19 @@ namespace Baller.Library.Scenes
                 {
                     Game.Transition(State.NewCareer);
                 }
-                return;
             }
-            else if (selectedIndex == 1)
+            else if (btnLoadGame.Pressed())
             {
                 if (GameSave.CurrentExists())
                 {
                     LoadGame();
                     Game.Transition(State.Lobby);
-                    return;
                 }
             }
             // If override save is visible
             else if (overrideSave.Visible)
             {
                 overrideSave.MainInput();
-                return;
             }
         }
 

@@ -21,8 +21,8 @@ namespace Baller.Library.Scenes
 
             acceptButton = new Button("Go Ahead", 
                 new Vector2(
-                    BallerGame.WindowSize.X - (buttonSize.X + 15),
-                    BallerGame.WindowSize.Y - (buttonSize.Y/2 + 15)), 
+                    BallerGame.NativeResolution.Width - (UserInterface.ButtonGreen.Width + 64),
+                    BallerGame.NativeResolution.Height - (UserInterface.ButtonGreen.Height + 64)),
                 Color.White, 
                 UserInterface.ButtonGreen);
 

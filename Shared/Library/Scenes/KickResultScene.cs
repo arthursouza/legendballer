@@ -76,7 +76,7 @@ namespace Baller.Library.Scenes
                 Vector2 textSize = Fonts.Arial26.MeasureString(text);
 
                 batch.DrawString(Fonts.Arial26, text,
-                    new Vector2(BallerGame.WindowSize.X / 2 - textSize.X / 2, BallerGame.WindowSize.Y / 2 - textSize.Y / 2), Color.White);
+                    new Vector2(BallerGame.NativeResolution.Width / 2f - textSize.X / 2, BallerGame.NativeResolution.Height / 2f - textSize.Y / 2), Color.White);
             }
         }
 
