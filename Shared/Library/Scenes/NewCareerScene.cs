@@ -7,24 +7,21 @@ namespace Baller.Library.Scenes
 {
     public class NewCareerScene : Scene
     {
-        Button acceptButton;
+        TextureButton acceptButton;
         Textbox txtName;
         MessageBox alertEmptyName;
 
         Vector2 nameLabelPos = new Vector2(40, 330);
         Vector2 nationalityLabelPos = new Vector2(40, 315);
 
-        public NewCareerScene(BallerGame game)
-            : base(game)
+        public NewCareerScene(BallerGame game) : base(game)
         {
-            var buttonSize = new Vector2(UserInterface.ButtonGreen.Width, UserInterface.ButtonGreen.Height);
-
-            acceptButton = new Button("Go Ahead", 
+            acceptButton = new TextureButton(UserInterface.ButtonGreen,
+                "Go Ahead",
                 new Vector2(
                     BallerGame.NativeResolution.Width - (UserInterface.ButtonGreen.Width + 64),
-                    BallerGame.NativeResolution.Height - (UserInterface.ButtonGreen.Height + 64)),
-                Color.White, 
-                UserInterface.ButtonGreen);
+                    BallerGame.NativeResolution.Height - (UserInterface.ButtonGreen.Height/2 + 64))
+                );
 
             txtName = new Textbox(nameLabelPos + new Vector2(0, Fonts.Arial36.MeasureString("Name").Y + 15));
             txtName.Text = "Brazuca";

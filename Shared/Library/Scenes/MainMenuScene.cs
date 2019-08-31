@@ -25,8 +25,8 @@ namespace Baller.Library.Scenes
             studioLogo = new Rectangle(14, 613, 91, 91);
             studioToolTip = new Tooltip("Navigate to facebook.com/stuffgamestudio", Position.Zero);
             
-            var newGame = new Vector2(BallerGame.WindowBounds.Width/2, 420);
-            var loadGame = new Vector2(BallerGame.WindowBounds.Width/2, 510);
+            var newGame = new Vector2(BallerGame.WindowBounds.Width/2, 660);
+            var loadGame = new Vector2(BallerGame.WindowBounds.Width/2, 770);
             //var gameJoltLogin = new Vector2(20, BrazucaGame.WindowBounds.Height - (Graphics.GameJoltLogin.Height + 20));
 
             btnNewGame = new TextureButton(UserInterface.ButtonBlue, UserInterface.MainNewCareer, newGame, true);
@@ -79,16 +79,16 @@ namespace Baller.Library.Scenes
         {
             if (btnNewGame.Pressed())
             {
-                if (GameSave.CurrentExists() && !alerted)
-                {
-                    // Show override save
-                    overrideSave.Visible = true;
-                    alerted = true;
-                }
-                else
-                {
+                //if (GameSave.CurrentExists() && !alerted)
+                //{
+                //    // Show override save
+                //    overrideSave.Visible = true;
+                //    alerted = true;
+                //}
+                //else
+                //{
                     Game.Transition(State.NewCareer);
-                }
+                //}
             }
             else if (btnLoadGame.Pressed())
             {

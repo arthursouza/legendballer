@@ -115,6 +115,8 @@ namespace Baller.Library
             
             //var resolutionDownscale = 0.5f;
 
+            SetGameResolution(NativeResolution.Width/2, NativeResolution.Height/2);
+
             //graphics.PreferredBackBufferWidth = (int)WindowSize.X;
             //graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
 
@@ -137,6 +139,12 @@ namespace Baller.Library
             Players = new List<Character>();
             Graphics.GraphicsDevice = this.GraphicsDevice;
             
+            #if ANDROID
+            
+            this.graphics.IsFullScreen = true;
+
+            #endif
+
             //WindowSize = NativeResolution.ToVector();
             //WindowSize = new Vector2(
             //    graphics.GraphicsDevice.Viewport.Height * ((float)NativeResolution.Width / NativeResolution.Height), 
@@ -145,7 +153,7 @@ namespace Baller.Library
             //graphics.PreferredBackBufferWidth = (int)WindowSize.X;
             //graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
 
-            Margin = (graphics.GraphicsDevice.Viewport.Width - (Scale * NativeResolution.Width)) / 2f;
+            //Margin = (graphics.GraphicsDevice.Viewport.Width - (Scale * NativeResolution.Width)) / 2f;
 
             base.Initialize();
         }
@@ -201,8 +209,8 @@ namespace Baller.Library
             LoadGraphics();
 
             MessageBox.DefaultWindowPosition = new Vector2(
-                WindowSize.X / 2 - MessageBox.DefaultWindowSize.X / 2,
-                WindowSize.Y / 2 - MessageBox.DefaultWindowSize.Y / 2);
+                NativeResolution.Width / 2f - MessageBox.DefaultWindowSize.X / 2,
+                NativeResolution.Height / 2f - MessageBox.DefaultWindowSize.Y / 2);
             
             IngameBall = new Ball();
             IngameBall.Animated = true;
@@ -363,9 +371,9 @@ namespace Baller.Library
             UserInterface.ClickCursor = Content.Load<Texture2D>("Mouse/Cursor2");
             UserInterface.MainNewCareer = Content.Load<Texture2D>("UI/Button Labels/New career");
             UserInterface.MainLoadCareer = Content.Load<Texture2D>("UI/Button Labels/Load career");
-            UserInterface.ButtonBlue = Content.Load<Texture2D>("UI/menu button");
-            UserInterface.ButtonGreen = Content.Load<Texture2D>("UI/green button");
-            UserInterface.ButtonRed = Content.Load<Texture2D>("UI/red button");
+            UserInterface.ButtonBlue = Content.Load<Texture2D>("UI/bluebtn");
+            UserInterface.ButtonGreen = Content.Load<Texture2D>("UI/greenbtn");
+            UserInterface.ButtonRed = Content.Load<Texture2D>("UI/redbtn");
             UserInterface.LobbyButton = Content.Load<Texture2D>("UI/Lobby Button");
             UserInterface.LabelNextGame = Content.Load<Texture2D>("UI/Button Labels/Next Game");
 
@@ -603,15 +611,13 @@ namespace Baller.Library
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.DarkSlateBlue, 1.0f, 0);
+            GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
             
             using (var sprite = new SpriteBatch(GraphicsDevice))
             {
-                var translate = new Vector3(BallerGame.Margin, 0, 0);
-                var translateMatrix = Matrix.CreateTranslation(translate);
-                Matrix.CreateScale(Scale, out translateMatrix);
-                
-
+                var translateMatrix = Matrix.CreateTranslation(new Vector3(Margin, 0, 0));
+                Matrix.CreateScale(Scale, out Matrix scaleMatrix);
+                translateMatrix = translateMatrix * scaleMatrix;
                 sprite.Begin(SpriteSortMode.Deferred, null, null, null, null, null, translateMatrix);
                 
                 if (Scenes != null && Scenes.ContainsKey(CurrentState))
@@ -879,14 +885,14 @@ namespace Baller.Library
 
         public void DrawField(SpriteBatch batch)
         {
-            batch.Draw(Graphics.NewField, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
+            batch.Draw(Graphics.NewField, BallerGame.WindowBounds, Color.White);
             batch.Draw(Graphics.GoalShadow, FieldRegions.GoalShadowBounds, Color.White);
             batch.Draw(Graphics.Goal, GoalBounds, Color.White);
 
             Players.ForEach(p => batch.Draw(Graphics.PlayerMarker,
                         new Rectangle(
-                            (int)(p.Position.X - Graphics.PlayerMarker.Width / 2),
-                            (int)(p.Position.Y - Graphics.PlayerMarker.Height / 2),
+                            (int)(p.Position.X - Graphics.PlayerMarker.Width / 2f),
+                            (int)(p.Position.Y - Graphics.PlayerMarker.Height / 2f),
                             Graphics.PlayerMarker.Width,
                             Graphics.PlayerMarker.Height),
                             (p.Type == PlayerType.Friend ? Color.Blue : Color.Red) * .4f));
@@ -938,7 +944,9 @@ namespace Baller.Library
 
         public void SetGameResolution(int width, int height)
         {
-            WindowSize = new Vector2(width, height);
+            float factor = (float)NativeResolution.Height / NativeResolution.Width;
+
+            WindowSize = new Vector2(height / factor, height);
             graphics.PreferredBackBufferWidth = (int)WindowSize.X;
             graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
         }

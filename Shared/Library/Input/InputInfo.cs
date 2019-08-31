@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 
@@ -11,8 +12,26 @@ namespace Baller.Library.Input
         public static KeyboardState KeyboardState;
         public static KeyboardState LastKeyboardState;
 
+        private static Vector2 Margin
+        {
+            get
+            {
+                return new Vector2(BallerGame.Margin, 0);
+            }
+        }
+
+        private static Vector2 MarginScale
+        {
+            get
+            {
+                return new Vector2(BallerGame.Margin / BallerGame.Scale, 0);
+            }
+        }
+
         public static Vector2? GetTouchPosition()
         {
+            #if ANDROID
+
             TouchCollection touchCollection = TouchPanel.GetState();
 
             if (touchCollection.Count > 0)
@@ -21,21 +40,22 @@ namespace Baller.Library.Input
                 if (touchCollection[0].State == TouchLocationState.Moved ||
                     touchCollection[0].State == TouchLocationState.Pressed)
                 {
-                    return touchCollection[0].Position / BallerGame.Scale;
+                    return (touchCollection[0].Position + Margin) / BallerGame.Scale;
                 }
             }
+            #endif
 
             return null;
         }
 
         public static Vector2 MousePosition
         {
-            get { return new Vector2(MouseState.X / BallerGame.Scale, MouseState.Y / BallerGame.Scale); }
+            get { return new Vector2(MouseState.X / BallerGame.Scale, MouseState.Y / BallerGame.Scale) + MarginScale; }
         }
 
         public static Position MousePositionPoint
         {
-            get { return new Position((int)(MouseState.X / BallerGame.Scale),(int) (MouseState.Y / BallerGame.Scale)); }
+            get { return new Position((int)(MouseState.X / BallerGame.Scale + MarginScale.X),(int) (MouseState.Y / BallerGame.Scale)); }
         }
 
         public static bool KeyPress(Keys keys)

@@ -24,6 +24,7 @@ namespace Baller.Library.Menu
             Position = position;
             Text = text;
             Option = option;
+            this.BackgroundTexture = UserInterface.LobbyButton;
 
             Bounds = new Rectangle((int) Position.X,  (int) Position.Y,  (int) buttonSize.X, (int) buttonSize.Y);
         }
@@ -47,7 +48,7 @@ namespace Baller.Library.Menu
         {
             //var color = selected ? Color.LightBlue : Color.White;
 
-            var sourceRect = new Rectangle(0, selected ? UserInterface.LobbyButton.Height / 2 : 0, UserInterface.LobbyButton.Width, UserInterface.LobbyButton.Height / 2);
+            var sourceRect = new Rectangle(0, selected ? BackgroundTexture.Height / 2 : 0, BackgroundTexture.Width, BackgroundTexture.Height / 2);
 
             batch.Draw(UserInterface.LobbyButton, Bounds, sourceRect, Color.White);
 
@@ -57,7 +58,7 @@ namespace Baller.Library.Menu
             batch.DrawString(
                 font, 
                 Text,
-                Position + new Vector2(Bounds.Width / 2 - textSize.X / 2, Bounds.Height / 2 - textSize.Y / 2), 
+                Position + new Vector2(Bounds.Width / 2f - textSize.X / 2, Bounds.Height / 2f - textSize.Y / 2), 
                 Color.White);
         }
     }

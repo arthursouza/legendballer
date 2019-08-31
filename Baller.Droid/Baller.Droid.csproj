@@ -134,6 +134,10 @@
     <AndroidAsset Include="Assets\Content\GameJolt.xnb" />
     <AndroidAsset Include="Assets\Content\Kick Aim.xnb" />
     <AndroidAsset Include="Assets\Content\InGame\field.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\bluebtn.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\greenbtn.xnb" />
+    <AndroidAsset Include="Assets\Content\UI\redbtn.xnb" />
+    <AndroidAsset Include="Assets\Content\Fonts\Arial28.xnb" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>

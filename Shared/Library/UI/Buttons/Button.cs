@@ -1,9 +1,6 @@
-﻿using Android.OS;
-using Baller.Library.Input;
-using Baller.Library.UI;
+﻿using Baller.Library.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Baller.Library
 {

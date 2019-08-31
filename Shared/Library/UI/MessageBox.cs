@@ -19,7 +19,7 @@ namespace Baller.Library
         private MessageBoxButtonType buttonType;
         public event CloseHandler Close;
 
-        public static Vector2 DefaultWindowSize = new Vector2(532, 358);
+        public static Vector2 DefaultWindowSize = new Vector2(800, 400);
         public static Vector2 DefaultWindowPosition;
 
         public Button OkButton;
@@ -75,13 +75,12 @@ namespace Baller.Library
 
         public MessageBox()
         {
-            var marginBottom = 80;
-            font = Fonts.Arial26;
+            font = Fonts.Arial36;
             Visible = false;
             OkButton = new Button("Ok",
                 new Vector2(
                     DefaultWindowPosition.X + DefaultWindowSize.X / 2,
-                    DefaultWindowPosition.Y + DefaultWindowSize.Y - marginBottom),
+                    DefaultWindowPosition.Y + DefaultWindowSize.Y - (UserInterface.ButtonBlue.Height/2 + 20)),
                     Color.White, UserInterface.ButtonBlue);
         }
         
