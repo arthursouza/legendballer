@@ -60,11 +60,11 @@ namespace Baller.Library.Scenes
             if (proposition != null)
             {
                 string teamName = Game.ContractProposition.Club.Name;
-                batch.DrawString(Fonts.Arial54, teamName, new Vector2(BallerGame.WindowBounds.Width / 2 - Fonts.Arial54.MeasureString(teamName).X / 2, 100), Color.White);
-                batch.DrawString(Fonts.Arial26, string.Format("Club Rating {0} Popularity {1}", Game.ContractProposition.Club.Rating, Game.ContractProposition.Club.Popularity), new Vector2(40, 170), Color.White);
-                batch.DrawString(Fonts.Arial26, "Salary $" + proposition.Value, new Vector2(40, 220), Color.White);
-                batch.DrawString(Fonts.Arial26, "Victory Bonus $" + proposition.VictoryBonus, new Vector2(40, 270), Color.White);
-                batch.DrawString(Fonts.Arial26, "Goal Bonus $" + proposition.GoalBonus, new Vector2(40, 320), Color.White);
+                batch.DrawString(Fonts.Arial54, teamName, new Vector2(BallerGame.WindowBounds.Width / 2 - Fonts.Arial54.MeasureString(teamName).X / 2, 90), Color.White);
+                batch.DrawString(Fonts.Arial26, string.Format("Club Rating {0} Popularity {1}", Game.ContractProposition.Club.Rating, Game.ContractProposition.Club.Popularity), new Vector2(40, 180), Color.White);
+                batch.DrawString(Fonts.Arial26, "Salary $" + proposition.Value, new Vector2(40, 230), Color.White);
+                batch.DrawString(Fonts.Arial26, "Victory Bonus $" + proposition.VictoryBonus, new Vector2(40, 280), Color.White);
+                batch.DrawString(Fonts.Arial26, "Goal Bonus $" + proposition.GoalBonus, new Vector2(40, 330), Color.White);
             }
 
             signButton.Draw(batch);

@@ -21,35 +21,48 @@ namespace Baller.Library.Scenes
             : base(game)
         {
             var lobbyOptions = new[]
-                {
-                    new LobbyOption("League", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.League),
-                    new LobbyOption("Business", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Business),
-                    new LobbyOption("My Stats", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.MyStats),
-                    new LobbyOption("Training", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Training),
-                    new LobbyOption("Shop", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Shop),
-                    new LobbyOption("News", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.RecentNews)
-                };
+            {
+                new LobbyOption("League", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.League),
+                new LobbyOption("Business", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Business),
+                new LobbyOption("My Stats", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.MyStats),
+                new LobbyOption("Training", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Training),
+                new LobbyOption("Shop", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.Shop),
+                new LobbyOption("News", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.RecentNews)
+            };
 
-            var buttonColumns = 4;
+            var buttonColumns = 3;
 
             var buttonSpacing = (BallerGame.WindowBounds.Width - (buttonColumns * lobbyButtonSize.X)) / (buttonColumns + 1);
 
-            for (int i = 0; i < 4; i++)
+            var buttonsStartPosition = BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height + windowPadding + (lobbyButtonSize.Y * 2));
+
+            for (int i = 0; i < lobbyOptions.Length; i++)
             {
-                lobbyOptions[i].UpdatePosition(new Vector2(
-                    buttonSpacing + (buttonSpacing * i) + (lobbyButtonSize.X * i),
-                    BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2 + windowPadding + lobbyButtonSize.Y)
-                    ));
+                var line = i / buttonColumns;
+                var column = i % buttonColumns;
+
+                var posX = buttonSpacing + (buttonSpacing * column) + (lobbyButtonSize.X * column);
+                var posY = ((buttonSpacing + lobbyButtonSize.Y) * line) + buttonsStartPosition;
+
+                lobbyOptions[i].UpdatePosition(new Vector2(posX, posY));
             }
 
-            for (int i = 4; i < 6; i++)
-            {
-                var iAlt = i - 2;
-                lobbyOptions[i].UpdatePosition(new Vector2(
-                    buttonSpacing + (buttonSpacing * iAlt) + (lobbyButtonSize.X * iAlt),
-                    BallerGame.WindowBounds.Height - ((windowPadding * 3) + (lobbyButtonSize.Y * 2) + UserInterface.ButtonGreen.Height / 2)
-                    ));
-            }
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    lobbyOptions[i].UpdatePosition(new Vector2(
+            //        buttonSpacing + (buttonSpacing * i) + (lobbyButtonSize.X * i),
+            //        BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2 + windowPadding + lobbyButtonSize.Y)
+            //        ));
+            //}
+
+            //for (int i = 3; i < 6; i++)
+            //{
+            //    var iAlt = i - 2;
+            //    lobbyOptions[i].UpdatePosition(new Vector2(
+            //        buttonSpacing + (buttonSpacing * iAlt) + (lobbyButtonSize.X * iAlt),
+            //        BallerGame.WindowBounds.Height - ((windowPadding * 3) + (lobbyButtonSize.Y * 2) + UserInterface.ButtonGreen.Height / 2)
+            //        ));
+            //}
 
             btnNextGame = new TextureButton(
                 UserInterface.ButtonGreen, 
@@ -130,7 +143,7 @@ namespace Baller.Library.Scenes
                 }
             }
 
-            if (btnNextGame.MouseOver())
+            if (btnNextGame.Pressed())
             {
                 NextGame();
             }

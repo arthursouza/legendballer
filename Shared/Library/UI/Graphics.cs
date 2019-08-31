@@ -65,6 +65,7 @@ namespace Baller.Library
             IngameBallShadow = content.Load<Texture2D>("Ball/Ball Shadow");
 
             KickArrow = content.Load<Texture2D>("Seta");
+            NewField = content.Load<Texture2D>("InGame/field");
 
             //GameJoltLogin = content.Load<Texture2D>("MainMenu/LoginGameJolt");
             //GameJoltLoginHover = content.Load<Texture2D>("MainMenu/LoginGameJolt_Hover");
@@ -109,5 +110,6 @@ namespace Baller.Library
         public static Texture2D GameJoltLoginHover { get; set; }
         public static Texture2D GoalTopNet { get; set; }
         public static Texture2D KickArrow { get; set; }
+        public static Texture2D NewField { get; set; }
     }
 }

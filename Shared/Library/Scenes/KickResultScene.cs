@@ -41,7 +41,7 @@ namespace Baller.Library.Scenes
         
         public override void Draw(SpriteBatch batch)
         {
-            Game.DrawField();
+            Game.DrawField(batch);
 
             AnimateResult(batch);
         }
@@ -89,12 +89,12 @@ namespace Baller.Library.Scenes
 
             if (ball.Height <= Game.GoalHeight)
             {
-                if (ball.CollisionBounds.Intersects(Game.LeftBar))
+                if (ball.CollisionBounds.Intersects(FieldRegions.LeftBar))
                 {
                     ball.Direction *= new Vector2(-1, -1);
                     //ball.Position += ball.Direction * 
                 }
-                else if (ball.CollisionBounds.Intersects(Game.RightBar))
+                else if (ball.CollisionBounds.Intersects(FieldRegions.RightBar))
                 {
                     ball.Direction *= new Vector2(-1, -1);
                 }

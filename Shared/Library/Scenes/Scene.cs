@@ -66,5 +66,14 @@ namespace Baller.Library
         {
 
         }
+
+        public virtual void InputMoved(Vector2 position)
+        {
+            
+        }
+
+        public virtual void InputReleased(Vector2 position)
+        {
+        }
     }
 }

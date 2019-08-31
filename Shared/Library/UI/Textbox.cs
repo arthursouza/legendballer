@@ -3,6 +3,7 @@ using Baller.Library.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Baller.Library
 {
@@ -25,14 +26,14 @@ namespace Baller.Library
 
         public Textbox(Vector2 position)
         {
-            MaxSize = 20;
+            MaxSize = 16;
             font = Fonts.Arial36;
             Position = position;
         }
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(Graphics.Selected, new Rectangle((int)Position.X, (int)Position.Y, 500, font.LineSpacing), Color.White * .5f);
+            batch.Draw(Graphics.Selected, new Rectangle((int)Position.X, (int)Position.Y, (int)(font.MeasureString("X").X * MaxSize + 32), font.LineSpacing), Color.White * .5f);
             batch.DrawString(font, Text, new Vector2(5 + Position.X, Position.Y), Color.White);
             if (cursorShow)
                 batch.Draw(Graphics.Selected, new Rectangle((int)(5 + Position.X + (font.MeasureString(Text).X)), (int)Position.Y, 2, font.LineSpacing), Color.White);
@@ -145,9 +146,34 @@ namespace Baller.Library
             get { return new Rectangle((int)Position.X, (int)Position.Y, 500, font.LineSpacing); }
         }
 
-        public bool MouseOver
+        private bool MouseOver
         {
             get { return Bounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y); }
+        }
+
+        public bool Pressed()
+        {
+#if ANDROID
+            TouchCollection touchCollection = TouchPanel.GetState();
+
+            if (touchCollection.Count > 0)
+            {
+                //Only Fire Select Once it's been released
+                if (touchCollection[0].State == TouchLocationState.Moved ||
+                    touchCollection[0].State == TouchLocationState.Pressed)
+                {
+                    return this.Bounds.Contains(touchCollection[0].Position);
+                }
+            }
+
+            return false;
+#endif
+
+#if WINDOWS
+            
+            return MouseOver && InputInfo.Clicked();
+
+#endif
         }
     }
 }

@@ -24,6 +24,17 @@ namespace Baller.Library.Scenes
 
         public override void InputDown(Vector2 pos)
         {
+        }
+
+        public override void MainInput(Vector2 pos)
+        {
+            ballClicked = Game.IngameBall.CollisionBounds.Contains((int)pos.X, (int)pos.Y);
+
+            base.MainInput(pos);
+        }
+        
+        public override void InputMoved(Vector2 pos)
+        {
             if (ballClicked)
             {
                 Vector2 diff = pos - Game.IngameBall.Position;
@@ -31,13 +42,9 @@ namespace Baller.Library.Scenes
                 Game.KickPower = Math.Min(diff.Length(), Game.Player.Stats.Power);
                 Game.KickPower = Math.Max(Game.KickPower, 1);
             }
-            else
-            {
-                ballClicked = Game.IngameBall.CollisionBounds.Contains((int)pos.X, (int)pos.Y);
-            }
         }
 
-        public override void MainInput(Vector2 pos)
+        public override void InputReleased(Vector2 pos)
         {
             if (ballClicked)
             {
@@ -45,13 +52,11 @@ namespace Baller.Library.Scenes
                 Game.CurrentState = State.IngameKickZoom;
                 ballClicked = false;
             }
-        
-            base.MainInput(pos);
         }
 
         public override void Draw(SpriteBatch batch)
         {
-            Game.DrawField();
+            Game.DrawField(batch);
             
             if (ballClicked)
             {

@@ -19,7 +19,7 @@ namespace Baller.Library
         private MessageBoxButtonType buttonType;
         public event CloseHandler Close;
 
-        public static Vector2 DefaultWindowSize = new Vector2(697, 358);
+        public static Vector2 DefaultWindowSize = new Vector2(532, 358);
         public static Vector2 DefaultWindowPosition;
 
         public Button OkButton;
@@ -89,7 +89,7 @@ namespace Baller.Library
         {
             batch.Draw(Graphics.Selected, BallerGame.WindowBounds, Color.Black);
             batch.Draw(UserInterface.MessageBox, new Rectangle((int)DefaultWindowPosition.X, (int)DefaultWindowPosition.Y, (int)DefaultWindowSize.X, (int)DefaultWindowSize.Y), Color.White);
-            batch.DrawString(font, Text, new Vector2(DefaultWindowPosition.X + DefaultWindowSize.X / 2 - Fonts.Arial26.MeasureString(Text).X / 2, DefaultWindowPosition.Y + 50), TextColor);
+            batch.DrawString(font, Text, new Vector2(DefaultWindowPosition.X + DefaultWindowSize.X / 2 - Fonts.Arial26.MeasureString(Text).X/2, DefaultWindowPosition.Y + 50), TextColor);
 
             OkButton.Draw(batch);
 
@@ -121,7 +121,7 @@ namespace Baller.Library
                     {
                         Vector2 size = font.MeasureString(word);
 
-                        if (lineWidth + size.X < DefaultWindowSize.X - 20)
+                        if (lineWidth + size.X < DefaultWindowSize.X - 36)
                         {
                             sb.Append(word + " ");
                             lineWidth += size.X + spaceWidth;

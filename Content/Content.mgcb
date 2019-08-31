@@ -494,6 +494,18 @@
 /processorParam:TextureFormat=Color
 /build:GameJolt.png
 
+#begin InGame/field.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:InGame/field.png
+
 #begin Kick Aim.png
 /importer:TextureImporter
 /processor:TextureProcessor

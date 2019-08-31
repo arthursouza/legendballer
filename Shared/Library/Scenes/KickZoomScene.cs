@@ -51,11 +51,7 @@ namespace Baller.Library.Scenes
 
             Vector2 efeito = (InputInfo.MousePosition - Game.KickBall.Position) / 100;
 
-            if (BallerGame.DebugMode)
-            {
-                //batch.DrawString(Fonts.Arial26, string.Format("({0})", efeito.ToString()), InputInfo.MousePosition, Color.White);
-            }
-
+            
             string text = Game.Simulation.CurrentTime.ToString("00");
             batch.DrawString(Fonts.Arial54, text, new Vector2(20, 0), Color.White);
         }

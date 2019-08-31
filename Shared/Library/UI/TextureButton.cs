@@ -43,7 +43,7 @@ namespace Baller.Library.UI
             batch.Draw(Texture, InnerBounds, Color.White);
         }
 
-        public bool MouseOver()
+        private bool MouseOver()
         {
             return Bounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
         }

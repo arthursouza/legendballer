@@ -95,7 +95,6 @@
     <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt3.xnb" />
     <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt4.xnb" />
     <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt5.xnb" />
-    <AndroidAsset Include="Assets\Content\Crowd\CrowdShirt6.xnb" />
     <AndroidAsset Include="Assets\Content\Flags\Flag Flat.xnb" />
     <AndroidAsset Include="Assets\Content\Flags\Flag Half Stripe.xnb" />
     <AndroidAsset Include="Assets\Content\Flags\Flag Stripe.xnb" />
@@ -134,6 +133,7 @@
     <AndroidAsset Include="Assets\Content\Circle.xnb" />
     <AndroidAsset Include="Assets\Content\GameJolt.xnb" />
     <AndroidAsset Include="Assets\Content\Kick Aim.xnb" />
+    <AndroidAsset Include="Assets\Content\InGame\field.xnb" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>

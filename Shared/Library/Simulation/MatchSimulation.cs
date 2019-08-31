@@ -233,61 +233,61 @@ namespace Baller.Library.Simulation
 
             #endregion
 
-            switch (CurrentSimulationStep)
-            {
-                case SimulationStep.Defensive:
-                    if (playSuccessful)
-                    {
-                        CreateEvent(SimulationStep.Midfield, playSuccessful, game.Narration.GoodDefense);
-                    }
-                    else
-                    {
-                        CreateEvent(SimulationStep.Attack, playSuccessful, game.Narration.BadDefense);
-                    }
-                    break;
-                case SimulationStep.Midfield:
-                    if (playSuccessful)
-                    {
-                        if (possessingTeam == game.PlayerClub.Name && random.Next(1, 101) >= playerChance)
-                        {
-                            CreatePassChance();
-                        }
-                        else
-                        {
-                            CreateEvent(SimulationStep.Attack, playSuccessful, game.Narration.GoodMid);
-                        }
-                    }
-                    else
-                    {
-                        CreateEvent(SimulationStep.Defensive, playSuccessful, game.Narration.BadMid);
-                    }
-                    break;
-                case SimulationStep.Attack:
-                    if (playSuccessful)
-                    {
-                        //CreateEvent(SimulationStep.ShotAttempt, playSuccessful, game.Narration.GoodAttack);
-                        if (possessingTeam == game.PlayerClub.Name && random.Next(1, 101) >= playerChance)
-                        {
+            //switch (CurrentSimulationStep)
+            //{
+            //    case SimulationStep.Defensive:
+            //        if (playSuccessful)
+            //        {
+            //            CreateEvent(SimulationStep.Midfield, playSuccessful, game.Narration.GoodDefense);
+            //        }
+            //        else
+            //        {
+            //            CreateEvent(SimulationStep.Attack, playSuccessful, game.Narration.BadDefense);
+            //        }
+            //        break;
+            //    case SimulationStep.Midfield:
+            //        if (playSuccessful)
+            //        {
+            //            if (possessingTeam == game.PlayerClub.Name && random.Next(1, 101) >= playerChance)
+            //            {
+            //                CreatePassChance();
+            //            }
+            //            else
+            //            {
+            //                CreateEvent(SimulationStep.Attack, playSuccessful, game.Narration.GoodMid);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            CreateEvent(SimulationStep.Defensive, playSuccessful, game.Narration.BadMid);
+            //        }
+            //        break;
+            //    case SimulationStep.Attack:
+            //        if (playSuccessful)
+            //        {
+            //            //CreateEvent(SimulationStep.ShotAttempt, playSuccessful, game.Narration.GoodAttack);
+            //            if (possessingTeam == game.PlayerClub.Name && random.Next(1, 101) >= playerChance)
+            //            {
                             CreateShootingChance();
-                        }
-                        else
-                        {
-                            CreateEvent(SimulationStep.ShotAttempt, playSuccessful, game.Narration.GoodAttack);
-                        }
-                    }
-                    else
-                    {
-                        CreateEvent(SimulationStep.Midfield, playSuccessful, game.Narration.BadAttack);
-                    }
-                    break;
-                case SimulationStep.ShotAttempt:
-                    bool scored = possessingTeam == game.PlayerClub.Name
-                        ? CreateFriendlyShotEvent()
-                        : CreateEnemyShotEvent();
-                    NextStep = scored ? SimulationStep.Midfield : SimulationStep.Defensive;
-                    possession = possession == Team.Away ? Team.Home : Team.Away;
-                    break;
-            }
+            //            }
+            //            else
+            //            {
+            //                CreateEvent(SimulationStep.ShotAttempt, playSuccessful, game.Narration.GoodAttack);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            CreateEvent(SimulationStep.Midfield, playSuccessful, game.Narration.BadAttack);
+            //        }
+            //        break;
+            //    case SimulationStep.ShotAttempt:
+            //        bool scored = possessingTeam == game.PlayerClub.Name
+            //            ? CreateFriendlyShotEvent()
+            //            : CreateEnemyShotEvent();
+            //        NextStep = scored ? SimulationStep.Midfield : SimulationStep.Defensive;
+            //        possession = possession == Team.Away ? Team.Home : Team.Away;
+            //        break;
+            //}
             
         }
 
@@ -392,7 +392,6 @@ namespace Baller.Library.Simulation
         private void CreateShootingChance()
         {
             GameEvents.Add(game.Player.Name + " gets a clear shot.");
-
             GameEvent?.Invoke(SimulationStep.ShotAttempt, null);
         }
 

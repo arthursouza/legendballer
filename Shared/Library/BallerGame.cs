@@ -34,9 +34,16 @@ namespace Baller.Library
 
         public static bool DebugMode = false;
 
+        public static Size NativeResolution = new Size(1080, 1920);
+
+        public static float Scale
+        {
+            get { return WindowSize.X / NativeResolution.Width; }
+        }
+
         Random rand = new Random(DateTime.Now.Millisecond);
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        //SpriteBatch spriteBatch;
         public State CurrentState;
         public static Vector2 WindowSize;
         public Player Player;
@@ -57,10 +64,14 @@ namespace Baller.Library
         }
         public List<Club> Clubs;
         public List<string> Country;
+        
+        public BasicEffect BasicEffect;
 
         // Match data
         public Rectangle GameField;
+        
         public Rectangle GoalBounds;
+        
         public Rectangle GoalInnerBounds;
         public Ball IngameBall;
         public Ball KickBall;
@@ -81,10 +92,7 @@ namespace Baller.Library
         // Field Bounds
         public float GoalInsideGrassArea { get; set; }
         public float GoalHeight { get; set; }
-        public Rectangle LeftBar { get; set; }
-        public Rectangle RightBar { get; set; }
-        public Rectangle SmallAreaBounds { get; set; }
-        public Rectangle GoalShadowBounds { get; set; }
+        
         public Vector2 LastBallPosition { get; set; }
 
         private Transition transition;
@@ -102,7 +110,7 @@ namespace Baller.Library
             
             var resolutionDownscale = 0.5f;
 
-            WindowSize = new Vector2(1080, 1920);
+            WindowSize = NativeResolution.ToVector();
             WindowSize = new Vector2(WindowSize.X * resolutionDownscale, WindowSize.Y * resolutionDownscale);
             
             graphics.PreferredBackBufferWidth = (int)WindowSize.X;
@@ -115,6 +123,11 @@ namespace Baller.Library
 
         protected override void Initialize()
         {
+            BasicEffect = new BasicEffect(graphics.GraphicsDevice)
+            {
+                VertexColorEnabled = true
+            };
+
             Simulation = new MatchSimulation(this);
             Simulation.GameEvent += Simulation_GameEvent;
             CurrentState = State.MainMenu;
@@ -169,7 +182,7 @@ namespace Baller.Library
         /// </summary>
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            //spriteBatch = new SpriteBatch(GraphicsDevice);
 
             LoadGraphics();
 
@@ -210,55 +223,73 @@ namespace Baller.Library
 
         private void SetupFieldSize()
         {
-            var fieldScale = 800f/1200f;
+            // Later should change this to scale resolutin
+            
             var goalBarWidth = 2f;
             var innerGoalHeight = 34f;
-            GoalInsideGrassArea = 35f * fieldScale;
+            GoalInsideGrassArea = 35f * Scale;
 
             GoalHeight = 5f;
             IngameBall.MaxHeight = 12f;
             
-            GameField = new Rectangle((int) ((WindowSize.X - ((float) Graphics.FieldBounds.Width*fieldScale))/2),
-                (int) (WindowSize.Y - ((float) Graphics.FieldBounds.Height*fieldScale)),
-                (int) (Graphics.FieldBounds.Width*fieldScale),
-                (int) (Graphics.FieldBounds.Height*fieldScale));
+            GameField = new Rectangle((int)(Scale * 28),(int)(Scale * 232),(int)(Scale * 1029),(int)(Scale * 1245));
 
-            GoalBounds = new Rectangle(
-                (int) (WindowSize.X/2 - (Graphics.Goal.Width*fieldScale)/2),
-                (int) (GameField.Y - (Graphics.Goal.Height*fieldScale)) + 2,
-                (int) (Graphics.Goal.Width*fieldScale),
-                (int) (Graphics.Goal.Height*fieldScale));
+            GoalBounds = new Rectangle((int)(Scale * 444),(int)(Scale * 158),(int)(Scale * 190),(int)(Scale * 46));
 
-            GoalShadowBounds = new Rectangle(
-                (int) (WindowSize.X/2 - (Graphics.Goal.Width*fieldScale)/2),
-                (int) (GameField.Y - (Graphics.Goal.Height*fieldScale)),
-                (int) (Graphics.GoalShadow.Width*fieldScale),
-                (int) (Graphics.GoalShadow.Height*fieldScale));
+            FieldRegions.GoalShadowBounds = new Rectangle((int)(Scale * 444),(int)(Scale * 159),(int)(Scale * 219),(int)(Scale * 73));
 
-            GoalInnerBounds = new Rectangle(
-                (int) (GoalBounds.X + goalBarWidth),
-                GameField.Y - (int) (innerGoalHeight*fieldScale) + 2,
-                (int) (GoalBounds.Width - (goalBarWidth*2)),
-                (int) (innerGoalHeight*fieldScale));
+            GoalInnerBounds = new Rectangle((int)(Scale * 447),(int)(Scale * 177),(int)(Scale * 184),(int)(Scale * 55));
 
-            SmallAreaBounds = new Rectangle((int) (WindowSize.X/2), (int) GameField.Y, (int) (240*fieldScale),
-                (int) (70*fieldScale));
+            FieldRegions.SmallAreaBounds = new Rectangle((int)(Scale * 418),(int)(Scale * 232),(int)(Scale * 247),(int)(Scale * 70));
 
-            var playableAreaSize = new Vector2(800, 700) * fieldScale;
+
+
+            //GameField = new Rectangle((int) ((WindowSize.X - ((float) Graphics.FieldBounds.Width*fieldScale))/2),
+            //    (int) (WindowSize.Y - ((float) Graphics.FieldBounds.Height*fieldScale)),
+            //    (int) (Graphics.FieldBounds.Width*fieldScale),
+            //    (int) (Graphics.FieldBounds.Height*fieldScale));
+
+            //GoalBounds = new Rectangle(
+            //    (int) (WindowSize.X/2 - (Graphics.Goal.Width*fieldScale)/2),
+            //    (int) (GameField.Y - (Graphics.Goal.Height*fieldScale)) + 2,
+            //    (int) (Graphics.Goal.Width*fieldScale),
+            //    (int) (Graphics.Goal.Height*fieldScale));
+
+            //GoalShadowBounds = new Rectangle(
+            //    (int) (WindowSize.X/2 - (Graphics.Goal.Width*fieldScale)/2),
+            //    (int) (GameField.Y - (Graphics.Goal.Height*fieldScale)),
+            //    (int) (Graphics.GoalShadow.Width*fieldScale),
+            //    (int) (Graphics.GoalShadow.Height*fieldScale));
+
+            //GoalInnerBounds = new Rectangle(
+            //    (int) (GoalBounds.X + goalBarWidth),
+            //    GameField.Y - (int) (innerGoalHeight*fieldScale) + 2,
+            //    (int) (GoalBounds.Width - (goalBarWidth*2)),
+            //    (int) (innerGoalHeight*fieldScale));
+
+            //SmallAreaBounds = new Rectangle((int) (WindowSize.X/2), (int) GameField.Y, (int) (240*fieldScale),
+            //    (int) (70*fieldScale));
+
+            var playableAreaSize = new Vector2(1023,1212) * Scale;
 
             var playableArea = new Rectangle(
-                (int) (GameField.Width - playableAreaSize.X)/2 + GameField.X,
-                (int) (GameField.Height - playableAreaSize.Y)/2 + GameField.Y,
+                31, 
+                236,
                 (int) playableAreaSize.X,
                 (int) playableAreaSize.Y);
 
-            LeftBar = new Rectangle(GoalBounds.X, GameField.Y - 50, 4, 50);
-            RightBar = new Rectangle(GoalBounds.X + GoalBounds.Width - 4, GameField.Y - 50, 4, 50);
+            FieldRegions.LeftBar = new Rectangle(GoalBounds.X, GoalBounds.Y, 4, 50);
+            FieldRegions.RightBar = new Rectangle(GoalBounds.X + GoalBounds.Width - 4, GoalBounds.Y, 4, 50);
 
             FieldRegions.Keeper = new Rectangle(GoalBounds.X + ((GoalBounds.Width / 4) * 2) - GoalBounds.Width / 4, GameField.Y, GoalBounds.Width / 2, 50);
+            
             FieldRegions.Attack = new Rectangle(playableArea.X, playableArea.Y, playableArea.Width, playableArea.Height / 3);
+            
             FieldRegions.MidAttack = new Rectangle(playableArea.X, playableArea.Height / 3 + playableArea.Y, playableArea.Width, playableArea.Height / 3);
+            
             FieldRegions.MidField = new Rectangle(playableArea.X, playableArea.Height / 3 * 2 + playableArea.Y, playableArea.Width, playableArea.Height / 3);
+
+            
         }
         
         private void LoadCountries()
@@ -482,7 +513,7 @@ namespace Baller.Library
                 }
                 else if (InputInfo.MouseState.LeftButton == ButtonState.Pressed)
                 {
-                    MainInput(InputInfo.MousePosition);
+                    Scenes[CurrentState].InputDown(InputInfo.MousePosition);
                 }
             
                 InputInfo.LastMouseState = InputInfo.MouseState;
@@ -519,10 +550,17 @@ namespace Baller.Library
             if (touchCollection.Count > 0)
             {
                 //Only Fire Select Once it's been released
-                if (touchCollection[0].State == TouchLocationState.Moved ||
-                    touchCollection[0].State == TouchLocationState.Pressed)
+                if (touchCollection[0].State == TouchLocationState.Pressed)
                 {
                     Scenes[CurrentState].MainInput(touchCollection[0].Position);
+                }
+                else if(touchCollection[0].State == TouchLocationState.Moved)
+                {
+                    Scenes[CurrentState].InputMoved(touchCollection[0].Position);
+                }
+                else if (touchCollection[0].State == TouchLocationState.Released)
+                {
+                    Scenes[CurrentState].InputReleased(touchCollection[0].Position);
                 }
             }
         }
@@ -549,53 +587,68 @@ namespace Baller.Library
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LightGray);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            Scenes[CurrentState].Draw(spriteBatch);
-            if (transition != null && transition.Animating)
+            GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.DarkSlateBlue, 1.0f, 0);
+            
+            using (var sprite = new SpriteBatch(GraphicsDevice))
             {
-                transition.Draw(spriteBatch);
-            }
+                sprite.Begin();
+                
+                if (Scenes != null && Scenes.ContainsKey(CurrentState))
+                {
+                    try
+                    {
+                        Scenes[CurrentState].Draw(sprite);
 
-            if (MouseCursor == MouseCursor.MouseOver)
-            {
-                IsMouseVisible = false;
-                spriteBatch.Draw(UserInterface.ClickCursor, new Rectangle(InputInfo.MousePositionPoint.X, InputInfo.MousePositionPoint.Y, UserInterface.ClickCursor.Width, UserInterface.ClickCursor.Height), Color.White);
-            }
-            else
-            {
-                IsMouseVisible = true;
-            }
+                        if (MouseCursor == MouseCursor.MouseOver)
+                        {
+                            IsMouseVisible = false;
+                            //spriteBatch.Draw(UserInterface.ClickCursor, new Rectangle(InputInfo.MousePositionPoint.X, InputInfo.MousePositionPoint.Y, UserInterface.ClickCursor.Width, UserInterface.ClickCursor.Height), Color.White);
+                        }
+                        else
+                        {
+                            IsMouseVisible = true;
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        BasicEffect = new BasicEffect(graphics.GraphicsDevice)
+                        {
+                            VertexColorEnabled = true
+                        };
 
-            spriteBatch.End();
+
+                        // check this
+                        // https://stackoverflow.com/questions/16225701/how-to-prevent-graphicsdevice-from-being-disposed-when-applying-new-settings
+                    }
+                }
+                
+                if (transition != null && transition.Animating)
+                {
+                    transition.Draw(sprite);
+                }
+
+                sprite.End();
+            }
+            
             base.Draw(gameTime);
         }
 
         public void ResetBall(BallPositionType position)
         {
-            Rectangle shotPositions = new Rectangle((int)GameField.X + 308, (int)GameField.Y + 196, 338, 196);
-            Rectangle passPositions = new Rectangle((int)GameField.X + 192, (int)GameField.Y + 338, 590, 209);
+            var rand = new Random(DateTime.Now.Millisecond);
+            var ballArea = position == BallPositionType.Kick ? FieldRegions.KickMidfield : FieldRegions.KickAttack;
 
-            Random rand = new Random(DateTime.Now.Millisecond);
+            ballArea = new Rectangle(
+                (int)(ballArea.X * Scale), 
+                (int)(ballArea.Y * Scale), 
+                (int)(ballArea.X * Scale + ballArea.Width * Scale), 
+                (int)(ballArea.Y * Scale + ballArea.Height * Scale));
 
-
-            if (position == BallPositionType.Kick)
+            IngameBall.Position = new Vector2(rand.Next(ballArea.X, ballArea.Width), rand.Next(ballArea.Y, ballArea.Height));
+            
+            while (Players.Any(p => (p.Position - IngameBall.Position).Length() < 60))
             {
-                IngameBall.Position = new Vector2(
-                    rand.Next(shotPositions.X, shotPositions.X + shotPositions.Width),
-                    rand.Next(shotPositions.Y, shotPositions.Y + shotPositions.Height));
-            }
-            else
-            {
-                IngameBall.Position = new Vector2(
-                    rand.Next(passPositions.X, passPositions.X + passPositions.Width),
-                    rand.Next(passPositions.Y, passPositions.Y + passPositions.Height));
-            }
-
-            for (int i = 0; i < Players.Count; i++)
-            {
-                if ((Players[i].Position - IngameBall.Position).Length() < 60)
-                    ResetBall(position);
+                IngameBall.Position = new Vector2(rand.Next(ballArea.X, ballArea.Width), rand.Next(ballArea.Y, ballArea.Height));
             }
 
             IngameBall.Kicked = false;
@@ -803,14 +856,13 @@ namespace Baller.Library
             }
         }
 
-        public void DrawField()
+        public void DrawField(SpriteBatch batch)
         {
-            spriteBatch.Draw(Graphics.FieldBackground, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
-            spriteBatch.Draw(Graphics.FieldBounds, GameField, Color.White);
-            spriteBatch.Draw(Graphics.GoalShadow, GoalShadowBounds, Color.White);
-            spriteBatch.Draw(Graphics.Goal, GoalBounds, Color.White);
+            batch.Draw(Graphics.NewField, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
+            batch.Draw(Graphics.GoalShadow, FieldRegions.GoalShadowBounds, Color.White);
+            batch.Draw(Graphics.Goal, GoalBounds, Color.White);
 
-            Players.ForEach(p => spriteBatch.Draw(Graphics.PlayerMarker,
+            Players.ForEach(p => batch.Draw(Graphics.PlayerMarker,
                         new Rectangle(
                             (int)(p.Position.X - Graphics.PlayerMarker.Width / 2),
                             (int)(p.Position.Y - Graphics.PlayerMarker.Height / 2),
@@ -819,18 +871,18 @@ namespace Baller.Library
                             (p.Type == PlayerType.Friend ? Color.Blue : Color.Red) * .4f));
 
             if (!BallInsideGoal())
-            { spriteBatch.Draw(Graphics.GoalTopNet, GoalBounds, Color.White); }
+            { batch.Draw(Graphics.GoalTopNet, GoalBounds, Color.White); }
 
             List<GameObject> renderList = new List<GameObject>();
             renderList.Add(IngameBall);
             renderList.AddRange(Players);
             renderList.Sort();
-            renderList.ForEach(o => o.Draw(spriteBatch));
+            renderList.ForEach(o => o.Draw(batch));
 
             //Players.ForEach(p => spriteBatch.Draw(Graphics.Circle, new Rectangle((int)(p.Position.X - p.VisionRange), (int)(p.Position.Y - p.VisionRange), (int)(p.VisionRange * 2), (int)p.VisionRange * 2), Color.Orange));
 
             if(BallInsideGoal())
-            { spriteBatch.Draw(Graphics.GoalTopNet, GoalBounds, Color.White);}
+            { batch.Draw(Graphics.GoalTopNet, GoalBounds, Color.White);}
 
             //spriteBatch.Draw(Graphics.Selected, GoalBounds, Color.Yellow);
             //spriteBatch.Draw(Graphics.Selected, new Rectangle(GoalBounds.X, GoalBounds.Y + GoalBounds.Height - (int)GoalInsideGrassArea, GoalBounds.Width, (int)GoalInsideGrassArea), Color.Orange);
@@ -849,7 +901,7 @@ namespace Baller.Library
             }
 
             string text = Simulation.CurrentTime.ToString("00");
-            spriteBatch.DrawString(Fonts.Arial54, text, new Vector2(20, 0), Color.White);
+            batch.DrawString(Fonts.Arial54, text, new Vector2(20, 0), Color.White);
         }
 
         public bool BallInsideGoal()

@@ -373,18 +373,6 @@
 /processorParam:TextureFormat=Color
 /build:Crowd/CrowdShirt5.png
 
-#begin Crowd/CrowdShirt6.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Crowd/CrowdShirt6.png
-
 #begin Data/Countries
 /importer:
 /processor:
@@ -493,6 +481,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:GameJolt.png
+
+#begin InGame/field.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:InGame/field.png
 
 #begin Kick Aim.png
 /importer:TextureImporter

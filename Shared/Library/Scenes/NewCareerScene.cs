@@ -11,7 +11,7 @@ namespace Baller.Library.Scenes
         Textbox txtName;
         MessageBox alertEmptyName;
 
-        Vector2 nameLabelPos = new Vector2(40, 310);
+        Vector2 nameLabelPos = new Vector2(40, 330);
         Vector2 nationalityLabelPos = new Vector2(40, 315);
 
         public NewCareerScene(BallerGame game)
@@ -26,7 +26,7 @@ namespace Baller.Library.Scenes
                 Color.White, 
                 UserInterface.ButtonGreen);
 
-            txtName = new Textbox(nameLabelPos + new Vector2(Fonts.Arial36.MeasureString("Name").X + 10, 0));
+            txtName = new Textbox(nameLabelPos + new Vector2(0, Fonts.Arial36.MeasureString("Name").Y + 15));
             txtName.Text = "Brazuca";
 
             alertEmptyName = new MessageBox();
@@ -45,9 +45,10 @@ namespace Baller.Library.Scenes
         {
             batch.Draw(Graphics.BlankBackground, BallerGame.WindowBounds, Color.White);
             txtName.Draw(batch);
+            
             batch.DrawString(Fonts.Arial54, "A new career", new Vector2(40, 80), Color.White);
             batch.DrawString(Fonts.Arial26, "Create a new character.", new Vector2(40, 180), Color.White);
-            batch.DrawString(Fonts.Arial26, "Start at the age of 16 on a random club.", new Vector2(40, 230), Color.White);
+            batch.DrawString(Fonts.Arial26, Fonts.WrapText("Start at the age of 16 on a random club.", 450, Fonts.Arial26), new Vector2(40, 230), Color.White);
             batch.DrawString(Fonts.Arial36, "Name", nameLabelPos, Color.White);
             acceptButton.Draw(batch);
             
@@ -84,7 +85,7 @@ namespace Baller.Library.Scenes
                 }
                 return;
             }
-            else if (txtName.MouseOver)
+            else if (txtName.Pressed())
             {
                 txtName.HasFocus = true;
                 return;

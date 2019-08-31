@@ -63,8 +63,7 @@ namespace Baller.Library.Menu
                 Color.White);
         }
 
-        
-        public bool MouseOver()
+        private bool MouseOver()
         {
             return Bounds.Contains((int)InputInfo.MousePosition.X, (int)InputInfo.MousePosition.Y);
         }
