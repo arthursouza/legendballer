@@ -22,7 +22,7 @@ namespace Baller.Library
         public static Vector2 DefaultWindowSize = new Vector2(800, 400);
         public static Vector2 DefaultWindowPosition;
 
-        public Button OkButton;
+        public TextureButton OkButton;
         public Button CancelButton;
 
         public string Text;
@@ -48,21 +48,17 @@ namespace Baller.Library
             if (type == MessageBoxButtonType.Ok)
             {
                 // Button origin is the middle
-                OkButton = new Button("Ok",
+                OkButton = new TextureButton(UserInterface.ButtonBlue, "Ok",
                     new Vector2(
                         DefaultWindowPosition.X + DefaultWindowSize.X/2,
                         DefaultWindowPosition.Y + DefaultWindowSize.Y - marginBottom),
-                    Color.White, 
-                    UserInterface.ButtonBlue,
                     true);
             }
             else if(type == MessageBoxButtonType.OkCancel)
             {
-                OkButton = new Button("Ok",
+                OkButton = new TextureButton(UserInterface.ButtonBlue, "Ok",
                     new Vector2(DefaultWindowPosition.X + DefaultWindowSize.X / 2 - (buttonWidth + (horizSpace / 4)),
-                        DefaultWindowPosition.Y + DefaultWindowSize.Y - marginBottom),
-                    Color.White,
-                    UserInterface.ButtonBlue);
+                        DefaultWindowPosition.Y + DefaultWindowSize.Y - marginBottom));
 
                 CancelButton = new Button("Cancel",
                     new Vector2(
@@ -77,11 +73,10 @@ namespace Baller.Library
         {
             font = Fonts.Arial36;
             Visible = false;
-            OkButton = new Button("Ok",
+            OkButton = new TextureButton(UserInterface.ButtonBlue, "Ok",
                 new Vector2(
                     DefaultWindowPosition.X + DefaultWindowSize.X / 2,
-                    DefaultWindowPosition.Y + DefaultWindowSize.Y - (UserInterface.ButtonBlue.Height/2 + 20)),
-                    Color.White, UserInterface.ButtonBlue);
+                    DefaultWindowPosition.Y + DefaultWindowSize.Y - (UserInterface.ButtonBlue.Height/2 + 20)));
         }
         
         public void Draw(SpriteBatch batch)

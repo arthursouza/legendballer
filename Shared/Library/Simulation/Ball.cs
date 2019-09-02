@@ -80,7 +80,8 @@ namespace Baller.Library.Simulation
 
             if (Animated)
             {
-                Rectangle sourceRect = new Rectangle(50 * currentFrame, 0, 50, 50);
+                var frameWidth = Texture.Width / frames;
+                Rectangle sourceRect = new Rectangle(frameWidth * currentFrame, 0, frameWidth, frameWidth);
                 batch.Draw(Texture, dest, sourceRect, Color.White);
             }
             else

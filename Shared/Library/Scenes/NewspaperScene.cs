@@ -16,7 +16,7 @@ namespace Baller.Library.Scenes
 
             continueButton = new Button(
                 "Continue", 
-                new Vector2(BallerGame.WindowBounds.Width - marginRight, BallerGame.WindowBounds.Height - marginBottom),
+                UserInterface.BottomRightPosition,
                 Color.White,
                 UserInterface.ButtonGreen);
 

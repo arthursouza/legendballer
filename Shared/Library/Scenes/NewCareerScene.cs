@@ -20,8 +20,7 @@ namespace Baller.Library.Scenes
                 "Go Ahead",
                 new Vector2(
                     BallerGame.NativeResolution.Width - (UserInterface.ButtonGreen.Width + 64),
-                    BallerGame.NativeResolution.Height - (UserInterface.ButtonGreen.Height/2 + 64))
-                );
+                    BallerGame.NativeResolution.Height - (UserInterface.ButtonGreen.Height/2 + 64)));
 
             txtName = new Textbox(nameLabelPos + new Vector2(0, Fonts.Arial36.MeasureString("Name").Y + 15));
             txtName.Text = "Brazuca";

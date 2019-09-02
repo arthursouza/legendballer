@@ -21,7 +21,7 @@ namespace Baller.Library.Scenes
 
             btnKickOff = new Button(
                 "Kick Off", 
-                new Vector2(BallerGame.WindowBounds.Width - (UserInterface.ButtonGreen.Width + windowPadding), BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)),
+                UserInterface.BottomRightPosition,
                 Color.White, 
                 UserInterface.ButtonGreen);
         }

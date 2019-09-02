@@ -19,11 +19,8 @@ namespace Baller.Library.Scenes
             var buttonSize = new Vector2(UserInterface.ButtonGreen.Width, UserInterface.ButtonGreen.Height/2);
             var buttonScreenPadding = 15;
 
-            signButton = new TextureButton(UserInterface.ButtonGreen, "Sign",
-                new Vector2(BallerGame.WindowBounds.Width/2 - (buttonSize.X + buttonScreenPadding), BallerGame.WindowBounds.Height - (buttonSize.Y + buttonScreenPadding)));
-            
-            rejectButton = new TextureButton(UserInterface.ButtonRed,"Reject",
-                new Vector2(BallerGame.WindowBounds.Width / 2 + buttonScreenPadding, BallerGame.WindowBounds.Height - (buttonSize.Y + buttonScreenPadding)));
+            signButton = new TextureButton(UserInterface.ButtonGreen, "Sign", UserInterface.BottomCenterRightPosition);
+            rejectButton = new TextureButton(UserInterface.ButtonRed,"Reject", UserInterface.BottomCenterLeftPosition);
 
             firstContractMessage = new MessageBox("You must accept your first contract.", Color.Black, Fonts.Arial26, MessageBox.MessageBoxButtonType.Ok);
             firstContractMessage.Close += new MessageBox.CloseHandler(firstContractMessage_Close);

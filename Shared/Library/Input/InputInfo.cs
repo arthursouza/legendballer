@@ -11,6 +11,7 @@ namespace Baller.Library.Input
         public static MouseState LastMouseState;
         public static KeyboardState KeyboardState;
         public static KeyboardState LastKeyboardState;
+        public static TouchCollection TouchCollection;
 
         private static Vector2 Margin
         {
@@ -32,15 +33,12 @@ namespace Baller.Library.Input
         {
             #if ANDROID
 
-            TouchCollection touchCollection = TouchPanel.GetState();
-
-            if (touchCollection.Count > 0)
+            if (TouchCollection.Count > 0)
             {
                 //Only Fire Select Once it's been released
-                if (touchCollection[0].State == TouchLocationState.Moved ||
-                    touchCollection[0].State == TouchLocationState.Pressed)
+                if (TouchCollection[0].State != TouchLocationState.Invalid)
                 {
-                    return (touchCollection[0].Position + Margin) / BallerGame.Scale;
+                    return (TouchCollection[0].Position + Margin) / BallerGame.Scale;
                 }
             }
             #endif

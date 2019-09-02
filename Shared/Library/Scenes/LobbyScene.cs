@@ -46,28 +46,11 @@ namespace Baller.Library.Scenes
 
                 lobbyOptions[i].UpdatePosition(new Vector2(posX, posY));
             }
-
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    lobbyOptions[i].UpdatePosition(new Vector2(
-            //        buttonSpacing + (buttonSpacing * i) + (lobbyButtonSize.X * i),
-            //        BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2 + windowPadding + lobbyButtonSize.Y)
-            //        ));
-            //}
-
-            //for (int i = 3; i < 6; i++)
-            //{
-            //    var iAlt = i - 2;
-            //    lobbyOptions[i].UpdatePosition(new Vector2(
-            //        buttonSpacing + (buttonSpacing * iAlt) + (lobbyButtonSize.X * iAlt),
-            //        BallerGame.WindowBounds.Height - ((windowPadding * 3) + (lobbyButtonSize.Y * 2) + UserInterface.ButtonGreen.Height / 2)
-            //        ));
-            //}
-
+            
             btnNextGame = new TextureButton(
                 UserInterface.ButtonGreen, 
                 UserInterface.LabelNextGame, 
-                new Vector2(BallerGame.WindowBounds.Width - (windowPadding + UserInterface.ButtonGreen.Width), BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)));
+                UserInterface.BottomRightPosition);
 
             options.AddRange(lobbyOptions);
             Controls.AddRange(lobbyOptions);

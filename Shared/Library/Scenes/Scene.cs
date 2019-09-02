@@ -52,27 +52,12 @@ namespace Baller.Library
         public virtual void MainInput(Vector2 pos)
         {
         }
-
-        public virtual void SecondInput(Vector2 pos)
-        {
-        }
-
+        
         public virtual void InputDown(Vector2 pos)
         {
-
         }
-
-        public virtual void InputUp(Vector2 pos)
-        {
-
-        }
-
+        
         public virtual void InputMoved(Vector2 position)
-        {
-            
-        }
-
-        public virtual void InputReleased(Vector2 position)
         {
         }
     }
