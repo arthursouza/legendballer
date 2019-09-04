@@ -41,6 +41,10 @@ namespace Baller.Library.Scenes
         
         public override void Draw(SpriteBatch batch)
         {
+            batch.Draw(Graphics.NewField, BallerGame.WindowBounds, Color.White);
+            batch.Draw(Graphics.GoalShadow, FieldRegions.GoalShadowBounds, Color.White);
+            batch.Draw(Graphics.Goal, FieldRegions.GoalBounds, Color.White);
+
             Game.DrawField(batch);
 
             AnimateResult(batch);
@@ -87,7 +91,7 @@ namespace Baller.Library.Scenes
             bool anythingHappened = false;
 
 
-            if (ball.Height <= Game.GoalHeight)
+            if (ball.Height <= FieldRegions.GoalHeight)
             {
                 if (ball.CollisionBounds.Intersects(FieldRegions.LeftBar))
                 {
@@ -182,27 +186,27 @@ namespace Baller.Library.Scenes
                 // Enquanto animo resultado, se for um gol, deixo a bola ser animada até bater no fundo da rede
                 if (result == KickResult.Goal || result == KickResult.Assist)
                 {
-                    if (Game.IngameBall.Position.Y - Game.IngameBall.CollisionRadius < Game.GoalBounds.Y + Game.GoalBounds.Height - Game.GoalInsideGrassArea)
+                    if (Game.IngameBall.Position.Y - Game.IngameBall.CollisionRadius < FieldRegions.GoalBounds.Y + FieldRegions.GoalBounds.Height - FieldRegions.GoalInsideGrassArea)
                     {
-                        Game.IngameBall.Position.Y = Game.IngameBall.CollisionRadius + Game.GoalBounds.Y + Game.GoalBounds.Height - Game.GoalInsideGrassArea;
+                        Game.IngameBall.Position.Y = Game.IngameBall.CollisionRadius + FieldRegions.GoalBounds.Y + FieldRegions.GoalBounds.Height - FieldRegions.GoalInsideGrassArea;
                         Game.IngameBall.Speed = 0f;
                     }
-                    else if (Game.IngameBall.Position.X + Game.IngameBall.CollisionRadius < Game.GoalInnerBounds.X)
+                    else if (Game.IngameBall.Position.X + Game.IngameBall.CollisionRadius < FieldRegions.GoalInnerBounds.X)
                     {
-                        Game.IngameBall.Position.X = Game.GoalInnerBounds.X + Game.IngameBall.CollisionRadius;
+                        Game.IngameBall.Position.X = FieldRegions.GoalInnerBounds.X + Game.IngameBall.CollisionRadius;
                     }
                     else if (Game.IngameBall.Position.X + Game.IngameBall.CollisionRadius >
-                             Game.GoalInnerBounds.X + Game.GoalInnerBounds.Width)
+                             FieldRegions.GoalInnerBounds.X + FieldRegions.GoalInnerBounds.Width)
                     {
-                        Game.IngameBall.Position.X = Game.GoalInnerBounds.X + Game.GoalInnerBounds.Width -
+                        Game.IngameBall.Position.X = FieldRegions.GoalInnerBounds.X + FieldRegions.GoalInnerBounds.Width -
                                                      Game.IngameBall.CollisionRadius;
                     }
 
                     // Bounce ball off the top of the goal net
                     
-                    if (ball.Position.Y - ball.CollisionRadius - ball.DrawingHeight < Game.GoalBounds.Y)
+                    if (ball.Position.Y - ball.CollisionRadius - ball.DrawingHeight < FieldRegions.GoalBounds.Y)
                     {
-                        //ball.Position.Y = Game.GoalBounds.Y + ball.CollisionRadius + ball.DrawingHeight;
+                        //ball.Position.Y = FieldRegions.GoalBounds.Y + ball.CollisionRadius + ball.DrawingHeight;
                         Game.IngameBall.VerticalForce *= -0.7f;
                     }
                 }
@@ -233,7 +237,7 @@ namespace Baller.Library.Scenes
             result = KickResult.Pass;
             Game.IngameBall.Speed = 0f;
 
-            Vector2 goal = new Vector2(Game.GoalBounds.X + Game.GoalBounds.Width/2, Game.GoalBounds.Y);
+            Vector2 goal = new Vector2(FieldRegions.GoalBounds.X + FieldRegions.GoalBounds.Width/2, FieldRegions.GoalBounds.Y);
             if ((p.Position - goal).Length() < 250)
             {
                 if (p.Position.Y < Game.IngameBall.Position.Y + Game.IngameBall.CollisionRadius)
@@ -242,7 +246,7 @@ namespace Baller.Library.Scenes
                 }
                 Random r = new Random(DateTime.Now.Millisecond);
 
-                Vector2 kickTarget = new Vector2(r.Next(Game.GoalBounds.X, Game.GoalBounds.X + Game.GoalBounds.Width), Game.GoalBounds.Y);
+                Vector2 kickTarget = new Vector2(r.Next(FieldRegions.GoalBounds.X, FieldRegions.GoalBounds.X + FieldRegions.GoalBounds.Width), FieldRegions.GoalBounds.Y);
                 Vector2 kickDirection = p.Position - kickTarget;
                 kickDirection *= -1;
                 if (kickDirection != Vector2.Zero)

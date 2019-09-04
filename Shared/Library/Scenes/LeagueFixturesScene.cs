@@ -11,8 +11,8 @@ namespace Baller.Library.Scenes
     public class LeagueFixturesScene : Scene
     {
         List<Match> matches;
-        Button btnFixtureStandings;
-        Button btnBack;
+        TextureButton btnFixtureStandings;
+        TextureButton btnBack;
         int round;
         bool standings = true;
         SpriteFont font;
@@ -40,19 +40,19 @@ namespace Baller.Library.Scenes
             conGoals = new Vector2(620, windowPadding);
             goalRes = new Vector2(690, windowPadding);
 
-            btnFixtureStandings = new Button("Fixtures", 
+            btnFixtureStandings = new TextureButton(
+                UserInterface.ButtonGreen,
+                "Fixtures", 
                 new Vector2(
                     BallerGame.WindowBounds.Width - (windowPadding + UserInterface.ButtonGreen.Width), 
-                    BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)), 
-                Color.White, 
-                UserInterface.ButtonGreen);
+                    BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)));
             
-            btnBack = new Button("Lobby", 
+            btnBack = new TextureButton(
+                UserInterface.ButtonGreen,
+                "Lobby", 
                 new Vector2(
                     windowPadding,
-                    BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)),
-                Color.White, 
-                UserInterface.ButtonGreen);
+                    BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)));
             
             font = Fonts.Arial26;
             
@@ -137,9 +137,9 @@ namespace Baller.Library.Scenes
                 standings = !standings;
 
                 if (standings)
-                    btnFixtureStandings.Label = "Fixtures";
+                    btnFixtureStandings.Text = "Fixtures";
                 else
-                    btnFixtureStandings.Label = "Standings";
+                    btnFixtureStandings.Text = "Standings";
             }
             base.MainInput(pos);
         }

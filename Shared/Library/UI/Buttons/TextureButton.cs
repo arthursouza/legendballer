@@ -43,7 +43,7 @@ namespace Baller.Library.UI
 
         public void Draw(SpriteBatch batch)
         {
-            var sourceRect = new Rectangle(0, MouseOver() ? BackgroundTexture.Height / 2 : 0, BackgroundTexture.Width, BackgroundTexture.Height / 2);
+            var sourceRect = new Rectangle(0, Pressed() ? BackgroundTexture.Height / 2 : 0, BackgroundTexture.Width, BackgroundTexture.Height / 2);
 
             batch.Draw(BackgroundTexture, Bounds, sourceRect, Color.White);
             

@@ -8,7 +8,7 @@ namespace Baller.Library.Scenes
 {
     public class SimulationScene : Scene
     {
-        Button btnKickOff;
+        TextureButton btnKickOff;
 
         private int currentEventIndex = -1;
         private float eventDelay = 1000;
@@ -19,11 +19,10 @@ namespace Baller.Library.Scenes
         {
             this.Game = game;
 
-            btnKickOff = new Button(
+            btnKickOff = new TextureButton(
+                UserInterface.ButtonGreen,
                 "Kick Off", 
-                UserInterface.BottomRightPosition,
-                Color.White, 
-                UserInterface.ButtonGreen);
+                UserInterface.BottomRightPosition);
         }
 
         public override void Draw(SpriteBatch batch)
@@ -102,10 +101,10 @@ namespace Baller.Library.Scenes
             Game.Simulation.Update(gameTime);
 
             if (Game.Simulation.Period == MatchPeriod.HalfTime || Game.Simulation.Period == MatchPeriod.BeforeGame)
-                btnKickOff.Label = "Kick Off";
+                btnKickOff.Text = "Kick Off";
 
             if (Game.Simulation.Period == MatchPeriod.EndGame)
-                btnKickOff.Label = "Lobby";
+                btnKickOff.Text = "Lobby";
 
             UpdateGameEvents(gameTime);
         }

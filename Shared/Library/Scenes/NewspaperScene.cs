@@ -6,7 +6,7 @@ namespace Baller.Library.Scenes
 {
     public class NewspaperScene : Scene
     {
-        Button continueButton;
+        TextureButton continueButton;
 
         public NewspaperScene(BallerGame game)
             : base(game)
@@ -14,11 +14,9 @@ namespace Baller.Library.Scenes
             var marginBottom = 15 + UserInterface.ButtonGreen.Height/2;
             var marginRight = 15 + UserInterface.ButtonGreen.Width;
 
-            continueButton = new Button(
+            continueButton = new TextureButton(UserInterface.ButtonGreen,
                 "Continue", 
-                UserInterface.BottomRightPosition,
-                Color.White,
-                UserInterface.ButtonGreen);
+                UserInterface.BottomRightPosition);
 
             Controls.Add(continueButton);
         }

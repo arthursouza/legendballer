@@ -10,7 +10,7 @@ namespace Baller.Library.Scenes
         private SpriteFont textFont;
         private SpriteFont titleFont;
 
-        Button btnLobby;
+        TextureButton btnLobby;
         private Vector2 textPosition;
         private Color labelColor;
         private int valuePadding;
@@ -23,13 +23,10 @@ namespace Baller.Library.Scenes
             textFont = Fonts.Arial20;
             titleFont = Fonts.Arial26;
 
-            btnLobby = new Button(
+            btnLobby = new TextureButton(
+                UserInterface.ButtonGreen, 
                 "Lobby",
-                new Vector2(
-                   windowPadding,
-                    BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height / 2)),
-                Color.White,
-                UserInterface.ButtonGreen);
+                new Vector2(windowPadding, BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height / 2)));
 
             labelColor = Color.White;
             valuePadding = 400;

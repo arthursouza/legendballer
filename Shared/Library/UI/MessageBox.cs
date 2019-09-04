@@ -23,7 +23,7 @@ namespace Baller.Library
         public static Vector2 DefaultWindowPosition;
 
         public TextureButton OkButton;
-        public Button CancelButton;
+        public TextureButton CancelButton;
 
         public string Text;
 
@@ -32,7 +32,7 @@ namespace Baller.Library
 
         public MessageBox(string text, Color textColor, SpriteFont font, MessageBoxButtonType type)
         {
-            var marginBottom = 110;
+            var marginBottom = 32;
             
             this.Text = text;
             this.TextColor = textColor;
@@ -51,21 +51,21 @@ namespace Baller.Library
                 OkButton = new TextureButton(UserInterface.ButtonBlue, "Ok",
                     new Vector2(
                         DefaultWindowPosition.X + DefaultWindowSize.X/2,
-                        DefaultWindowPosition.Y + DefaultWindowSize.Y - marginBottom),
+                        DefaultWindowPosition.Y + DefaultWindowSize.Y - (UserInterface.ButtonBlue.Height/2f + marginBottom)),
                     true);
             }
             else if(type == MessageBoxButtonType.OkCancel)
             {
                 OkButton = new TextureButton(UserInterface.ButtonBlue, "Ok",
                     new Vector2(DefaultWindowPosition.X + DefaultWindowSize.X / 2 - (buttonWidth + (horizSpace / 4)),
-                        DefaultWindowPosition.Y + DefaultWindowSize.Y - marginBottom));
+                        DefaultWindowPosition.Y + DefaultWindowSize.Y - (UserInterface.ButtonBlue.Height/2f + marginBottom)));
 
-                CancelButton = new Button("Cancel",
+                CancelButton = new TextureButton(
+                    UserInterface.ButtonBlue,
+                    "Cancel",
                     new Vector2(
                         DefaultWindowPosition.X + DefaultWindowSize.X / 2 + (horizSpace / 4),
-                        DefaultWindowPosition.Y + DefaultWindowSize.Y - marginBottom),
-                    Color.White,
-                    UserInterface.ButtonBlue);
+                        DefaultWindowPosition.Y + DefaultWindowSize.Y - (UserInterface.ButtonBlue.Height/2f + marginBottom)));
             }
         }
 

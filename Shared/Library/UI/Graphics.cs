@@ -48,9 +48,7 @@ namespace Baller.Library
 
             NewspaperChampion = content.Load<Texture2D>("Backgrounds/Jornal Championship");
             BlankBackground = content.Load<Texture2D>("Backgrounds/Light Blue Bg");
-
-            FieldBounds = content.Load<Texture2D>("Backgrounds/FieldBounds");
-            FieldBackground = content.Load<Texture2D>("Backgrounds/Field");
+            BallHelp = content.Load<Texture2D>("ball_help");
             Goal = content.Load<Texture2D>("Backgrounds/Goal");
             GoalTopNet = content.Load<Texture2D>("Backgrounds/GoalTopNet");
             GoalShadow = content.Load<Texture2D>("Backgrounds/GoalShadow");
@@ -97,6 +95,8 @@ namespace Baller.Library
             //PlayerMarker = content.Load<Texture2D>("Player/PlayerMarker");
             //Selected = content.Load<Texture2D>("UI/Selected");
         }
+
+        public static Texture2D BallHelp { get; set; }
 
         public static Texture2D IngameBallShadow { get; set; }
 

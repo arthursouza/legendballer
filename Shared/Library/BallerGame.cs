@@ -75,9 +75,6 @@ namespace Baller.Library
         // Match data
         public Rectangle GameField;
         
-        public Rectangle GoalBounds;
-        
-        public Rectangle GoalInnerBounds;
         public Ball IngameBall;
         public Ball KickBall;
         public List<Character> Players;
@@ -93,11 +90,6 @@ namespace Baller.Library
         // Kick Information
         public float KickPower;
         public Vector2 KickDirection;
-
-        // Field Bounds
-        public float GoalInsideGrassArea { get; set; }
-        public float GoalHeight { get; set; }
-        
         public Vector2 LastBallPosition { get; set; }
 
         private Transition transition;
@@ -679,6 +671,9 @@ namespace Baller.Library
         
         public void SetGameResolution(int width, int height)
         {
+            if (height > 1920)
+                height = 1920;
+
             float factor = (float)NativeResolution.Height / NativeResolution.Width;
 
             WindowSize = new Vector2(height / factor, height);
@@ -693,15 +688,14 @@ namespace Baller.Library
             var goalBarWidth = 2f;
             var innerGoalHeight = 34f;
             
-            GoalInsideGrassArea = 35f * Scale;
-            GoalHeight = 5f;
-            IngameBall.MaxHeight = 12f;
+            FieldRegions.GoalInsideGrassArea = 35f * Scale;
+            FieldRegions.GoalHeight = 5f;
+            IngameBall.MaxHeight = 24f;
             
             GameField = new Rectangle((int)(28),(int)(232),(int)(1029),(int)(1245));
-            GoalBounds = new Rectangle((int)(444),(int)(158),(int)(190),(int)(46));
-
+            FieldRegions.GoalBounds = new Rectangle((int)(444),(int)(161),(int)(190),(int)(73));
             FieldRegions.GoalShadowBounds = new Rectangle((int)(444),(int)(159),(int)(219),(int)(73));
-            GoalInnerBounds = new Rectangle((int)(447),(int)(177),(int)(184),(int)(55));
+            FieldRegions.GoalInnerBounds = new Rectangle((int)(447),(int)(177),(int)(184),(int)(55));
             FieldRegions.SmallAreaBounds = new Rectangle((int)(418),(int)(232),(int)(247),(int)(70));
 
             var playableAreaSize = new Vector2(1023,1212);
@@ -711,9 +705,9 @@ namespace Baller.Library
                 (int) playableAreaSize.X,
                 (int) playableAreaSize.Y);
 
-            FieldRegions.LeftBar = new Rectangle(GoalBounds.X, GoalBounds.Y, 4, 50);
-            FieldRegions.RightBar = new Rectangle(GoalBounds.X + GoalBounds.Width - 4, GoalBounds.Y, 4, 50);
-            FieldRegions.Keeper = new Rectangle(GoalBounds.X + ((GoalBounds.Width / 4) * 2) - GoalBounds.Width / 4, GameField.Y, GoalBounds.Width / 2, 50);
+            FieldRegions.LeftBar = new Rectangle(FieldRegions.GoalBounds.X, FieldRegions.GoalBounds.Y, 4, 50);
+            FieldRegions.RightBar = new Rectangle(FieldRegions.GoalBounds.X + FieldRegions.GoalBounds.Width - 4, FieldRegions.GoalBounds.Y, 4, 50);
+            FieldRegions.Keeper = new Rectangle(FieldRegions.GoalBounds.X + ((FieldRegions.GoalBounds.Width / 4) * 2) - FieldRegions.GoalBounds.Width / 4, GameField.Y, FieldRegions.GoalBounds.Width / 2, 50);
             FieldRegions.Attack = new Rectangle(playableArea.X, playableArea.Y, playableArea.Width, playableArea.Height / 3);
             FieldRegions.MidAttack = new Rectangle(playableArea.X, playableArea.Height / 3 + playableArea.Y, playableArea.Width, playableArea.Height / 3);
             FieldRegions.MidField = new Rectangle(playableArea.X, playableArea.Height / 3 * 2 + playableArea.Y, playableArea.Width, playableArea.Height / 3);
@@ -852,10 +846,6 @@ namespace Baller.Library
 
         public void DrawField(SpriteBatch batch)
         {
-            batch.Draw(Graphics.NewField, BallerGame.WindowBounds, Color.White);
-            batch.Draw(Graphics.GoalShadow, FieldRegions.GoalShadowBounds, Color.White);
-            batch.Draw(Graphics.Goal, GoalBounds, Color.White);
-
             Players.ForEach(p => batch.Draw(Graphics.PlayerMarker,
                         new Rectangle(
                             (int)(p.Position.X - Graphics.PlayerMarker.Width / 2f),
@@ -865,7 +855,9 @@ namespace Baller.Library
                             (p.Type == PlayerType.Friend ? Color.Blue : Color.Red) * .4f));
 
             if (!BallInsideGoal())
-            { batch.Draw(Graphics.GoalTopNet, GoalBounds, Color.White); }
+            {
+                batch.Draw(Graphics.GoalTopNet, FieldRegions.GoalBounds, Color.White);
+            }
 
             List<GameObject> renderList = new List<GameObject>();
             renderList.Add(IngameBall);
@@ -875,8 +867,10 @@ namespace Baller.Library
 
             //Players.ForEach(p => spriteBatch.Draw(Graphics.Circle, new Rectangle((int)(p.Position.X - p.VisionRange), (int)(p.Position.Y - p.VisionRange), (int)(p.VisionRange * 2), (int)p.VisionRange * 2), Color.Orange));
 
-            if(BallInsideGoal())
-            { batch.Draw(Graphics.GoalTopNet, GoalBounds, Color.White);}
+            if (BallInsideGoal())
+            {
+                batch.Draw(Graphics.GoalTopNet, FieldRegions.GoalBounds, Color.White);
+            }
 
             //spriteBatch.Draw(Graphics.Selected, GoalBounds, Color.Yellow);
             //spriteBatch.Draw(Graphics.Selected, new Rectangle(GoalBounds.X, GoalBounds.Y + GoalBounds.Height - (int)GoalInsideGrassArea, GoalBounds.Width, (int)GoalInsideGrassArea), Color.Orange);
@@ -900,11 +894,11 @@ namespace Baller.Library
 
         public bool BallInsideGoal()
         {
-            var belowTopBar = IngameBall.Height < GoalHeight;
+            var belowTopBar = IngameBall.Height < FieldRegions.GoalHeight;
             var pastEndLine = IngameBall.Position.Y + IngameBall.CollisionRadius < GameField.Y;
             //var insideGoalArea = ball.Position.Y - ball.CollisionRadius >= Game.GoalInnerBounds.Y;
 
-            var betweenTwoBars = (IngameBall.Position.X - IngameBall.CollisionRadius > GoalBounds.X && IngameBall.Position.X + IngameBall.CollisionRadius < GoalBounds.X + GoalBounds.Width);
+            var betweenTwoBars = (IngameBall.Position.X - IngameBall.CollisionRadius > FieldRegions.GoalBounds.X && IngameBall.Position.X + IngameBall.CollisionRadius < FieldRegions.GoalBounds.X + FieldRegions.GoalBounds.Width);
 
             return belowTopBar && pastEndLine && betweenTwoBars;
         }

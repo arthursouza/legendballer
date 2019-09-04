@@ -7,7 +7,7 @@ namespace Baller.Library.Scenes
 {
     public class ShopScene : Scene
     {
-        Button btnLobby;
+        TextureButton btnLobby;
 
         public ShopScene(BallerGame game)
             : base(game)
@@ -15,13 +15,12 @@ namespace Baller.Library.Scenes
             var marginLeft = 30;
             var marginBottom = 80;
 
-            btnLobby = new Button(
+            btnLobby = new TextureButton(
+                UserInterface.ButtonGreen,
                 "Lobby", 
                 new Vector2(
                     marginLeft, 
-                    BallerGame.WindowBounds.Height - marginBottom), 
-                Color.White, 
-                UserInterface.ButtonGreen);
+                    BallerGame.WindowBounds.Height - marginBottom));
         }
 
         public override void Draw(SpriteBatch batch)

@@ -21,8 +21,8 @@ namespace Baller.Library.Scenes
             
             Game.KickBall = new Ball();
             Game.KickBall.Position = new Vector2(BallerGame.NativeResolution.Width / 2f, BallerGame.NativeResolution.Height * .75f);
-            Game.KickBall.CollisionRadius = 100;
-            Game.KickBall.BallRadius = 100;
+            Game.KickBall.CollisionRadius = 250;
+            Game.KickBall.BallRadius = 250;
             Game.KickBall.Texture = game.Content.Load<Texture2D>("Ball/Ball");
         }
         
@@ -44,7 +44,7 @@ namespace Baller.Library.Scenes
         {
             Vector2 aimSize = new Vector2(40, 40);
 
-            batch.Draw(kickBackground, new Rectangle(0, 0, kickBackground.Width, kickBackground.Height), Color.White);
+            batch.Draw(kickBackground, BallerGame.WindowBounds, Color.White);
 
             Game.KickBall.Draw(batch);
             batch.Draw(kickAim, new Rectangle((int)(InputInfo.MousePosition.X - aimSize.X / 2), (int)(InputInfo.MousePosition.Y - aimSize.Y / 2), (int)aimSize.X, (int)aimSize.Y), Color.White);

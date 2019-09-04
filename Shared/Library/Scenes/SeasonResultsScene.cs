@@ -8,7 +8,7 @@ namespace Baller.Library.Scenes
     public class SeasonResultsScene : Scene
     {
         private SpriteFont font;
-        Button btnNextSeason;
+        TextureButton btnNextSeason;
 
         public SeasonResultsScene(BallerGame game)
             : base(game)
@@ -18,13 +18,12 @@ namespace Baller.Library.Scenes
 
             font = Fonts.Arial20;
             
-            btnNextSeason = new Button(
+            btnNextSeason = new TextureButton(
+                UserInterface.ButtonGreen,
                 "Next Season", 
                 new Vector2(
                     BallerGame.WindowBounds.Width - marginRight, 
-                    BallerGame.WindowBounds.Height - marginBottom), 
-                Color.White, 
-                UserInterface.ButtonGreen);
+                    BallerGame.WindowBounds.Height - marginBottom));
         }
 
         public override void Draw(SpriteBatch batch)

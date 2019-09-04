@@ -8,7 +8,7 @@ namespace Baller.Library.Scenes
 {
     public class BusinessScene : Scene
     {
-        Button btnLobby;
+        TextureButton btnLobby;
 
         public SpriteFont textFont { get; set; }
         public SpriteFont teamNameFont { get; set; }
@@ -19,13 +19,11 @@ namespace Baller.Library.Scenes
             textFont = Fonts.Arial20;
             teamNameFont = Fonts.Arial26;
 
-            btnLobby = new Button(
+            btnLobby = new TextureButton(UserInterface.ButtonGreen,
                 "Lobby",
                 new Vector2(
                     windowPadding, 
-                    BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)), 
-                Color.White, 
-                UserInterface.ButtonGreen);
+                    BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height/2)));
             
             Controls.Add(btnLobby);
         }

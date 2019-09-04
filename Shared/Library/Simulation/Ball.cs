@@ -12,6 +12,7 @@ namespace Baller.Library.Simulation
         public BallStopHandler Stop;
 
         private float frameDelay = 100f;
+        private float baseFrameDelay = 100f;
         private float frameTimer;
         private int frames = 6;
         private int currentFrame;
@@ -42,25 +43,45 @@ namespace Baller.Library.Simulation
                     (int)(CollisionRadius * 2));
             }
         }
+
+        // Increase radius to make player interaction easier
+        public Rectangle TouchBounds
+        {
+            get
+            {
+                var effectiveRadius = CollisionRadius * 4;
+
+                return new Rectangle(
+                    (int)(Position.X - effectiveRadius),
+                    (int)(Position.Y - effectiveRadius),
+                    (int)(effectiveRadius * 2),
+                    (int)(effectiveRadius * 2));
+            }
+        }
+
         public bool Kicked;
         public float BallRadius;
         public Vector2 Direction;
         public float Speed;
         public float VerticalForce;
         public bool PlayerKick;
+        public float InitialSpeed;
 
         public Ball()
         {
-            speedDecay = .05f;
+            speedDecay = .038f;
             gravity = .03f;
             Kicked = false;
         }
 
         public override void Draw(SpriteBatch batch)
         {
+            float shadowHeight = Math.Min(5, (int)Height);
+            shadowSize = BallRadius * (1 - (shadowHeight / 10));
+
             Rectangle shadow = new Rectangle(
-                (int)(Position.X - shadowSize),
-                (int)(Position.Y - shadowSize),
+                (int)(Position.X - shadowSize) + (Height > 0 ? 0 : 8),
+                (int)(Position.Y - shadowSize) + (Height > 0 ? 0 : 4),
                 (int)(shadowSize * 2),
                 (int)(shadowSize * 2));
 
@@ -92,18 +113,20 @@ namespace Baller.Library.Simulation
 
         public void Update(GameTime gameTime)
         {
-            if (Speed != 0 || Height != 0)
-            {
-                frameTimer += gameTime.ElapsedGameTime.Milliseconds;
+            //if (Speed > speedDecay || Height > gravity)
+            //{
+            //    frameTimer += gameTime.ElapsedGameTime.Milliseconds;
 
-                if (frameTimer > frameDelay)
-                {
-                    frameTimer = 0f;
-                    currentFrame++;
-                    if (currentFrame == frames)
-                        currentFrame = 0;
-                }
-            }
+            //    if (frameTimer > frameDelay)
+            //    {
+            //        frameTimer = 0f;
+            //        currentFrame++;
+            //        if (currentFrame == frames)
+            //            currentFrame = 0;
+
+            //        frameDelay = baseFrameDelay * (InitialSpeed / Speed);
+            //    }
+            //}
 
             float ballDirection = (float)Math.Atan2(Direction.Y, Direction.X);
 
@@ -126,13 +149,13 @@ namespace Baller.Library.Simulation
             if (dir != Vector2.Zero)
                 dir.Normalize();
 
-            if (Speed > 0)
+            if (Speed > 0.4)
                 Speed -= speedDecay;
+            else if (Speed > 0)
+                Speed -= speedDecay / 3;
 
             VerticalForce -= gravity;
-
             Height += VerticalForce;
-
             Height = Height > MaxHeight ? MaxHeight : Height;
 
             if (Height < 0)
@@ -157,7 +180,7 @@ namespace Baller.Library.Simulation
             Direction = direction;
             Kicked = true;
 
-            ballEffect = new Vector2(kickVector.X, 0);
+            ballEffect = new Vector2(kickVector.X * 0.5f, 0);
 
             // perda de força por bater no canto da bola
             float edge = kickVector.X < 0 ? kickVector.X * -1 : kickVector.X;
@@ -167,7 +190,7 @@ namespace Baller.Library.Simulation
             // a força pra cima existe independente de onde você chuta
             // a força pra cima é somada a uma fraçao da força do chute
             if (VerticalForce < 0.2)
-                VerticalForce += Math.Max(.5f, kickVector.Y);
+                VerticalForce += Math.Max(.5f, kickVector.Y * 0.5f);
 
             float maxSpeed = 10;
             float minSpeed = 6;
@@ -175,6 +198,8 @@ namespace Baller.Library.Simulation
             Speed = (maxSpeed - minSpeed) * (strength / Player.MaxPower);
 
             Speed += minSpeed;
+            InitialSpeed = Speed;
+
             this.PlayerKick = playerKick;
         }
 
