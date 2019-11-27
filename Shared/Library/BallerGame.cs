@@ -22,6 +22,8 @@ namespace Baller.Library
     /// </summary>
     public class BallerGame : Microsoft.Xna.Framework.Game
     {
+        private bool TESTMODE = true;
+
         public MouseCursor MouseCursor;
         public bool CurrentLeagueChampion = false;
         public Narration Narration;
@@ -116,6 +118,8 @@ namespace Baller.Library
             IsMouseVisible = true;
             Player = new Player();
             Year = 2016;
+            
+            SetupTransition();
         }
 
         protected override void Initialize()
@@ -128,6 +132,26 @@ namespace Baller.Library
             Simulation = new MatchSimulation(this);
             Simulation.GameEvent += Simulation_GameEvent;
             CurrentState = State.MainMenu;
+
+            if (TESTMODE)
+            {
+                List<Match> roundGames = new List<Match>(); 
+                LoadClubs();
+                ContractProposition = new Contract();
+                ContractProposition.Club = Clubs[Random.Next(0, Clubs.Count -1)];
+                ContractProposition.Value = Random.Next(100, 200);
+                ContractProposition.GoalBonus = 0;
+                ContractProposition.VictoryBonus = 0;
+                Player.Contract = ContractProposition;
+                League = new League();
+                League.SetupNewLeague(Clubs);
+                CurrentLeagueRound = 0;
+                roundGames = League.Matches.FindAll(x => x.Round == CurrentLeagueRound);
+                Simulation.Match = roundGames.Find(x => x.Home.Name == PlayerClub.Name || x.Away.Name == PlayerClub.Name);
+                Simulation.Start();
+                Transition(State.SimulationRoling);
+            }
+
             Players = new List<Character>();
             Graphics.GraphicsDevice = this.GraphicsDevice;
             
@@ -214,9 +238,6 @@ namespace Baller.Library
             InputInfo.LastMouseState = Mouse.GetState();
             InputInfo.LastKeyboardState = Keyboard.GetState();
 
-            transition = new Transition(this);
-            transition.Finish += transition_Finish;
-
             CreateFieldRegions();
 
             LoadScenes();
@@ -234,7 +255,13 @@ namespace Baller.Library
             //    Simulation.Start();
             //}
         }
-        
+
+        private void SetupTransition()
+        {
+            transition = new Transition(this);
+            transition.Finish += transition_Finish;
+        }
+
         private void LoadCountries()
         {
             Country = new List<string>();

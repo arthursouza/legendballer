@@ -13,7 +13,7 @@ namespace Baller.Library.Scenes
         List<LobbyOption> options = new List<LobbyOption>();
 
         int selectedIndex;
-        Vector2 lobbyButtonSize = new Vector2(160, 160);
+        Vector2 lobbyButtonSize = new Vector2(260, 260);
         
         private TextureButton btnNextGame;
 
