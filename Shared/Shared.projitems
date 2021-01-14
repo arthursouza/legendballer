@@ -72,11 +72,90 @@
     <Compile Include="$(MSBuildThisFileDirectory)Library\Util\Size.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Content\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Content\Button Labels\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Content\Locales\" />
     <Folder Include="$(MSBuildThisFileDirectory)Library\IO\" />
     <Folder Include="$(MSBuildThisFileDirectory)Library\UI\Buttons\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Resources\" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Content\Data\Countries" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Locales\pt-br.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\Arial12.spritefont" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\Arial18.spritefont" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\Arial20.spritefont" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\Arial26.spritefont" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\Arial28.spritefont" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\Arial36.spritefont" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\Arial42.spritefont" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\Arial54.spritefont" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\TimesNR26.spritefont" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Content\Alert.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Alert.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Background.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Game Lobby.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Goal.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\GoalShadow.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\GoalTopNet.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Jornal Championship.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Jornal.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\KickBackground.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Light Blue Bg.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Main Menu.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\MessageBox.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\NewsPaperContract.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Backgrounds\Simulation BG.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Ball\Ball Shadow.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Ball\Ball spritesheet.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Ball\Ball.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\ball_help.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Black.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Circle.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Crowd\CrowdGuy.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Crowd\CrowdShirt1.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Crowd\CrowdShirt2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Crowd\CrowdShirt3.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Crowd\CrowdShirt4.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Crowd\CrowdShirt5.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Flags\Flag Flat.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Flags\Flag Half Stripe.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Flags\Flag Stripe.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\GameJolt.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\InGame\field.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Kick Aim.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\MainMenu\LoginGameJolt.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\MainMenu\LoginGameJolt_Hover.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Mouse\Cursor1.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Mouse\Cursor2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Player\Flat.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Player\Keeper.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Player\Player1.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Player\Player2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Player\PlayerMarker.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Player\PlayerShadow.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Player\SingleStripe.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Player\Stripes.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\RedSquare.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Seta.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\big button.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\bluebtn.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\Button Labels\Load career.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\Button Labels\New career.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\Button Labels\Next Game.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\green button.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\greenbtn.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\Load career.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\Lobby Button.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\menu button.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\red button.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\redbtn.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\UI\Selected.png" />
   </ItemGroup>
 </Project>

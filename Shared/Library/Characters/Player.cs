@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Windows.Resources;
 
 namespace Baller.Library.Characters
 {
@@ -39,17 +40,17 @@ namespace Baller.Library.Characters
         public string FameDescription()
         {
             if (Stats.Fame < 10)
-                return "Beginner";
+                return GameResource.Beginner;
             if (Stats.Fame < 20)
-                return "Hard Worker";
+                return GameResource.HardWorker;
             else if (Stats.Fame < 40)
-                return "Promissing";
+                return GameResource.Promissing;
             else if (Stats.Fame < 60)
-                return "Local Star";
+                return GameResource.LocalStar;
             else if (Stats.Fame < 90)
-                return "National Idol";
+                return GameResource.NationalIdol;
             else
-                return "Worldwide Star";
+                return GameResource.WorldwideStar;
         }
 
         public int GetExpToNextLevel()

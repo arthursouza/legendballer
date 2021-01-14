@@ -13,7 +13,13 @@ namespace Baller.Library.Scenes
         List<LobbyOption> options = new List<LobbyOption>();
 
         int selectedIndex;
-        Vector2 lobbyButtonSize = new Vector2(260, 260);
+
+        Vector2 lobbyButtonSize = new Vector2(330, 330);
+        Vector2 lobbyButtonOrigin = new Vector2(190, 300);
+
+        private int buttonColumns = 2;
+        private int buttonRows = 3;
+        private int buttonSpacing = 40;
         
         private TextureButton btnNextGame;
 
@@ -30,19 +36,22 @@ namespace Baller.Library.Scenes
                 new LobbyOption("News", Vector2.Zero, lobbyButtonSize, LobbyOptionFunction.RecentNews)
             };
 
-            var buttonColumns = 3;
+            //var buttonColumns = 3;
 
-            var buttonSpacing = (BallerGame.WindowBounds.Width - (buttonColumns * lobbyButtonSize.X)) / (buttonColumns + 1);
-
-            var buttonsStartPosition = BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height + windowPadding + (lobbyButtonSize.Y * 2));
+            //var buttonSpacing = (BallerGame.WindowBounds.Width - (buttonColumns * lobbyButtonSize.X)) / (buttonColumns + 1);
+            
+            //var buttonsStartPosition = BallerGame.WindowBounds.Height - (windowPadding + UserInterface.ButtonGreen.Height + windowPadding + (lobbyButtonSize.Y * 2));
 
             for (int i = 0; i < lobbyOptions.Length; i++)
             {
                 var line = i / buttonColumns;
                 var column = i % buttonColumns;
 
-                var posX = buttonSpacing + (buttonSpacing * column) + (lobbyButtonSize.X * column);
-                var posY = ((buttonSpacing + lobbyButtonSize.Y) * line) + buttonsStartPosition;
+                var posX = lobbyButtonOrigin.X + (buttonSpacing * column) + (lobbyButtonSize.X * column);
+                var posY = lobbyButtonOrigin.Y + ((buttonSpacing + lobbyButtonSize.Y) * line);
+
+                //var posX = buttonSpacing + (buttonSpacing * column) + (lobbyButtonSize.X * column);
+                //var posY = ((buttonSpacing + lobbyButtonSize.Y) * line) + buttonsStartPosition;
 
                 lobbyOptions[i].UpdatePosition(new Vector2(posX, posY));
             }
@@ -68,7 +77,6 @@ namespace Baller.Library.Scenes
             var agePos = new Vector2(windowPadding, 129);
 
             batch.DrawString(Fonts.Arial36, Game.Player.Name, playerNamePos, Color.White);
-            batch.DrawString(Fonts.Arial18, Game.Player.Contract.Club.Name + " - Season "+ Game.Year, teamNamePos, Color.White);
             batch.DrawString(Fonts.Arial18, string.Format("Age {0}", Game.Player.Stats.Age, Game.Year), agePos, Color.White);
             batch.DrawString(Fonts.Arial26, Game.Player.Stats.Fame.ToString(), new Vector2(30, 160), Color.White);
             batch.DrawString(Fonts.Arial26, Game.Player.FameDescription(), new Vector2(30, 200), Color.White);

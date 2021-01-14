@@ -1,7 +1,5 @@
-﻿using Baller.Library.Input;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Baller.Library.UI
 {
@@ -62,3 +60,4 @@ namespace Baller.Library.UI
         }
     }
 }
+

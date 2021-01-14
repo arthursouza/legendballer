@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Baller.Library.Characters;
 using Baller.Library.Input;
 using Baller.Library.Leagues;
@@ -22,7 +24,7 @@ namespace Baller.Library
     /// </summary>
     public class BallerGame : Microsoft.Xna.Framework.Game
     {
-        private bool TESTMODE = true;
+        private bool TESTMODE = false;
 
         public MouseCursor MouseCursor;
         public bool CurrentLeagueChampion = false;
@@ -107,13 +109,6 @@ namespace Baller.Library
             Window.Title = "Legend Baller";
             Narration = new Narration();
             
-            //var resolutionDownscale = 0.5f;
-
-            SetGameResolution(NativeResolution.Width/2, NativeResolution.Height/2);
-
-            //graphics.PreferredBackBufferWidth = (int)WindowSize.X;
-            //graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
-
             MouseCursor = MouseCursor.Normal;
             IsMouseVisible = true;
             Player = new Player();
@@ -124,6 +119,8 @@ namespace Baller.Library
 
         protected override void Initialize()
         {
+            SetGameResolution(NativeResolution.Width/2, NativeResolution.Height/2);
+
             BasicEffect = new BasicEffect(graphics.GraphicsDevice)
             {
                 VertexColorEnabled = true
@@ -706,6 +703,7 @@ namespace Baller.Library
             WindowSize = new Vector2(height / factor, height);
             graphics.PreferredBackBufferWidth = (int)WindowSize.X;
             graphics.PreferredBackBufferHeight = (int)WindowSize.Y;
+            graphics.ApplyChanges();
         }
         
         #region match stuff
